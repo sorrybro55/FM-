@@ -1,67 +1,64 @@
 import java.util.Arrays;
+import java.util.Random;
 /**
  * Escreva a descrição da classe Player aqui.
  * 
  * @author (seu name) 
  * Falta Implementar GK, Atualizar Overall para as posiçoes (diferentes pesos percentuais), apresentar clube de que o player faz parte;  
  */
-public class Player{
-    private String player_name;
+public class FootballPlayer{
+    private String name;
     private int age;
-    private String position;
-    private int[] player_stats;
-    private int overall; 
+    //private FootballTeam team;
     
-    
-    public Player(){
-        this.player_name = "---";
-        this.age = 0;
-        this.position = "---";
-        this.player_stats = new int[] {0, 0, 0, 0, 0, 0, 0};   
+    public FootballPlayer(){
+        this.name = generateName();
+        this.age = 20; 
     }        
     
-    public Player(String name, int nAge, String nPos, int[] v){
-        this.player_name = name;
-        this.age = nAge;
-        this.position = nPos;
-        for(int i=0; i<7; i++) this.player_stats[i] = v[i];
+    public FootballPlayer(String name, int age){
+        this.name = name;
+        this.age = age;
     }   
     
-    public Player(Player p){
-        this.player_name = p.player_name; 
-        this.age = p.age;
-        this.position = p.position;
-        for(int i=0; i<7;i++) this.player_stats[i] = p.player_stats[i];
+    public FootballPlayer(FootballPlayer p){
+        this.name = p.getName(); 
+        this.age = p.getAge();
     }
     
     public String getName(){
-        return this.player_name;
+        return this.name;
     }
     
-    public void setName(String n){
-        this.player_name = n;
+    public void setName(String name){
+        this.name = name;
     }
     
-    public Int getAge(){
+    public int getAge(){
         return this.age;
     }
     
-    public void setAge(int a){
-        this.age = a;
+    public void setAge(int age){
+        this.age = age;
     }
     
-    public String getPosition(){
-        return this.position;
+    public String toString(){
+        return "Nome: " + this.name + ". " + "Idade: " + this.age + ".";
     }
     
-    public void setPosition(String pos){
-        this.position = pos;
+    public FootballPlayer clone(){
+        return new FootballPlayer(this);
     }
     
-    public int[] getStats(){
-        return this.player_stats;
+    private String generateName(){
+        String[] firstName = {"Joao", "Miguel","Tiago","Rui","Jose","Luis","Daniel","Pedro","Vicente","Diogo","Oscar","Fernando"};
+        String[] lastName = {"Silva", "Fernandes","Leite","Soares","Ferreira","Gonçalves","Lopes","Costa","Azevedo","Pinheiro","Cardoso","Abreu"};
+        int f = (int) (Math.random()*firstName.length);
+        int l = (int) (Math.random()*lastName.length);
+        return firstName[f] + " " +lastName[l];
     }
-    
+   
+    /*
     public void setStats(int[] s){
         for(int i = 0; i<7 ; i++) this.player_stats[i] = s[i];
     }
@@ -80,8 +77,8 @@ public class Player{
     public boolean equals(Object o){
         if(this == o) return true;
         if((o==null) || (this.getClass() != o.getClass())) return false;
-        Player c = (Player) o;
-        return (this.getName() == c.getName && this.getAge() == c.getAge);
+        FootballPlayer c = (FootballPlayer) o;
+        return (this.name == c.getName() && this.age == c.getAge());
     }
     
     public String toString(){
@@ -89,9 +86,8 @@ public class Player{
                 "; .Destreza: " + this.player_stats[2] + "; .Impulsao: " + this.player_stats[3] + "; .Jogo de cabeca: "+ this.player_stats[4] + "; .Remate: " +this.player_stats[5] + 
                 "; Capacidade de passe: " + this.player_stats[6] + ";\n" + "Overall: "+ this.overall);
                 
-}
+}*/
 
 
-public Goalkeeper extends Player {
-    private int[] gk_stats;
+
 }    

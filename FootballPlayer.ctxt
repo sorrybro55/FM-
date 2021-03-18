@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.target=FootballPlayer
+comment0.text=\n\ Escreva\ a\ descri\u00E7\u00E3o\ da\ classe\ Player\ aqui.\n\ \n\ @author\ (seu\ name)\ \n\ Falta\ Implementar\ GK,\ Atualizar\ Overall\ para\ as\ posi\u00E7oes\ (diferentes\ pesos\ percentuais),\ apresentar\ clube\ de\ que\ o\ player\ faz\ parte;\ \ \n
+comment1.params=
+comment1.target=FootballPlayer()
+comment10.params=
+comment10.target=java.lang.String\ generateName()
+comment2.params=name\ age
+comment2.target=FootballPlayer(java.lang.String,\ int)
+comment3.params=p
+comment3.target=FootballPlayer(FootballPlayer)
+comment4.params=
+comment4.target=java.lang.String\ getName()
+comment5.params=name
+comment5.target=void\ setName(java.lang.String)
+comment6.params=
+comment6.target=int\ getAge()
+comment7.params=age
+comment7.target=void\ setAge(int)
+comment8.params=
+comment8.target=java.lang.String\ toString()
+comment9.params=
+comment9.target=FootballPlayer\ clone()
+numComments=11
