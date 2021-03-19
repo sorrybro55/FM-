@@ -42,6 +42,10 @@ public class FootballPlayer{
         this.age = age;
     }
     
+    public void increaseAge(){
+        this.age +=1;
+    }
+    
     public String toString(){
         return "Nome: " + this.name + ". " + "Idade: " + this.age + ".";
     }
