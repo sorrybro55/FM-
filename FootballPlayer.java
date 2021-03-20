@@ -1,10 +1,10 @@
 import java.util.Arrays;
 import java.util.Random;
 /**
- * Escreva a descrição da classe Player aqui.
+ * Escreva a descriÃ§Ã£o da classe Player aqui.
  * 
  * @author (seu name) 
- * Falta Implementar GK, Atualizar Overall para as posiçoes (diferentes pesos percentuais), apresentar clube de que o player faz parte;  
+ * Falta corrigir toString para o GK e os jogadores 
  */
 public class FootballPlayer{
     private String name;
@@ -67,7 +67,7 @@ public class FootballPlayer{
     }
     
     public String toString(){
-        return "Nome: " + this.name + ". " + "\nIdade: " + this.age + "\nPosi�ao: " + this.pos +".";
+        return "Nome: " + this.name + ". " + "\nIdade: " + this.age + "\nPosiçao: " + this.pos +".";
     }
     
     public FootballPlayer clone(){
@@ -76,7 +76,7 @@ public class FootballPlayer{
     
     private String generateName(){
         String[] firstName = {"Joao", "Miguel","Tiago","Rui","Jose","Luis","Daniel","Pedro","Vicente","Diogo","Oscar","Fernando"};
-        String[] lastName = {"Silva", "Fernandes","Leite","Soares","Ferreira","Gonçalves","Lopes","Costa","Azevedo","Pinheiro","Cardoso","Abreu"};
+        String[] lastName = {"Silva", "Fernandes","Leite","Soares","Ferreira","GonÃ§alves","Lopes","Costa","Azevedo","Pinheiro","Cardoso","Abreu"};
         int f = (int) (Math.random()*firstName.length);
         int l = (int) (Math.random()*lastName.length);
         return firstName[f] + " " +lastName[l];
