@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.target=GoalKeeperStats
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ GoalKeeperStats\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=GoalKeeperStats()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ GoalKeeperStats\r\n
+comment10.params=
+comment10.target=java.lang.String\ toString()
+comment2.params=speed\ stamina\ agility\ heading\ finishing\ passing\ elasticity
+comment2.target=GoalKeeperStats(int,\ int,\ int,\ int,\ int,\ int,\ int)
+comment3.params=gks
+comment3.target=GoalKeeperStats(GoalKeeperStats)
+comment4.params=
+comment4.target=int\ getElasticity()
+comment5.params=elasticity
+comment5.target=void\ setElasticity(int)
+comment6.params=
+comment6.target=int\ getGKoverall()
+comment7.params=speed\ stamina\ agility\ heading\ finishing\ passing\ elasticity
+comment7.target=void\ setGKoverall(int,\ int,\ int,\ int,\ int,\ int,\ int)
+comment8.params=inc
+comment8.target=void\ increaseElasticity(int)
+comment9.params=dec
+comment9.target=void\ decreaseElasticity(int)
+numComments=11

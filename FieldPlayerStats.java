@@ -14,6 +14,8 @@ public class FieldPlayerStats
     private int heading;
     private int finishing;
     private int passing;
+    private int overall;
+    FootballPlayer fp = new FootballPlayer();
 
     /**
      * Constructor for objects of class PlayerStats
@@ -26,6 +28,7 @@ public class FieldPlayerStats
         this.heading = 50;
         this.finishing = 50;
         this.passing = 50;
+        this.overall = 50;
     }
     
     public FieldPlayerStats(int speed, int stamina, int agility, int heading, int finishing, int passing){
@@ -36,6 +39,7 @@ public class FieldPlayerStats
         this.heading = heading;
         this.finishing = finishing;
         this.passing = passing;
+        this.overall = (this.speed + this.stamina + this.agility + this.heading + this.finishing + this.passing) / 6; //mudar mais tarde 
     }
     
     public FieldPlayerStats(FieldPlayerStats fps){
@@ -45,6 +49,7 @@ public class FieldPlayerStats
         this.heading = fps.getHeading();
         this.finishing = fps.getFinishing();
         this.passing = fps.getPassing();
+        this.overall = (this.speed + this.stamina + this.agility + this.heading + this.finishing + this.passing) / 6;
     }
     
     public int getSpeed(){
@@ -71,6 +76,10 @@ public class FieldPlayerStats
         return this.passing;
     }
     
+    public int getOverall(){
+        return this.overall;
+    }
+    
     public void setSpeed(int speed){
         this.speed = speed;
     }
@@ -93,6 +102,10 @@ public class FieldPlayerStats
     
     public void setPassing(int passing){
         this.passing = passing;
+    }
+    
+    public void setOverall(int speed, int stamina, int agility, int heading, int finishing, int passing){
+        this.overall = (speed + stamina + agility + heading + finishing + passing) / 6;
     }
     
     public void increaseSpeed(int inc){
@@ -159,11 +172,6 @@ public class FieldPlayerStats
     
     public String toString(){
         return "Velocidade: " + this.speed + "\nResistencia: " + this.stamina + "\nDestreza: " + this.agility + 
-               "\nJogo de CadeÃ§a: " + this.heading + "\nRemate: " + this.finishing + "\nCapacidade de Passe: " + this.passing;
+               "\nJogo de Cabeça: " + this.heading + "\nRemate: " + this.finishing + "\nCapacidade de Passe: " + this.passing;
     }
-    
-    
-        
-
-    
 }

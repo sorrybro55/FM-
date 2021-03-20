@@ -9,21 +9,33 @@ import java.util.Random;
 public class FootballPlayer{
     private String name;
     private int age;
+    private enum Position{
+        GOALKEEPER,
+        DEFENDER,
+        MIDFIELDER,
+        STRIKER,
+        WINGER
+    }
+    private Position pos;
+    
     //private FootballTeam team;
     
     public FootballPlayer(){
         this.name = generateName();
-        this.age = 20; 
+        this.age = 20;
+        this.pos = null;
     }        
     
-    public FootballPlayer(String name, int age){
+    public FootballPlayer(String name, int age, Position pos){
         this.name = name;
         this.age = age;
+        this.pos = pos;
     }   
     
     public FootballPlayer(FootballPlayer p){
         this.name = p.getName(); 
         this.age = p.getAge();
+        this.pos = p.getPos();
     }
     
     public String getName(){
@@ -46,8 +58,16 @@ public class FootballPlayer{
         this.age +=1;
     }
     
+    public Position getPos(){
+        return this.pos;
+    }
+    
+    public void setPos(Position xPos){
+        this.pos = xPos;
+    }
+    
     public String toString(){
-        return "Nome: " + this.name + ". " + "Idade: " + this.age + ".";
+        return "Nome: " + this.name + ". " + "\nIdade: " + this.age + "\nPosiçao: " + this.pos +".";
     }
     
     public FootballPlayer clone(){
@@ -61,6 +81,7 @@ public class FootballPlayer{
         int l = (int) (Math.random()*lastName.length);
         return firstName[f] + " " +lastName[l];
     }
+}
    
     /*
     public void setStats(int[] s){
@@ -94,4 +115,4 @@ public class FootballPlayer{
 
 
 
-}    
+
