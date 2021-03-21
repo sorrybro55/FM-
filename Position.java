@@ -20,7 +20,7 @@ public enum Position
            case GOALKEEPER: return "Guarda-Redes";
            case DEFENDER: return "Defesa";
            case MIDFIELDER: return "Medio";
-           case STRIKER: return "Avançado";
+           case STRIKER: return "Avancado";
            case WINGER: return "Lateral";
            default: return "Indefenido";
         }

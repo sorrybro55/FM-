@@ -81,7 +81,7 @@ public class FootballPlayer{
         
         
     public String toString(){
-        return "Nome: " + this.name + ". " + "\nIdade: " + this.age + "\nPosi�ao: " + this.position +"\nEquipa: " + this.team +"\n";
+        return "Nome: " + this.name + ". " + "\nIdade: " + this.age + "\nPosicao: " + this.position +"\nEquipa: " + this.team +"\n";
     }
     
     public FootballPlayer clone(){
@@ -90,7 +90,7 @@ public class FootballPlayer{
     
     private String generateName(){
         String[] firstName = {"Joao", "Miguel","Tiago","Rui","Jose","Luis","Daniel","Pedro","Vicente","Diogo","Oscar","Fernando"};
-        String[] lastName = {"Silva", "Fernandes","Leite","Soares","Ferreira","GonÃ§alves","Lopes","Costa","Azevedo","Pinheiro","Cardoso","Abreu"};
+        String[] lastName = {"Silva", "Fernandes","Leite","Soares","Ferreira","Araujo","Lopes","Costa","Azevedo","Pinheiro","Cardoso","Abreu"};
         int f = (int) (Math.random()*firstName.length);
         int l = (int) (Math.random()*lastName.length);
         return firstName[f] + " " +lastName[l];

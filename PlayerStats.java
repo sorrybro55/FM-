@@ -191,6 +191,6 @@ public class PlayerStats
     
     public String toString(){
         return "Velocidade: " + this.speed + "\nResistencia: " + this.stamina + "\nDestreza: " + this.agility + 
-               "\nJogo de Cabeça: " + this.heading + "\nRemate: " + this.finishing + "\nCapacidade de Passe: " + this.passing;
+               "\nJogo de Cabeca: " + this.heading + "\nRemate: " + this.finishing + "\nCapacidade de Passe: " + this.passing;
     }
 }
