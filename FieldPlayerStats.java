@@ -1,159 +1,117 @@
 
 /**
- * Write a description of class PlayerStats here.
+ * Write a description of class FieldPalyerStats here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class FieldPlayerStats
+public class FieldPlayerStats extends PlayerStats
 {
     // instance variables - replace the example below with your own
-    private int speed;
-    private int stamina;
-    private int agility;
-    private int heading;
-    private int finishing;
-    private int passing;
     private int overall;
-    FootballPlayer fp = new FootballPlayer();
 
     /**
-     * Constructor for objects of class PlayerStats
+     * Constructor for objects of class FieldPalyerStats
      */
     public FieldPlayerStats(){
-        // initialise instance variables
-        this.speed = 50;
-        this.stamina = 50;
-        this.agility = 50;
-        this.heading = 50;
-        this.finishing = 50;
-        this.passing = 50;
-        this.overall = 50;
+        super();
+        setOverall();
     }
     
     public FieldPlayerStats(int speed, int stamina, int agility, int heading, int finishing, int passing){
-        // initialise instance variables
-        this.speed = speed;
-        this.stamina = stamina;
-        this.agility = agility;
-        this.heading = heading;
-        this.finishing = finishing;
-        this.passing = passing;
-        this.overall = (this.speed + this.stamina + this.agility + this.heading + this.finishing + this.passing) / 6; //mudar mais tarde 
+        super(speed, stamina, agility, heading, finishing, passing);
+        setOverall();
     }
     
-    public FieldPlayerStats(FieldPlayerStats fps){
-        this.speed = fps.getSpeed();
-        this.stamina = fps.getStamina();
-        this.agility = fps.getAgility();
-        this.heading = fps.getHeading();
-        this.finishing = fps.getFinishing();
-        this.passing = fps.getPassing();
-        this.overall = (this.speed + this.stamina + this.agility + this.heading + this.finishing + this.passing) / 6;
+    public FieldPlayerStats(FieldPlayerStats fp){
+        super(fp.getSpeed(), fp.getStamina(), fp.getAgility(), fp.getHeading(), fp.getFinishing(), fp.getPassing());
+        setOverall();
     }
     
-    public int getSpeed(){
-        return this.speed;
+    private void setOverall(){
+        this.overall = (this.getSpeed() + this.getStamina() + this.getAgility() + this.getHeading() + this.getFinishing() + this.getPassing()) / 6;
     }
-    
-    public int getStamina(){
-        return this.stamina;
-    }
-    
-    public int getAgility(){
-        return this.agility;
-    }
-    
-    public int getHeading(){
-        return this.heading;
-    }
-    
-    public int getFinishing(){
-        return this.finishing;
-    }
-    
-    public int getPassing(){
-        return this.passing;
-    }
-    
+
     public int getOverall(){
         return this.overall;
     }
     
     public void setSpeed(int speed){
-        this.speed = speed;
+        super.setSpeed(speed);
+        setOverall();
     }
     
     public void setStamina(int stamina){
-        this.stamina = stamina;
+        super.setStamina(stamina);
+        setOverall();
     }
     
     public void setAgility(int agility){
-        this.agility = agility;
+        super.setAgility(agility);
+        setOverall();
     }
     
     public void setHeading(int heading){
-        this.heading = heading;
+        super.setHeading(heading);
+        setOverall();
     }
     
     public void setFinishing(int finishing){
-        this.finishing = finishing;
+        super.setFinishing(finishing);
+        setOverall();
     }
     
     public void setPassing(int passing){
-        this.passing = passing;
-    }
-    
-    public void setOverall(int speed, int stamina, int agility, int heading, int finishing, int passing){
-        this.overall = (speed + stamina + agility + heading + finishing + passing) / 6;
+        super.setPassing(passing);
+        setOverall();
     }
     
     public void increaseSpeed(int inc){
-        this.speed += inc;
+        setSpeed(getSpeed()+inc);
     }
     
     public void increaseStamina(int inc){
-        this.stamina += inc;
+        setStamina(getStamina() + inc);
     }
     
     public void increaseAgility(int inc){
-        this.agility += inc;
+        setAgility(getAgility() + inc);
     }
     
     public void increaseHeading(int inc){
-        this.heading += inc;
+        setHeading(getHeading() + inc);
     }
     
     public void increaseFinishing(int inc){
-        this.finishing += inc;
+        setFinishing(getFinishing() + inc);
     }
     
     public void increasePassing(int inc){
-        this.passing += inc;
+        setPassing(getPassing() + inc);
     }
     
     public void decreaseSpeed(int dec){
-        this.speed -= dec;
+        setSpeed(getSpeed() - dec);
     }
     
     public void decreaseStamina(int dec){
-        this.stamina -= dec;
+        setStamina(getStamina() - dec);
     }
     
     public void decreaseAgility(int dec){
-        this.agility -= dec;
+        setAgility(getAgility() - dec);
     }
     
     public void decreaseHeading(int dec){
-        this.heading -= dec;
+        setHeading(getHeading() - dec);
     }
     
     public void decreaseFinishing(int dec){
-        this.finishing += dec;
+        setFinishing(getFinishing() - dec);
     }
     
     public void decreasePassing(int dec){
-        this.passing += dec;
+        setPassing(getPassing() - dec);
     }
     
     public boolean equals(Object o){
@@ -161,9 +119,8 @@ public class FieldPlayerStats
             return true;
         if(o == null || o.getClass() != this.getClass())
             return false;
-        FieldPlayerStats fps = (FieldPlayerStats) o;
-        return this.speed == fps.getSpeed() && this.stamina == fps.getStamina() && this.agility == fps.getAgility() &&
-               this.heading == fps.getHeading() && this.finishing == fps.getFinishing() && this.passing == fps.getPassing();
+        PlayerStats ps = (PlayerStats) o;
+        return super.equals(ps);
     }
     
     public FieldPlayerStats clone(){
@@ -171,7 +128,9 @@ public class FieldPlayerStats
     }
     
     public String toString(){
-        return "Velocidade: " + this.speed + "\nResistencia: " + this.stamina + "\nDestreza: " + this.agility + 
-               "\nJogo de Cabeça: " + this.heading + "\nRemate: " + this.finishing + "\nCapacidade de Passe: " + this.passing;
+        //String aux = this.toString();
+        return super.toString() +  "\nOverall: " +this.overall; 
     }
 }
+
+

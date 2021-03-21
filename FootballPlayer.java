@@ -4,38 +4,34 @@ import java.util.Random;
  * Escreva a descriÃ§Ã£o da classe Player aqui.
  * 
  * @author (seu name) 
- * Falta corrigir toString para o GK e os jogadores 
+ * 
  */
 public class FootballPlayer{
     private String name;
     private int age;
-    private enum Position{
-        GOALKEEPER,
-        DEFENDER,
-        MIDFIELDER,
-        STRIKER,
-        WINGER
-    }
-    private Position pos;
-    
-    //private FootballTeam team;
+    private Position position;
+    private String team;
     
     public FootballPlayer(){
         this.name = generateName();
         this.age = 20;
-        this.pos = null;
+        this.position = Position.ND;
+        this.team = "Sem equipa";
+        
     }        
     
-    public FootballPlayer(String name, int age, Position pos){
+    public FootballPlayer(String name, int age, Position position, String team){
         this.name = name;
         this.age = age;
-        this.pos = pos;
+        this.position = position;
+        this.team = team;
     }   
     
     public FootballPlayer(FootballPlayer p){
         this.name = p.getName(); 
         this.age = p.getAge();
-        this.pos = p.getPos();
+        this.position = p.getPosition();
+        this.team = p.getTeam();
     }
     
     public String getName(){
@@ -54,20 +50,38 @@ public class FootballPlayer{
         this.age = age;
     }
     
+    public String getTeam(){
+        return this.team;
+    }
+    
+    public void setTeam(String team){
+        this.team = team;
+    }
+    
     public void increaseAge(){
         this.age +=1;
     }
     
-    public Position getPos(){
-        return this.pos;
+    public Position getPosition(){
+        return this.position;
     }
     
-    public void setPos(Position xPos){
-        this.pos = xPos;
+    public void setPosition(Position position){
+        this.position = position;
     }
     
+    public boolean equals(Object o){
+        if (o == this)
+            return true;
+        if(o == null || o.getClass() != this.getClass())
+            return false;
+        FootballPlayer fp = (FootballPlayer) o;
+        return this.name == fp.getName() && this.age == fp.getAge() && this.position == fp.getPosition() && this.team == fp.getTeam();
+    }
+        
+        
     public String toString(){
-        return "Nome: " + this.name + ". " + "\nIdade: " + this.age + "\nPosiçao: " + this.pos +".";
+        return "Nome: " + this.name + ". " + "\nIdade: " + this.age + "\nPosi�ao: " + this.position +"\nEquipa: " + this.team +"\n";
     }
     
     public FootballPlayer clone(){
@@ -83,35 +97,7 @@ public class FootballPlayer{
     }
 }
    
-    /*
-    public void setStats(int[] s){
-        for(int i = 0; i<7 ; i++) this.player_stats[i] = s[i];
-    }
-    
-    public int getOverall(){
-        return this.overall;
-    }
-    
-    public void setOverall(){
-        int sum = Arrays.stream(player_stats).sum();
-        int ovr = sum/7;
-        this.overall= ovr;
-        return this.overall;
-    }
-    
-    public boolean equals(Object o){
-        if(this == o) return true;
-        if((o==null) || (this.getClass() != o.getClass())) return false;
-        FootballPlayer c = (FootballPlayer) o;
-        return (this.name == c.getName() && this.age == c.getAge());
-    }
-    
-    public String toString(){
-        return ("Name: " + this.player_name + "\nAge: " + this.age + "\nPosition: " + this.position + "\nStats: .Velocidade: " + this.player_stats[0]+ "; .Resistencia: " + this.player_stats[1]+
-                "; .Destreza: " + this.player_stats[2] + "; .Impulsao: " + this.player_stats[3] + "; .Jogo de cabeca: "+ this.player_stats[4] + "; .Remate: " +this.player_stats[5] + 
-                "; Capacidade de passe: " + this.player_stats[6] + ";\n" + "Overall: "+ this.overall);
-                
-}*/
+
 
 
 
