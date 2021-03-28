@@ -77,6 +77,7 @@ public class Player{
         int l = (int) (Math.random()*lastName.length);
         return firstName[f] + " " +lastName[l];
     }
+    
 }
    
 

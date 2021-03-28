@@ -41,14 +41,6 @@ public class GoalKeeper extends FootballPlayer
             this.elasticity = elasticity;
     }
     
-    public void increaseElasticity(int inc){
-        setElasticity(this.elasticity + inc);
-    }
-    
-    public void decreaseElasticity(int dec){
-        setElasticity(this.elasticity - dec);
-    }
-    
     public GoalKeeper clone(){
         return new GoalKeeper(this);
     }
@@ -67,13 +59,32 @@ public class GoalKeeper extends FootballPlayer
         return super.equals(f) && gk.getElasticity() == this.elasticity;
     }
     
+    public void increaseElasticity(int inc){
+        setElasticity(this.elasticity + inc);
+    }
+    
+    public void decreaseElasticity(int dec){
+        setElasticity(this.elasticity - dec);
+    }
+    
+    public void increaseStats(int inc){
+        super.increaseStats(inc);
+        increaseElasticity(inc);
+    }
+    
+    public void decreaseStats(int dec){
+        super.decreaseStats(dec);
+        decreaseElasticity(dec);
+    }
+    
+ 
     public int overall (){
         return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getElasticity()) / 7;
     }
     
     public String stats(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.stats()).append("\nElasticidade: ").append(this.elasticity).append("\nOverall: ").append(overall());
+        sb.append(super.stats()).append("\nElasticidade: ").append(this.elasticity);
         return sb.toString();
     }
         

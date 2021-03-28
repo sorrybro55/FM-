@@ -155,6 +155,34 @@ public class FootballPlayer extends Player
         this.career = (ArrayList<String>) career.clone();
     }
     
+    public boolean equals(Object o){
+        if (o == this)
+            return true;
+        if(o == null || o.getClass() != this.getClass())
+            return false;
+        Player p = (FootballPlayer) o;
+        FootballPlayer fp = (FootballPlayer) o;
+        return super.equals(p)  && this.position == fp.getPosition() && this.team == fp.getTeam();
+    }
+        
+        
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString()).append("\nPosicao: ").append(this.position).append("\nClube Atual: ").append(this.team);
+        sb.append("\nClubes Anteiores: ");
+        for (String c : career)
+            sb.append(c);
+        sb.append("\nVelocidade: ").append(this.speed).append("\nResistencia: ").append(this.stamina).append("\nDestreza: ").append(this.agility);
+        sb.append("\nJogo de Cabeca: ").append(this.heading).append("\nRemate: ").append(this.finishing);
+        sb.append("\nCapacidade de Passe: ").append(this.passing);
+        
+        return sb.toString();
+    }
+    
+    public FootballPlayer clone(){
+        return new FootballPlayer(this);
+    }
+    
     public void increaseSpeed(int inc){
         setSpeed(this.speed+inc);
     }
@@ -203,46 +231,43 @@ public class FootballPlayer extends Player
         setPassing(this.passing - dec);
     }
     
-    public boolean equals(Object o){
-        if (o == this)
-            return true;
-        if(o == null || o.getClass() != this.getClass())
-            return false;
-        Player p = (FootballPlayer) o;
-        FootballPlayer fp = (FootballPlayer) o;
-        return super.equals(p)  && this.position == fp.getPosition() && this.team == fp.getTeam();
+    public void increaseStats(int inc){
+        increaseSpeed(inc);
+        increaseStamina(inc);
+        increaseAgility(inc);
+        increaseHeading(inc);
+        increaseFinishing(inc);
+        increasePassing(inc);
+    }
+    
+    public void decreaseStats(int dec){
+        decreaseSpeed(dec);
+        decreaseStamina(dec);
+        decreaseAgility(dec);
+        decreaseHeading(dec);
+        decreaseFinishing(dec);
+        decreasePassing(dec);
     }
         
-        
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(super.toString()).append("\nPosicao: ").append(this.position).append("\nEquipa: ").append(this.team);
-        return sb.toString();
+    
+    public int overall(){
+        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getHeading() + this.getFinishing() + this.getPassing()) / 6;
     }
     
-    public FootballPlayer clone(){
-        return new FootballPlayer(this);
-    }
-    
-    private String generateName(){
-        String[] firstName = {"Joao", "Miguel","Tiago","Rui","Jose","Luis","Daniel","Pedro","Vicente","Diogo","Oscar","Fernando"};
-        String[] lastName = {"Silva", "Fernandes","Leite","Soares","Ferreira","Araujo","Lopes","Costa","Azevedo","Pinheiro","Cardoso","Abreu"};
-        int f = (int) (Math.random()*firstName.length);
-        int l = (int) (Math.random()*lastName.length);
-        return firstName[f] + " " +lastName[l];
-    }
-    
-    public String stats(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Velocidade: ").append(this.speed).append("\nResistencia: ").append(this.stamina).append("\nDestreza: ").append(this.agility);
-        sb.append("\nJogo de Cabeca: ").append(this.heading).append("\nRemate: ").append(this.finishing).append("\nCapacidade de Passe: ").append(this.passing);
-        return sb.toString();
-    }
-    
-    public void changeTeam(String team){
+    public void switchTeam(String team){
         career.add(this.team);
         this.team = team;
     }
+   
+    public String stats(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Velocidade: ").append(this.speed).append("\nResistencia: ").append(this.stamina).append("\nDestreza: ").append(this.agility);
+        sb.append("\nJogo de Cabeca: ").append(this.heading).append("\nRemate: ").append(this.finishing);
+        sb.append("\nCapacidade de Passe: ").append(this.passing);
+        return sb.toString();
+    }
+    
+    
         
         
    
