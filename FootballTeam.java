@@ -100,10 +100,10 @@ public class FootballTeam
     
     public void removePlayer(int index){
         if (index <squad.size())
-            squad.remove(index);
+            squad.remove(index); 
     }
     
-    public Player getPlayer(int index){
+    public FootballPlayer getPlayer(int index){
         if (index <squad.size())
             return squad.get(index).clone();
         else 
