@@ -62,7 +62,17 @@ public class FootballTeam
     }
     
     public void setPoints(int points){
-        this.points = points;
+        if(points >=0)
+            this.points = points;
+    }
+    
+    public void increasePoints(int inc){
+        if(inc == 1 || inc == 3)
+            this.points += inc;
+    }
+    
+    public void resetPoints(){
+        this.points = 0;
     }
     
     public FootballTeam clone(){
@@ -95,8 +105,9 @@ public class FootballTeam
     
     public Player getPlayer(int index){
         if (index <squad.size())
-        return squad.get(index).clone();
-        else return null;
+            return squad.get(index).clone();
+        else 
+            return null;
     }
     
     public void updatePlayer(int index, FootballPlayer p){
