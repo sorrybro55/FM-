@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
     
 /**
  * Write a description of class FieldPlayer here.
@@ -8,33 +8,22 @@
  */
 public class FieldPlayer extends FootballPlayer
 {
-    // instance variables - replace the example below with your own
-    private FieldPlayerStats stats;
+   
 
     /**
      * Constructor for objects of class FieldPlayer
      */
     public FieldPlayer(){
         super();
-        stats = new FieldPlayerStats();
     }
     
-    public FieldPlayer(String name, int age, Position position, FieldPlayerStats stats, String team){
-        super(name, age, position, team);
-        this.stats = stats.clone();
+    public FieldPlayer(String name, int age, Position position,int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
+        super(name, age, position,speed, stamina, agility, heading, finishing, passing,  team, career);
+  
     }
     
     public FieldPlayer(FieldPlayer fp){
-        super(fp.getName(), fp.getAge(), fp.getPosition(), fp.getTeam());
-        this.stats = fp.getStats().clone();
-    }
-    
-    public FieldPlayerStats getStats(){
-        return this.stats;
-    }
-    
-    public void setStats(FieldPlayerStats stats){
-        this.stats = stats.clone();
+        super(fp);
     }
     
     public FieldPlayer clone(){
@@ -42,7 +31,7 @@ public class FieldPlayer extends FootballPlayer
     }
     
     public String toString(){
-        return super.toString() + stats;
+        return super.toString();
     }
     
     public boolean equals(Object o){
@@ -52,8 +41,19 @@ public class FieldPlayer extends FootballPlayer
             return false;
         FieldPlayer fp = (FieldPlayer) o;
         FootballPlayer f = (FootballPlayer) o;
-        return super.equals(f) && this.stats.equals(fp.getStats());
+        return super.equals(f);
     }
+    
+    public int overall(){
+        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getHeading() + this.getFinishing() + this.getPassing()) / 6;
+    }
+    
+    public String stats(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.stats()).append("\nOverall: ").append(overall());
+        return sb.toString();
+    }
+        
         
     
    

@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  * Write a description of class GoalKeeper here.
  *
@@ -7,34 +7,46 @@
  */
 public class GoalKeeper extends FootballPlayer
 {
-    // instance variables - replace the example below with your own
-    private GoalKeeperStats stats;
+    private int elasticity;
 
     /**
      * Constructor for objects of class FieldPlayer
      */
     public GoalKeeper(){
         super();
-        setPosition(Position.GOALKEEPER);
-        stats = new GoalKeeperStats();
+        super.setPosition(Position.GOALKEEPER);
+        this.elasticity = 50;
+        
     }
     
-    public GoalKeeper(String name, int age, Position position, GoalKeeperStats stats, String team){
-        super(name, age, Position.GOALKEEPER, team);
-        this.stats = stats.clone();
+    public GoalKeeper(String name, int age, Position position,int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
+        super(name, age, position,speed, stamina, agility, heading, finishing, passing,  team, career);
     }
     
     public GoalKeeper(GoalKeeper gk){
-        super(gk.getName(), gk.getAge(), gk.getPosition(), gk.getTeam());
-        this.stats = gk.getStats().clone();
+        super(gk);
+        this.elasticity = gk.getElasticity();
     }
     
-    public GoalKeeperStats getStats(){
-        return this.stats;
+    public int getElasticity(){
+        return this.elasticity;
     }
     
-    public void setStats(GoalKeeperStats stats){
-        this.stats = stats.clone();
+    public void setElasticity(int elasticity){
+        if (elasticity > 100)
+            this.elasticity = 100;
+        else if (elasticity <0)
+            this.elasticity = 0;
+        else
+            this.elasticity = elasticity;
+    }
+    
+    public void increaseElasticity(int inc){
+        setElasticity(this.elasticity + inc);
+    }
+    
+    public void decreaseElasticity(int dec){
+        setElasticity(this.elasticity - dec);
     }
     
     public GoalKeeper clone(){
@@ -42,7 +54,7 @@ public class GoalKeeper extends FootballPlayer
     }
     
     public String toString(){
-        return super.toString() + stats;
+        return super.toString();
     }
     
     public boolean equals(Object o){
@@ -52,6 +64,17 @@ public class GoalKeeper extends FootballPlayer
             return false;
         GoalKeeper gk = (GoalKeeper) o;
         FootballPlayer f = (FootballPlayer) o;
-        return super.equals(f) && this.stats.equals(gk.getStats());
+        return super.equals(f) && gk.getElasticity() == this.elasticity;
     }
+    
+    public int overall (){
+        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getElasticity()) / 7;
+    }
+    
+    public String stats(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.stats()).append("\nElasticidade: ").append(this.elasticity).append("\nOverall: ").append(overall());
+        return sb.toString();
+    }
+        
 }

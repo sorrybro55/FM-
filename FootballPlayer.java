@@ -1,53 +1,56 @@
-import java.util.Arrays;
-import java.util.Random;
-/**
- * Escreva a descriÃ§Ã£o da classe Player aqui.
- * 
- * @author (seu name) 
- * 
- */
-public class FootballPlayer{
-    private String name;
-    private int age;
+
+import java.util.ArrayList;
+public class FootballPlayer extends Player
+{
+    // instance variables - replace the example below with your own
     private Position position;
+    private int speed;
+    private int stamina;
+    private int agility;
+    private int heading;
+    private int finishing;
+    private int passing;
     private String team;
+    private ArrayList<String> career;
     
     public FootballPlayer(){
-        this.name = generateName();
-        this.age = 20;
+        super();
         this.position = Position.ND;
+        this.speed = 50;
+        this.stamina = 50;
+        this.agility = 50;
+        this.heading = 50;
+        this.finishing = 50;
+        this.passing = 50;
         this.team = "Sem equipa";
+        this.career = new ArrayList<String>();
         
     }        
     
-    public FootballPlayer(String name, int age, Position position, String team){
-        this.name = name;
-        this.age = age;
+    public FootballPlayer(String name, int age, Position position,int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
+        super(name, age);
         this.position = position;
+        this.speed = speed;
+        this.stamina = stamina;
+        this.agility = agility;
+        this.heading = heading;
+        this.finishing = finishing;
+        this.passing = passing;
         this.team = team;
+        setCareer(career);
     }   
     
     public FootballPlayer(FootballPlayer p){
-        this.name = p.getName(); 
-        this.age = p.getAge();
+        super(p);
         this.position = p.getPosition();
+        this.speed = p.getSpeed();
+        this.stamina = p.getStamina();
+        this.agility = p.getAgility();
+        this.heading = p.getHeading();
+        this.finishing = p.getFinishing();
+        this.passing = p.getPassing();
         this.team = p.getTeam();
-    }
-    
-    public String getName(){
-        return this.name;
-    }
-    
-    public void setName(String name){
-        this.name = name;
-    }
-    
-    public int getAge(){
-        return this.age;
-    }
-    
-    public void setAge(int age){
-        this.age = age;
+        setCareer(p.getCareer());
     }
     
     public String getTeam(){
@@ -58,10 +61,6 @@ public class FootballPlayer{
         this.team = team;
     }
     
-    public void increaseAge(){
-        this.age +=1;
-    }
-    
     public Position getPosition(){
         return this.position;
     }
@@ -70,18 +69,155 @@ public class FootballPlayer{
         this.position = position;
     }
     
+    public int getSpeed(){
+        return this.speed;
+    }
+    
+    public int getStamina(){
+        return this.stamina;
+    }
+    
+    public int getAgility(){
+        return this.agility;
+    }
+    
+    public int getHeading(){
+        return this.heading;
+    }
+    
+    public int getFinishing(){
+        return this.finishing;
+    }
+    
+    public int getPassing(){
+        return this.passing;
+    }
+    
+    public void setSpeed(int speed){
+        if (speed > 100)
+            this.speed = 100;
+        else if (speed <0)
+            this.speed = 0;
+        else
+            this.speed = speed;
+    }
+    
+    public void setStamina(int stamina){
+        if (stamina > 100)
+            this.stamina = 100;
+        else if (stamina <0)
+            this.stamina = 0;
+        else
+            this.stamina = stamina;
+    }
+    
+    public void setAgility(int agility){
+        if (agility > 100)
+            this.agility = 100;
+        else if (agility <0)
+            this.agility = 0;
+        else
+            this.agility = agility;
+    }
+    
+    public void setHeading(int heading){
+        if (heading > 100)
+            this.heading = 100;
+        else if (heading <0)
+            this.heading = 0;
+        else
+            this.heading = heading;
+    }
+    
+    public void setFinishing(int finishing){
+        if (finishing > 100)
+            this.finishing = 100;
+        else if (finishing <0)
+            this.finishing = 0;
+        else
+            this.finishing = finishing;
+    }
+    
+    public void setPassing(int passing){
+        if (passing > 100)
+            this.passing = 100;
+        else if (passing <0)
+            this.passing = 0;
+        else
+            this.passing = passing;
+    }
+    
+    public ArrayList<String> getCareer(){
+        return (ArrayList<String>) this.career.clone();
+    }
+    
+    public void setCareer(ArrayList<String> career){
+        this.career = (ArrayList<String>) career.clone();
+    }
+    
+    public void increaseSpeed(int inc){
+        setSpeed(this.speed+inc);
+    }
+    
+    public void increaseStamina(int inc){
+        setStamina(this.stamina + inc);
+    }
+    
+    public void increaseAgility(int inc){
+        setAgility(this.agility + inc);
+    }
+    
+    public void increaseHeading(int inc){
+        setHeading(this.heading + inc);
+    }
+    
+    public void increaseFinishing(int inc){
+        setFinishing(this.finishing + inc);
+    }
+    
+    public void increasePassing(int inc){
+        setPassing(this.passing + inc);
+    }
+    
+    public void decreaseSpeed(int dec){
+        setSpeed(this.speed - dec);
+    }
+    
+    public void decreaseStamina(int dec){
+        setStamina(this.stamina - dec);
+    }
+    
+    public void decreaseAgility(int dec){
+        setAgility(this.agility - dec);
+    }
+    
+    public void decreaseHeading(int dec){
+        setHeading(this.heading - dec);
+    }
+    
+    public void decreaseFinishing(int dec){
+        setFinishing(this.finishing - dec);
+    }
+    
+    public void decreasePassing(int dec){
+        setPassing(this.passing - dec);
+    }
+    
     public boolean equals(Object o){
         if (o == this)
             return true;
         if(o == null || o.getClass() != this.getClass())
             return false;
+        Player p = (FootballPlayer) o;
         FootballPlayer fp = (FootballPlayer) o;
-        return this.name == fp.getName() && this.age == fp.getAge() && this.position == fp.getPosition() && this.team == fp.getTeam();
+        return super.equals(p)  && this.position == fp.getPosition() && this.team == fp.getTeam();
     }
         
         
     public String toString(){
-        return "Nome: " + this.name + ". " + "\nIdade: " + this.age + "\nPosicao: " + this.position +"\nEquipa: " + this.team +"\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString()).append("\nPosicao: ").append(this.position).append("\nEquipa: ").append(this.team);
+        return sb.toString();
     }
     
     public FootballPlayer clone(){
@@ -95,10 +231,20 @@ public class FootballPlayer{
         int l = (int) (Math.random()*lastName.length);
         return firstName[f] + " " +lastName[l];
     }
-}
+    
+    public String stats(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Velocidade: ").append(this.speed).append("\nResistencia: ").append(this.stamina).append("\nDestreza: ").append(this.agility);
+        sb.append("\nJogo de Cabeca: ").append(this.heading).append("\nRemate: ").append(this.finishing).append("\nCapacidade de Passe: ").append(this.passing);
+        return sb.toString();
+    }
+    
+    public void changeTeam(String team){
+        career.add(this.team);
+        this.team = team;
+    }
+        
+        
    
-
-
-
-
-
+        
+}
