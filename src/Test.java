@@ -1,8 +1,11 @@
 
 
-public class Teste
+public class Test
 {
-    public static void main(){
+
+    public static void main(String[] args) {
+
+
         FootballPlayer fp = new FootballPlayer();
         GoalKeeper gk = new GoalKeeper();
         //System.out.println(fp);
@@ -12,22 +15,22 @@ public class Teste
         FootballTeam t1 = new FootballTeam();
         t1.addPlayer(gk);
         //t1.addPlayer(fp);
-   
-        Position pos = Position.GOALKEEPER;
-       
-        
+
+        //Position pos = Position.GOALKEEPER;
+
+
         GoalKeeper gk1 = (GoalKeeper) t1.getPlayer(0);
         gk1.setStamina(80);
-        t1.updatePlayer(0,gk1);
-        GoalKeeper gk2  = (GoalKeeper) t1.getPlayer(0);
-        
-        
+        t1.updatePlayer(0, gk1);
+        GoalKeeper gk2 = (GoalKeeper) t1.getPlayer(0);
+
 
         System.out.println(t1);
         System.out.println(t1.defensiveOverall());
+    }
         
         
     
-    }
+
    
 }

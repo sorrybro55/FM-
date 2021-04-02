@@ -94,7 +94,7 @@ public class FootballTeam
        return sb.toString(); 
     }
     
-    public void addPlayer(FootballPlayer p){
+    public void addPlayer(GoalKeeper p){
         squad.add(p.clone());
     }
     
