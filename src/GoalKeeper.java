@@ -19,8 +19,8 @@ public class GoalKeeper extends FootballPlayer
         
     }
     
-    public GoalKeeper(String name, int age, Position position,int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
-        super(name, age, position,speed, stamina, agility, heading, finishing, passing,  team, career);
+    public GoalKeeper(String name, int age,int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
+        super(name, age, Position.GOALKEEPER ,speed, stamina, agility, heading, finishing, passing,  team, career);
     }
     
     public GoalKeeper(GoalKeeper gk){
@@ -46,6 +46,7 @@ public class GoalKeeper extends FootballPlayer
     }
     
     public String toString(){
+
         return super.toString();
     }
     

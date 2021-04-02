@@ -65,7 +65,7 @@ public class FootballPlayer extends Player
         return this.position;
     }
     
-    public void setPosition(Position position){
+    protected void setPosition(Position position){
         this.position = position;
     }
     
