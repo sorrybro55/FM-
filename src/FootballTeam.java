@@ -78,14 +78,14 @@ public class FootballTeam
 
     public void setStarting(ArrayList<FootballPlayer> starting){
         for(FootballPlayer fp : starting){
-            FootballPlayer aux = getPlayerFromList(squad, fp);
+            FootballPlayer aux = getPlayer(fp);
             starting.add(fp);
         }
     }
 
     public void setBench(ArrayList<FootballPlayer> bench){
         for(FootballPlayer fp : bench){
-            FootballPlayer aux = getPlayerFromList(squad, fp);
+            FootballPlayer aux = getPlayer(fp);
             bench.add(fp);
         }
     }
@@ -135,7 +135,7 @@ public class FootballTeam
        return sb.toString(); 
     }
     
-    public void squadAddPlayer(FootballPlayer fp){
+    public void addPlayer(FootballPlayer fp){
         if(!squad.contains(fp)){
             FootballPlayer copy = fp.clone();
             squad.add(copy);
@@ -145,7 +145,7 @@ public class FootballTeam
         }
     }
 
-    public void squadRemovePlayer(FootballPlayer fp){
+    public void removePlayer(FootballPlayer fp){
         this.squad.remove(fp);
         if(this.starting.contains(fp))
             startingRemovePlayer(fp);
@@ -153,48 +153,87 @@ public class FootballTeam
             benchRemovePlayer(fp);
     }
 
-    public void startingAddPlayer(FootballPlayer fp){
-        if(!starting.contains(fp) && starting.size() <11) {
-            if (fp instanceof GoalKeeper && filterByPosition(starting, Position.GOALKEEPER).size() == 0)
-                starting.add(fp);
-            if(fp instanceof  Defender && filterByPosition(starting, Position.DEFENDER).size() < 2)
-                starting.add(fp);
-            if(fp instanceof  Winger && filterByPosition(starting, Position.WINGER).size() < 2)
-                starting.add(fp);
-            if(fp instanceof  MidFielder && filterByPosition(starting, Position.MIDFIELDER).size() < 4)
-                starting.add(fp);
-            if(fp instanceof  Striker && filterByPosition(starting, Position.STRIKER).size() < 2)
-                starting.add(fp);
-        }
-    }
-
-    public void startingRemovePlayer(FootballPlayer fp){
-        starting.remove(fp);
-    }
-
-    public void benchAddPlayer(FootballPlayer fp){
-        if(!bench.contains(fp))
-            bench.add(fp);
-    }
-
-    public void benchRemovePlayer(FootballPlayer fp){
-        bench.remove(fp);
-    }
-
-    public FootballPlayer getPlayer(FootballPlayer fp){
+    private FootballPlayer getPlayer(FootballPlayer fp){
         int index = squad.indexOf(fp);
         return getPlayer(index);
     }
 
-    public FootballPlayer getPlayer(int index){
-        if(index <squad.size()){
-            return squad.get(index).clone();
-        }
+   private FootballPlayer getPlayer(int index){
+        if(index <squad.size())
+            return squad.get(index);
         return null;
     }
-    
 
-    private FootballPlayer getPlayerFromList(ArrayList<FootballPlayer> a, FootballPlayer fp){
+    public void moveToBench(int index){
+        FootballPlayer fp = getPlayer(index);
+        if(fp != null && starting.contains(fp)){
+            startingRemovePlayer(fp);
+            benchAddPlayer(fp);
+        }
+    }
+
+    public void moveToBench(FootballPlayer fp){
+        int index = squad.indexOf(fp);
+        moveToBench(index);
+    }
+
+    public void moveToStarting(int index){
+        FootballPlayer fp = getPlayer(index);
+        if(fp != null){
+            int flag = startingAddPlayer(fp);
+            if(flag == 1){
+                startingRemovePlayer(fp);
+                benchAddPlayer(fp);
+            }
+        }
+    }
+
+    public void moveToStarting (FootballPlayer fp){
+        int index = squad.indexOf(fp);
+        moveToStarting(index);
+    }
+
+    private int startingAddPlayer(FootballPlayer fp){
+        if(!starting.contains(fp) && starting.size() <11) {
+            if (fp instanceof GoalKeeper && filterByPosition(starting, Position.GOALKEEPER).size() == 0){
+                starting.add(fp);
+                return 1;
+            }
+            if(fp instanceof  Defender && filterByPosition(starting, Position.DEFENDER).size() < 2){
+                starting.add(fp);
+                return 1;
+            }
+            if(fp instanceof  Winger && filterByPosition(starting, Position.WINGER).size() < 2){
+                starting.add(fp);
+                return 1;
+            }
+            if(fp instanceof  MidFielder && filterByPosition(starting, Position.MIDFIELDER).size() < 4){
+                starting.add(fp);
+                return 1;
+            }
+            if(fp instanceof  Striker && filterByPosition(starting, Position.STRIKER).size() < 2){
+                starting.add(fp);
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    private void startingRemovePlayer(FootballPlayer fp){
+        starting.remove(fp);
+    }
+
+    private void benchAddPlayer(FootballPlayer fp){
+        if(!bench.contains(fp))
+            bench.add(fp);
+    }
+
+    private void benchRemovePlayer(FootballPlayer fp){
+        bench.remove(fp);
+    }
+
+
+    private FootballPlayer getPlayer(ArrayList<FootballPlayer> a, FootballPlayer fp){
         int index = a.indexOf(fp);
         if(index >=0)
             return a.get(index);
@@ -202,7 +241,7 @@ public class FootballTeam
             return null;
     }
 
-    private void listUpdatePlayer(ArrayList<FootballPlayer> a, FootballPlayer fp){
+    private void setPlayer(ArrayList<FootballPlayer> a, FootballPlayer fp){
         int index = a.indexOf(fp);
         if(index >=0)
             a.set(index, fp);
@@ -210,11 +249,11 @@ public class FootballTeam
 
     public void updatePlayer(FootballPlayer fp){
         FootballPlayer copy = fp.clone();
-        listUpdatePlayer(this.squad, copy);
+        setPlayer(this.squad, copy);
         if (this.starting.contains(fp))
-            listUpdatePlayer(this.starting, copy);
+            setPlayer(this.starting, copy);
         else
-            listUpdatePlayer(this.bench, copy);
+            setPlayer(this.bench, copy);
     }
 
     private ArrayList<FootballPlayer> filterByPosition(ArrayList<FootballPlayer> a, Position pos){
