@@ -6,15 +6,22 @@ public class Test
     public static void main(String[] args) {
 
 
-        //FootballPlayer fp = new FootballPlayer();
-        //GoalKeeper gk = new GoalKeeper();
+        MidFielder md = new MidFielder();
+        GoalKeeper gk = new GoalKeeper();
         //System.out.println(fp);
         //System.out.println();
         //System.out.println(gk);
         //System.out.println();
-        //FootballTeam t1 = new FootballTeam();
-        //t1.addPlayer(gk);
-        //t1.addPlayer(fp);
+        FootballTeam t1 = new FootballTeam();
+        t1.squadAddPlayer(gk);
+        t1.squadAddPlayer(md);
+        System.out.println(t1.getStarting());
+        t1.moveToBench(md);
+
+        System.out.println("\n\n" + t1.getStarting());
+
+        System.out.println("\n\n" + t1.getBench());
+        //System.out.println(t1.getBench());
 
         //Position pos = Position.GOALKEEPER;
 
@@ -27,7 +34,7 @@ public class Test
 
         //System.out.println(t1);
         //System.out.println(t1.defensiveOverall());
-        Menu.Initial();
+        //Menu.Initial();
     }
         
         

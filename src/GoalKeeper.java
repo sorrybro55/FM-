@@ -14,7 +14,7 @@ public class GoalKeeper extends FootballPlayer
      */
     public GoalKeeper(){
         super();
-        super.setPosition(Position.DEFENDER);
+        super.setPosition(Position.GOALKEEPER);
         this.elasticity = 50;
         
     }

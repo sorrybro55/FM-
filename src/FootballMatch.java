@@ -13,10 +13,9 @@ public class FootballMatch
     private int scoreAway;
     private FootballTeam home;
     private FootballTeam away;
-    private ArrayList<FootballPlayer> lineUpHome;
-    private ArrayList<FootballPlayer> lineUpAway;
-    private ArrayList<FootballPlayer> benchHome;
-    private ArrayList<FootballPlayer> benchAway;
+    private ArrayList<FootballPlayer> replacedHome;
+    private ArrayList<FootballPlayer> replacedAway;
+
 
     public FootballMatch (){
         this.state = MatchState.TOSTART;
@@ -24,16 +23,18 @@ public class FootballMatch
         this.scoreAway = 0;
     }
     
-    public FootballMatch(MatchState state, int scoreH, int scoreA, FootballTeam home, FootballTeam away){
+    public FootballMatch(MatchState state, int scoreH, int scoreA, FootballTeam home, FootballTeam away, ArrayList<FootballPlayer> replacedHome, ArrayList<FootballPlayer> replacedAway){
         this.state = state;
         this.scoreHome = scoreH;
         this.scoreAway = scoreA;
         this.home = home.clone();
         this.away = away.clone();
+        setReplacedHome(replacedHome);
+        setReplacedAway(replacedAway);
     }
     
     public FootballMatch(FootballMatch match){
-        this(match.getState(), match.getScoreHome(), match.getScoreAway(), match.getHome(), match.getAway());
+        this(match.getState(), match.getScoreHome(), match.getScoreAway(), match.getHome(), match.getAway(), match.getReplacedHome(), match.getReplacedAway());
     }
     
     public MatchState getState(){
@@ -71,10 +72,35 @@ public class FootballMatch
         return this.away.clone();
     }
     
-     public void setAway(FootballTeam away){
+    public void setAway(FootballTeam away){
         this.away = away.clone();
     }
-    
+
+    public ArrayList<FootballPlayer> getReplacedHome(){
+        ArrayList<FootballPlayer> ret = new ArrayList<>();
+        for(FootballPlayer fp : replacedHome)
+            ret.add(fp.clone());
+        return ret;
+    }
+
+    public void setReplacedHome(ArrayList<FootballPlayer> replacedHome){
+        this.replacedHome = new ArrayList<>();
+        for(FootballPlayer fp : replacedHome)
+            this.replacedHome.add(fp.clone());
+    }
+
+    public ArrayList<FootballPlayer> getReplacedAway(){
+        ArrayList<FootballPlayer> ret = new ArrayList<>();
+        for(FootballPlayer fp : replacedAway)
+            ret.add(fp.clone());
+        return ret;
+    }
+
+    public void setReplacedAway(ArrayList<FootballPlayer> replacedAway){
+        this.replacedAway = new ArrayList<>();
+        for(FootballPlayer fp : replacedAway)
+            this.replacedAway.add(fp.clone());
+    }
    
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -141,5 +167,25 @@ public class FootballMatch
         else
             return MatchResult.LOSS;
         
+    }
+
+    public void substitutionHome(int in, int out ){
+        FootballPlayer fpOut = home.startingGetPlayer(out);
+        FootballPlayer fpIn = home.benchGetPlayer(in);
+        if (replacedHome.size() <3 && fpIn != null && fpOut!= null && !replacedHome.contains(fpIn) ){
+            home.moveToBench(out);
+            home.moveToStarting(in);
+            replacedHome.add(fpOut);
+        }
+    }
+
+    public void substitutionAway(int in, int out ){
+        FootballPlayer fpOut = away.startingGetPlayer(out);
+        FootballPlayer fpIn = away.benchGetPlayer(in);
+        if (replacedAway.size() <3 && fpIn != null && fpOut!= null && !replacedAway.contains(fpIn) ){
+            away.moveToBench(out);
+            away.moveToStarting(in);
+            replacedAway.add(fpOut);
+        }
     }
 }

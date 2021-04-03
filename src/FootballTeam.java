@@ -43,7 +43,7 @@ public class FootballTeam
     public FootballTeam(FootballTeam team){
         this.name = team.getName();
         setSquad(team.getSquad());
-        setStarting(team.getBench());
+        setStarting(team.getStarting());
         setBench(team.getBench());
         this.points = team.getPoints();
     }
@@ -66,7 +66,7 @@ public class FootballTeam
     public void setSquad(ArrayList<FootballPlayer> squad){
         this.squad = new ArrayList<FootballPlayer>();
         for (FootballPlayer fp : squad)
-            squad.add(fp.clone());
+            this.squad.add(fp.clone());
     }
 
     public ArrayList<FootballPlayer> getStarting() {
@@ -77,24 +77,28 @@ public class FootballTeam
     }
 
     public void setStarting(ArrayList<FootballPlayer> starting){
+        this.starting = new ArrayList<FootballPlayer>();
         for(FootballPlayer fp : starting){
-            FootballPlayer aux = getPlayer(fp);
-            starting.add(fp);
+            FootballPlayer aux = getPlayerFromList(squad, fp);
+            this.starting.add(aux);
         }
     }
 
-    public void setBench(ArrayList<FootballPlayer> bench){
-        for(FootballPlayer fp : bench){
-            FootballPlayer aux = getPlayer(fp);
-            bench.add(fp);
-        }
-    }
     public ArrayList<FootballPlayer> getBench() {
         ArrayList<FootballPlayer> ret = new ArrayList<FootballPlayer>();
         for (FootballPlayer fp : this.bench)
             ret.add(fp.clone());
         return ret;
     }
+
+    public void setBench(ArrayList<FootballPlayer> bench){
+        this.bench = new ArrayList<FootballPlayer>();
+        for(FootballPlayer fp : bench){
+            FootballPlayer aux = getPlayerFromList(squad, fp);
+            this.bench.add(aux);
+        }
+    }
+
 
 
     public int getPoints(){
@@ -135,7 +139,7 @@ public class FootballTeam
        return sb.toString(); 
     }
     
-    public void addPlayer(FootballPlayer fp){
+    public void squadAddPlayer(FootballPlayer fp){
         if(!squad.contains(fp)){
             FootballPlayer copy = fp.clone();
             squad.add(copy);
@@ -145,7 +149,7 @@ public class FootballTeam
         }
     }
 
-    public void removePlayer(FootballPlayer fp){
+    public void squadRemovePlayer(FootballPlayer fp){
         this.squad.remove(fp);
         if(this.starting.contains(fp))
             startingRemovePlayer(fp);
@@ -153,19 +157,46 @@ public class FootballTeam
             benchRemovePlayer(fp);
     }
 
-    private FootballPlayer getPlayer(FootballPlayer fp){
-        int index = squad.indexOf(fp);
-        return getPlayer(index);
+    private FootballPlayer getPlayerFromList(ArrayList<FootballPlayer> a, int index){
+        if(index <a.size())
+            return a.get(index);
+        return null;
+    }
+    private FootballPlayer getPlayerFromList(ArrayList<FootballPlayer> a, FootballPlayer fp){
+        int index = a.indexOf(fp);
+        return getPlayerFromList(a,index);
     }
 
-   private FootballPlayer getPlayer(int index){
-        if(index <squad.size())
-            return squad.get(index);
+    public FootballPlayer squadGetPlayer(FootballPlayer fp){
+        int index = squad.indexOf(fp);
+        return squadGetPlayer(index);
+    }
+
+   public FootballPlayer squadGetPlayer(int index){
+        FootballPlayer ret = getPlayerFromList(squad,index);
+        if(ret != null)
+            return ret.clone();
         return null;
     }
 
+    public FootballPlayer startingGetPlayer(int index){
+        FootballPlayer ret = getPlayerFromList(starting, index);
+        if(ret != null)
+            return ret.clone();
+        return null;
+    }
+
+    public FootballPlayer benchGetPlayer(int index){
+        FootballPlayer ret = getPlayerFromList(bench, index);
+        if(ret != null)
+            return ret.clone();
+        return null;
+    }
+
+
+
     public void moveToBench(int index){
-        FootballPlayer fp = getPlayer(index);
+        FootballPlayer fp = getPlayerFromList(squad, index);
         if(fp != null && starting.contains(fp)){
             startingRemovePlayer(fp);
             benchAddPlayer(fp);
@@ -178,7 +209,7 @@ public class FootballTeam
     }
 
     public void moveToStarting(int index){
-        FootballPlayer fp = getPlayer(index);
+        FootballPlayer fp = getPlayerFromList(squad, index);
         if(fp != null){
             int flag = startingAddPlayer(fp);
             if(flag == 1){
@@ -187,6 +218,7 @@ public class FootballTeam
             }
         }
     }
+
 
     public void moveToStarting (FootballPlayer fp){
         int index = squad.indexOf(fp);
@@ -230,15 +262,6 @@ public class FootballTeam
 
     private void benchRemovePlayer(FootballPlayer fp){
         bench.remove(fp);
-    }
-
-
-    private FootballPlayer getPlayer(ArrayList<FootballPlayer> a, FootballPlayer fp){
-        int index = a.indexOf(fp);
-        if(index >=0)
-            return a.get(index);
-        else
-            return null;
     }
 
     private void setPlayer(ArrayList<FootballPlayer> a, FootballPlayer fp){
