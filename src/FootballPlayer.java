@@ -1,6 +1,6 @@
 
 import java.util.ArrayList;
-public class FootballPlayer extends Player
+public class FootballPlayer extends Player implements Comparable<FootballPlayer>
 {
     // instance variables - replace the example below with your own
     private Position position;
@@ -181,6 +181,20 @@ public class FootballPlayer extends Player
     
     public FootballPlayer clone(){
         return new FootballPlayer(this);
+    }
+
+    public int compareTo(FootballPlayer fp){
+        int aux;
+        aux = this.getPosition().compareTo(fp.getPosition());
+        if (aux != 0)
+            return aux;
+        if (this.getAge() < fp.getAge())
+            return 1;
+        if (this.getAge() > fp.getAge())
+            return -1;
+
+        return this.getName().compareTo(fp.getName());
+
     }
     
     public void increaseSpeed(int inc){

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 /**
  * Write a description of class FootballMatch here.
@@ -12,7 +13,11 @@ public class FootballMatch
     private int scoreAway;
     private FootballTeam home;
     private FootballTeam away;
-    
+    private ArrayList<FootballPlayer> lineUpHome;
+    private ArrayList<FootballPlayer> lineUpAway;
+    private ArrayList<FootballPlayer> benchHome;
+    private ArrayList<FootballPlayer> benchAway;
+
     public FootballMatch (){
         this.state = MatchState.TOSTART;
         this.scoreHome = 0;
