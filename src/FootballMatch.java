@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class FootballMatch
 {
     private MatchState state;
+    private double beginning;
+    private double elapsedTime;
     private int scoreHome;
     private int scoreAway;
     private FootballTeam home;
@@ -19,12 +21,16 @@ public class FootballMatch
 
     public FootballMatch (){
         this.state = MatchState.TOSTART;
+        this.beginning = 0;
+        this.elapsedTime = 0;
         this.scoreHome = 0;
         this.scoreAway = 0;
     }
     
-    public FootballMatch(MatchState state, int scoreH, int scoreA, FootballTeam home, FootballTeam away, ArrayList<FootballPlayer> replacedHome, ArrayList<FootballPlayer> replacedAway){
+    public FootballMatch(MatchState state, double beginning, double elapsedTime, int scoreH, int scoreA, FootballTeam home, FootballTeam away, ArrayList<FootballPlayer> replacedHome, ArrayList<FootballPlayer> replacedAway){
         this.state = state;
+        this.beginning = beginning;
+        this.elapsedTime = elapsedTime;
         this.scoreHome = scoreH;
         this.scoreAway = scoreA;
         this.home = home.clone();
@@ -34,7 +40,7 @@ public class FootballMatch
     }
     
     public FootballMatch(FootballMatch match){
-        this(match.getState(), match.getScoreHome(), match.getScoreAway(), match.getHome(), match.getAway(), match.getReplacedHome(), match.getReplacedAway());
+        this(match.getState(), match.getBeginning(), match.getElapsedTime(), match.getScoreHome(), match.getScoreAway(), match.getHome(), match.getAway(), match.getReplacedHome(), match.getReplacedAway());
     }
     
     public MatchState getState(){
@@ -43,6 +49,21 @@ public class FootballMatch
     
     public void setState(MatchState state){
         this.state = state;
+    }
+
+    public double getBeginning(){
+        return this.beginning;
+    }
+
+    public void setBeginning(int beginning){
+        this.beginning = beginning;
+    }
+
+    public double getElapsedTime(){
+        return this.elapsedTime;
+    }
+    public void setElapsedTime(int elapsedTime){
+        this.elapsedTime = elapsedTime;
     }
     
     public int getScoreHome(){
@@ -125,22 +146,43 @@ public class FootballMatch
             
     
     public void startGame(){
-        if(this.state == MatchState.TOSTART)
+        if(this.state == MatchState.TOSTART){
             this.setState(MatchState.FIRSTHALF);
+            this.beginning += System.currentTimeMillis();
+        }
     }
     
     public void pauseGame(){
-        if(this.state == MatchState.FIRSTHALF)
+        if(this.state == MatchState.FIRSTHALF){
             this.setState(MatchState.INTERVALL);
+            this.elapsedTime += beginning - System.currentTimeMillis();
+        }
+    }
+
+    public void stopGame(){
+        if(this.state == MatchState.FIRSTHALF || this.state == MatchState.SECONDHALF ){
+            this.setState(MatchState.STOPED);
+            this.elapsedTime += beginning - System.currentTimeMillis();
+        }
     }
     
     public void restartGame(){
-        if(this.state == MatchState.INTERVALL)
+        if(this.state == MatchState.INTERVALL) {
             this.setState(MatchState.SECONDHALF);
+            this.beginning = System.currentTimeMillis();
+        }
+        if (this.state == MatchState.STOPED){
+            if (this.elapsedTime <= 1200000)
+                this.setState(MatchState.FIRSTHALF);
+            else
+                this.setState(MatchState.SECONDHALF);
+            this.beginning = System.currentTimeMillis();
+        }
     }
     
     public void endGame(){
         this.setState(MatchState.FINISHED);
+        this.elapsedTime += beginning - System.currentTimeMillis();
     }
     
     public void goalHome(){
@@ -157,6 +199,12 @@ public class FootballMatch
         StringBuilder sb = new StringBuilder();
         sb.append(this.home).append(" ").append(this.getScoreHome()).append(" : ").append(this.away).append(this.getScoreAway());
         return sb.toString();
+    }
+
+    public double clock(){
+        if(this.state == MatchState.FIRSTHALF || this.state == MatchState.SECONDHALF)
+            return this.elapsedTime + this.beginning - System.currentTimeMillis();
+        else return elapsedTime;
     }
     
     public MatchResult result(){
@@ -187,5 +235,32 @@ public class FootballMatch
             away.moveToStarting(in);
             replacedAway.add(fpOut);
         }
+    }
+
+    public String showPlayer(FootballPlayer fp){
+        StringBuilder sb = new StringBuilder();
+        sb.append(fp.getPosition()).append(" ").append(fp.getName()).append(" ").append(fp.overall());
+        return  sb.toString();
+    }
+
+    private String showList(ArrayList<FootballPlayer> a){
+        StringBuilder sb = new StringBuilder();
+        for (FootballPlayer fp : a)
+            sb.append(showPlayer(fp)).append("\n");
+        return sb.toString();
+    }
+
+    public String showStartingHome(){
+        return showList(home.getStarting());
+    }
+    public String showStartingAway(){
+        return showList(away.getStarting());
+    }
+
+    public String showBenchHome(){
+        return showList(home.getBench());
+    }
+    public String showBenchAway(){
+        return showList(away.getBench());
     }
 }
