@@ -33,7 +33,7 @@ public class Controller {
         if(position == Position.GOALKEEPER)
             elasticity = IO.chooseAbility("Elasticidade");
 
-        String team = IO.chooseTeam(state);
+        String team = IO.chooseTeamName(state);
 
         switch (position){
             case GOALKEEPER:

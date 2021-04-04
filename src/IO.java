@@ -83,7 +83,7 @@ public class IO {
         }
     }
 
-    public static String chooseTeam(State state){
+    public static String chooseTeamName(State state){
         StringBuilder sb = new StringBuilder();
         sb.append("Deseja escoler Equipa?\n");
         sb.append("1.Sim ").append("2.Nao: ");
@@ -94,7 +94,6 @@ public class IO {
             option = sc.nextInt();
         }
         if(option ==1){
-            System.out.println();
             FootballTeam team = selectTeam(state);
             if(team!=null)
                 return team.getName();

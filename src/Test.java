@@ -31,6 +31,9 @@ public class Test
         System.out.println(state.showPlayers());
         System.out.println(state.showTeams());
 
+        FootballTeam team3 = state.getTeam("Benfica");
+        System.out.println(team3);
+
 
 
 
