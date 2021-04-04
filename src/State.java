@@ -156,7 +156,7 @@ public class State {
     }
 
     public FootballTeam getTeam(int index){
-        if(index < teams.size()){
+        if(index >=0  && index < teams.size()){
             Iterator<FootballTeam> it = this.teams.iterator();
             FootballTeam ret = it.next();
             while(it.hasNext() && index >0) {

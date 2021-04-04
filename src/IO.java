@@ -94,7 +94,7 @@ public class IO {
             option = sc.nextInt();
         }
         if(option ==1){
-            FootballTeam team = selectTeam(state);
+            FootballTeam team = Controller.selectTeam(state);
             if(team!=null)
                 return team.getName();
         }
@@ -102,18 +102,20 @@ public class IO {
 
     }
 
-    public static FootballTeam selectTeam(State state){
+    public static int chooseTeam(State state){
         if(state.getTeams().size() ==0)
-            return null;
+            return -1;
         Scanner sc = new Scanner(System.in);
         int option = 0;
-        while(option<1 || option> state.getTeams().size()){
+        while(option<1 || option > state.getTeams().size()){
             System.out.print(state.showTeams());
             System.out.print("Escolha Equipa: ");
             option = sc.nextInt();
         }
-        return state.getTeam(option-1);
+        return option-1;
     }
+
+
 
 
 
