@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public static int Initial(){
+    public static int initial(){
         StringBuilder sb = new StringBuilder();
         sb.append("Menu Inicial\n\n");
         sb.append(("0. Sair\n"));

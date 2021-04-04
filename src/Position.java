@@ -25,6 +25,17 @@ public enum Position
            default: return "Indefenido";
         }
     }
+
+    public String simple(){
+        switch(this){
+            case GOALKEEPER: return "GR";
+            case DEFENDER: return "DF";
+            case MIDFIELDER: return "MD";
+            case STRIKER: return "AV";
+            case WINGER: return "LT";
+            default: return "ND";
+        }
+    }
     
 }
 

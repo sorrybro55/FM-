@@ -178,6 +178,9 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
         
         return sb.toString();
     }
+
+
+
     
     public FootballPlayer clone(){
         return new FootballPlayer(this);
@@ -281,7 +284,18 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
         return sb.toString();
     }
     
-    
+    /*
+    public String menuDescription(){
+        StringBuilder sb =  new StringBuilder();
+        sb.append(this.getName()).append(" ").append(getAge()).append(" ").append(position).append(" ").append(team);
+        return sb.toString();
+    }
+
+    public String gameDescription(){
+        StringBuilder sb =  new StringBuilder();
+        sb.append(position.simple()).append(" ").append(this.getName()).append(" ").append(overall());
+        return sb.toString();
+    }*/
         
         
    

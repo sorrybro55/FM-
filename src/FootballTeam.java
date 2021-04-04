@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class FootballTeam
+public class FootballTeam implements Comparable<FootballTeam>
 {
     // instance variables - replace the example below with your own
     private String name;
@@ -138,6 +138,8 @@ public class FootballTeam
             sb.append(p).append("\n");
        return sb.toString(); 
     }
+
+
     
     public void squadAddPlayer(FootballPlayer fp){
         if(!squad.contains(fp)){
@@ -324,22 +326,13 @@ public class FootballTeam
         return starting.stream().mapToInt(FootballPlayer::overall).sum()/starting.size();
     }
 
+    public int compareTo(FootballTeam team){
+
+        return this.getName().compareTo(team.getName());
+
+    }
 
 
-
-        
-        
-    
- 
-        
-            
-            
-        
-    
-        
-        
-        
-        
 
    
 }

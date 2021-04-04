@@ -237,9 +237,9 @@ public class FootballMatch
         }
     }
 
-    public String showPlayer(FootballPlayer fp){
+    private String showPlayer(FootballPlayer fp){
         StringBuilder sb = new StringBuilder();
-        sb.append(fp.getPosition()).append(" ").append(fp.getName()).append(" ").append(fp.overall());
+        sb.append(fp.getPosition().simple()).append(" ").append(fp.getName()).append(" ").append(fp.overall());
         return  sb.toString();
     }
 
