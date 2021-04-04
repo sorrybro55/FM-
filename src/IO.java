@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class IO {
 
-    public static int initialMenu(){
+    public  static int initialMenu(){
         int option = -1;
         Scanner sc = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
@@ -18,29 +18,29 @@ public class IO {
         return option;
     }
 
-    public String selectName(){
+    public  static String chooseName(){
         Scanner sc = new Scanner(System.in);
         String name = null;
         while(name == null){
             System.out.print("Digite Nome: ");
             name = sc.nextLine();
-            System.out.println("\n");
+
         }
         return name;
     }
 
-    public int selectAge(){
+    public static int  chooseAge(){
         Scanner sc = new Scanner(System.in);
         int age = 0;
         while(age<18 || age>40){
             System.out.print("Digite Idade: ");
             age = sc.nextInt();
-            System.out.println("\n");
+
         }
         return age;
     }
 
-    public int selectAbility(String ability){
+    public static int chooseAbility(String ability){
         Scanner sc = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
         sb.append("Digite Valor De ").append(ability).append(": ");
@@ -48,20 +48,20 @@ public class IO {
         while( value < 0 || value >100){
             System.out.print(sb.toString());
             value = sc.nextInt();
-            System.out.println("\n");
+
         }
         return value;
     }
 
-    public Position selectPosition(){
+    public static Position choosePosition(){
         Scanner sc = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
-        sb.append("Escolha Posicao: \n");
         sb.append("1: Guarda-Redes:\n");
         sb.append("2: Defesa:\n");
         sb.append("3: Lateral:\n");
         sb.append("4: Medio:\n");
         sb.append("5: Avancado:\n");
+        sb.append("Escolha Posicao: ");
         int option = -1;
         while(option <0 || option >5){
             System.out.print(sb.toString());
@@ -81,6 +81,39 @@ public class IO {
             default:
                 return Position.ND;
         }
+    }
+
+    public static String chooseTeam(State state){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Deseja escoler Equipa?\n");
+        sb.append("1.Sim ").append("2.Nao: ");
+        Scanner sc = new Scanner(System.in);
+        int option = 0;
+        while (option <1 || option > 2){
+            System.out.print(sb.toString());
+            option = sc.nextInt();
+        }
+        if(option ==1){
+            System.out.println();
+            FootballTeam team = selectTeam(state);
+            if(team!=null)
+                return team.getName();
+        }
+        return "Sem Equipa";
+
+    }
+
+    public static FootballTeam selectTeam(State state){
+        if(state.getTeams().size() ==0)
+            return null;
+        Scanner sc = new Scanner(System.in);
+        int option = 0;
+        while(option<1 || option> state.getTeams().size()){
+            System.out.print(state.showTeams());
+            System.out.print("Escolha Equipa: ");
+            option = sc.nextInt();
+        }
+        return state.getTeam(option-1);
     }
 
 

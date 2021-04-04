@@ -69,14 +69,14 @@ public class State {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Numero de Jogadores:").append(players.size()).append("\n");
-        sb.append("Numero de Equipas: ").append(teams.size());
+        sb.append("Numero de Equipas:").append(teams.size());
         return sb.toString();
 
     }
 
     private String showPlayer(FootballPlayer fp){
         StringBuilder sb =  new StringBuilder();
-        sb.append(fp.getName()).append(" ").append(fp.getAge()).append(" ").append(fp.getPosition()).append(" ").append(fp.getTeam());
+        sb.append("Nome:").append(fp.getName()).append(" Idade:").append(fp.getAge()).append(" Posicao:").append(fp.getPosition()).append(" Equipa:").append(fp.getTeam());
         return sb.toString();
     }
 
@@ -101,11 +101,16 @@ public class State {
         return sb.toString();
     }
 
-    public void addPlayer(FootballPlayer fp){
-        if(this.players.contains(fp))
+    public void addPlayer(FootballPlayer fp) {
+        if (this.players.contains(fp))
             updatePlayer(fp);
         else
             this.players.add(fp);
+        FootballTeam team = getTeam(fp.getTeam());
+        if (team != null) {
+            team.squadAddPlayer(fp.clone());
+            updateTeam(team);
+        }
     }
 
     public void addTeam(FootballTeam team){
@@ -163,9 +168,23 @@ public class State {
         return null;
     }
 
+    public FootballTeam getTeam(String name){
+        Iterator<FootballTeam> it = this.teams.iterator();
+        FootballTeam ret = null;
+        int found = 0;
+            while(found == 0 && it.hasNext()) {
+                ret = it.next();
+                if (ret.getName().equals(name))
+                    found = 1;
+            }
+            if (found == 1)
+                return ret.clone();
+            else
+                return null;
+
+            }
 
 
+    }
 
 
-
-}

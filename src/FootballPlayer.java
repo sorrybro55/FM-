@@ -22,7 +22,7 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
         this.heading = 50;
         this.finishing = 50;
         this.passing = 50;
-        this.team = "Sem equipa";
+        this.team = "Sem Equipa";
         this.career = new ArrayList<String>();
         
     }        
@@ -272,7 +272,8 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
     }
     
     public void switchTeam(String team){
-        career.add(this.team);
+        if(!this.team.equals("Sem Equipa"))
+            career.add(this.team);
         this.team = team;
     }
    
