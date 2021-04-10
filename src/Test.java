@@ -18,6 +18,8 @@ public class Test
         //t1.squadAddPlayer(md);
         //System.out.println(t1.getStarting());
         //t1.moveToBench(md);
+        FootballMatch fm = new FootballMatch();
+        Controller.makeLineUPs(fm);
         State state = new State();
         FootballTeam team1 = new FootballTeam();
         team1.setName("Benfica");

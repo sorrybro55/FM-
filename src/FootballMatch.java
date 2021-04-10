@@ -223,7 +223,8 @@ public class FootballMatch
         if (replacedHome.size() <3 && fpIn != null && fpOut!= null && !replacedHome.contains(fpIn) ){
             home.moveToBench(out);
             home.moveToStarting(in);
-            replacedHome.add(fpOut);
+            if(state != MatchState.TOSTART)
+                replacedHome.add(fpOut);
         }
     }
 
@@ -233,7 +234,8 @@ public class FootballMatch
         if (replacedAway.size() <3 && fpIn != null && fpOut!= null && !replacedAway.contains(fpIn) ){
             away.moveToBench(out);
             away.moveToStarting(in);
-            replacedAway.add(fpOut);
+            if(state != MatchState.TOSTART)
+                replacedAway.add(fpOut);
         }
     }
 

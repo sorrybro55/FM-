@@ -8,10 +8,11 @@ public class IO {
         StringBuilder sb = new StringBuilder();
         sb.append("Menu Inicial\n\n");
         sb.append(("0. Sair\n"));
-        sb.append("1. Comecar Novo Jogo\n");
-        sb.append("2. Ler Jogo");
-        sb.append("3. Gravar Jogo");
-        while(option <0 || option >3 ){
+        sb.append("1. Fazer Jogo\n");
+        sb.append("2. Transferir Jogador:");
+        sb.append("3. Ler Jogo");
+        sb.append("4. Gravar Jogo");
+        while(option <0 || option >4 ){
             System.out.println(sb.toString());
             option = sc.nextInt();
         }
@@ -107,13 +108,75 @@ public class IO {
             return -1;
         Scanner sc = new Scanner(System.in);
         int option = 0;
-        while(option<1 || option > state.getTeams().size()){
+        int size = state.getTeams().size();
+        while(option<1 || option > size){
             System.out.print(state.showTeams());
             System.out.print("Escolha Equipa: ");
             option = sc.nextInt();
         }
         return option-1;
     }
+
+    public static boolean wantToMakeChange(int player) {
+        Scanner sc = new Scanner(System.in);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Jogador ").append(player).append("\nDeseja fazer alteracao: 1.Sim  2.Nao: ");
+        int option = -1;
+        while (option < 0 || option > 2) {
+            System.out.print(sb.toString());
+            option = sc.nextInt();
+        }
+        return option == 1;
+    }
+
+    public static int choosePlayerStartingHome(FootballMatch fm){
+        int option = -1;
+        Scanner sc = new Scanner(System.in);
+        int size = fm.getHome().getStarting().size() - fm.getReplacedHome().size();
+        while (option < 0 || option > size) {
+            System.out.println(fm.showStartingHome());
+            System.out.println("Escolha Jogador: ");
+            option = sc.nextInt();
+        }
+        return option;
+    }
+
+    public static int choosePlayerBenchHome(FootballMatch fm){
+        int option = -1;
+        Scanner sc = new Scanner(System.in);
+        int size = fm.getHome().getBench().size() - fm.getReplacedHome().size();
+        while (option < 0 || option > size) {
+            System.out.println(fm.showBenchHome());
+            System.out.println("Escolha Jogador: ");
+            option = sc.nextInt();
+        }
+        return option;
+    }
+
+    public static int choosePlayerStartingAway(FootballMatch fm){
+        int option = -1;
+        Scanner sc = new Scanner(System.in);
+        int size = fm.getAway().getStarting().size() - fm.getReplacedAway().size();
+        while (option < 0 || option > size) {
+            System.out.println(fm.showStartingAway());
+            System.out.println("Escolha Jogador: ");
+            option = sc.nextInt();
+        }
+        return option;
+    }
+
+    public static int choosePlayerBenchAway(FootballMatch fm){
+        int option = -1;
+        Scanner sc = new Scanner(System.in);
+        int size = fm.getAway().getBench().size() - fm.getReplacedAway().size();
+        while (option < 0 || option > size) {
+            System.out.println(fm.showBenchAway());
+            System.out.println("Escolha Jogador: ");
+            option = sc.nextInt();
+        }
+        return option;
+    }
+
 
 
 
