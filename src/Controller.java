@@ -91,7 +91,7 @@ public class Controller {
             if (fm.clock() >= 1800000 && fm.clock() < 2400000) {
                 fm.setState(MatchState.STOPED);
                 makeSubstitutions(fm);
-                fm.setState(MatchState.FIRSTHALF);
+                fm.setState(MatchState.SECONDHALF);
             }
             if (fm.clock() >= 2400000)
                 fm.setState(MatchState.FINISHED);
