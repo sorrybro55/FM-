@@ -18,23 +18,24 @@ public class Test
         //t1.squadAddPlayer(md);
         //System.out.println(t1.getStarting());
         //t1.moveToBench(md);
-        FootballMatch fm = new FootballMatch();
-        Controller.makeLineUPs(fm);
-        State state = new State();
-        FootballTeam team1 = new FootballTeam();
-        team1.setName("Benfica");
-        state.addTeam(team1);
-        FootballTeam team2 = new FootballTeam();
-        team2.setName("Porto");
-        state.addTeam(team2);
+        //FootballMatch fm = new FootballMatch();
+        //Controller.makeLineUPs(fm);
+        //State state = new State();
+        //FootballTeam team1 = new FootballTeam();
+        //team1.setName("Benfica");
+        //state.addTeam(team1);
+        //FootballTeam team2 = new FootballTeam();
+        //team2.setName("Porto");
+        //state.addTeam(team2);
 
 
-        Controller.createPlayer(state);
-        System.out.println(state.showPlayers());
-        System.out.println(state.showTeams());
+        //Controller.createPlayer(state);
+        //System.out.println(state.showPlayers());
+        //System.out.println(state.showTeams());
 
-        FootballTeam team3 = state.getTeam("Benfica");
-        System.out.println(team3);
+        //FootballTeam team3 = state.getTeam("Benfica");
+        //System.out.println(team3);
+        Controller.run();
 
 
 

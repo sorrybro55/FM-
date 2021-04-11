@@ -247,8 +247,9 @@ public class FootballMatch
 
     private String showList(ArrayList<FootballPlayer> a){
         StringBuilder sb = new StringBuilder();
+        int index = 0;
         for (FootballPlayer fp : a)
-            sb.append(showPlayer(fp)).append("\n");
+            sb.append(index++).append(". ").append(showPlayer(fp)).append("\n");
         return sb.toString();
     }
 

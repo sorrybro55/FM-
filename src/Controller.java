@@ -4,6 +4,12 @@ public class Controller {
 
     public static void run() {
     State state = generateState();
+    System.out.println(state.showTeams());
+    System.out.println(state.showPlayers());
+    FootballTeam f1 = state.getTeam(0);
+    System.out.println(f1);
+    FootballMatch fm = new FootballMatch();
+
 
     while (true) {
             int option = IO.initialMenu();
@@ -62,18 +68,22 @@ public class Controller {
         return state.getTeam(option);
     }
 
-
-
-    public  static State generateState(){
-        State state = new State();
-        return  state;
+    public static FootballTeam selectTeam(State state, String player){
+        if(state.getTeams().size() ==0)
+            return null;
+        int option = IO.chooseTeam(state, player);
+        return state.getTeam(option);
     }
 
 
 
+
+
+
+
     public static void makeGame(State state){
-        FootballTeam home = selectTeam(state);
-        FootballTeam away = selectTeam(state);
+        FootballTeam home = selectTeam(state, "Casa");
+        FootballTeam away = selectTeam(state, "Visitante");
         FootballMatch fm = new FootballMatch(MatchState.TOSTART, 0, 0, 0, 0, home, away, new ArrayList<FootballPlayer>(), new ArrayList<FootballPlayer>());
         makeLineUPs(fm);
         fm.setState(MatchState.FIRSTHALF);
@@ -105,8 +115,8 @@ public class Controller {
             fm.substitutionHome(in, out);
         }
         while(IO.wantToMakeChange(2)){
-            int out = IO.choosePlayerStartingHome(fm);
-            int in = IO.choosePlayerBenchHome(fm);
+            int out = IO.choosePlayerStartingAway(fm);
+            int in = IO.choosePlayerBenchAway(fm);
             fm.substitutionHome(in, out);
         }
     }
@@ -120,7 +130,7 @@ public class Controller {
         while(fm.getReplacedAway().size() <3 && IO.wantToMakeChange(2)) {
             int out = IO.choosePlayerStartingHome(fm);
             int in = IO.choosePlayerBenchHome(fm);
-            fm.substitutionHome(in, out);
+            fm.substitutionAway(in, out);
         }
 
     }
@@ -137,6 +147,21 @@ public class Controller {
     }
     public void loadState(State state){
 
+    }
+
+
+    public  static State generateState(){
+        State state = new State();
+        FootballTeam ft = new FootballTeam("SL Benfica", new ArrayList<FootballPlayer> (), new ArrayList<FootballPlayer> (), new ArrayList<FootballPlayer> (), 0);
+        state.addTeam(ft);
+        ft = new FootballTeam("FC Porto", new ArrayList<FootballPlayer> (), new ArrayList<FootballPlayer> (), new ArrayList<FootballPlayer> (), 0);
+        state.addTeam(ft);
+        FootballPlayer fp = new GoalKeeper("Marchesin", 30, 60, 60, 70, 40, 20,60, 80, "FC Porto", new ArrayList<String>());
+        state.addPlayer(fp);
+        fp = new GoalKeeper("Helton Leite", 30, 60, 60, 70, 40, 20,60, 80, "SL Benfica", new ArrayList<String>());
+        state.addPlayer(fp);
+
+        return  state;
     }
 }
 
