@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class PlayersList {
+public class PlayersDataBase {
 
 	//stats retiradas do site "fminside.net"
 	// age, speed, stamina, agility, heading, finishing, passing
