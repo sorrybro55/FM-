@@ -9,10 +9,11 @@ public class IO {
         sb.append("Menu Inicial\n\n");
         sb.append(("0. Sair\n"));
         sb.append("1. Fazer Jogo\n");
-        sb.append("2. Transferir Jogador:\n");
-        sb.append("3. Ler Jogo\n");
-        sb.append("4. Gravar Jogo\n");
-        while(option <0 || option >4 ){
+        sb.append("2. Gerir Jogadores:\n");
+        sb.append("3. Gerir Equipas: \n");
+        sb.append("4. Ler Jogo\n");
+        sb.append("5. Gravar Jogo\n");
+        while(option <0 || option >5 ){
             System.out.println(sb.toString());
             option = sc.nextInt();
         }

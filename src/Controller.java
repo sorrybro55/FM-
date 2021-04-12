@@ -4,12 +4,6 @@ public class Controller {
 
     public static void run() {
     State state = generateState();
-    System.out.println(state.showTeams());
-    System.out.println(state.showPlayers());
-    FootballTeam f1 = state.getTeam(0);
-    System.out.println(f1);
-    FootballMatch fm = new FootballMatch();
-
 
     while (true) {
             int option = IO.initialMenu();
@@ -20,7 +14,17 @@ public class Controller {
                     makeGame(state);
                     break;
                 case 2:
-                    ////
+                    playersManagement(state);
+                    break;
+                case 3:
+                    teamsManagement(state);
+                    break;
+                case 4:
+                    loadState(state);
+                    break;
+                case 5:
+                    saveState(state);
+                    break;
             }
 
         }
@@ -59,6 +63,21 @@ public class Controller {
                 state.addPlayer(new Striker(name, age,speed, stamina, agility, heading, finishing, passing, team, new ArrayList<String>()));
                 break;
         }
+    }
+
+    public static void createTeam(State state){
+
+    }
+
+    public static void teamsManagement(State state){
+
+    }
+    public static void playersManagement(State state){
+
+    }
+
+    public static void transferPalyer(State state){
+
     }
 
     public static FootballTeam selectTeam(State state){
@@ -141,11 +160,11 @@ public class Controller {
 
 
 
-    public void saveState(State state){
+    public static void saveState(State state){
 
 
     }
-    public void loadState(State state){
+    public static void loadState(State state){
 
     }
 
