@@ -7,8 +7,8 @@ public class MidFielder extends FootballPlayer{
         super.setPosition(Position.MIDFIELDER);
     }
 
-    public MidFielder (String name, int age, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
-        super(name, age, Position.MIDFIELDER, speed, stamina, agility, heading, finishing, passing, team, career);
+    public MidFielder (String name, int age, int number, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
+        super(name, age, Position.MIDFIELDER, number, speed, stamina, agility, heading, finishing, passing, team, career);
     }
 
     public MidFielder(MidFielder md){

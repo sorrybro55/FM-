@@ -9,9 +9,9 @@ public class PlayersDataBase {
 	//heading, finishing, elasticity - falta o finishing e o heading dos gk, para elasticity foi usado reflexes 
 	//					, reflexes 
 	// para speed foi usado o pace
-	
+	/*
 	ArrayList<String> carrer = new ArrayList<>();
-	
+
 	//PORTO
 	FootballPlayer MoussaMarega 		= new Striker("Moussa Marega", 29, 17, 16, 8, 14, 13, 8, "Porto", carrer);
 	FootballPlayer Evanilson	 		= new Striker("Evanilson", 20, 15, 12, 13, 12, 14, 13, "Porto", carrer);
@@ -112,7 +112,7 @@ public class PlayersDataBase {
 	FootballPlayer LukasHornicek 		= new GoalKeeper("Lukas Hornicek", 18, 10, 4, 13, 0, 0, 7, 12,"Braga", carrer);
 	//
 	//BRAGA
-
+*/
 }
 
 

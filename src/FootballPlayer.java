@@ -4,6 +4,7 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
 {
     // instance variables - replace the example below with your own
     private Position position;
+    private int number;
     private int speed;
     private int stamina;
     private int agility;
@@ -16,6 +17,7 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
     public FootballPlayer(){
         super();
         this.position = Position.ND;
+        this.number = -1;
         this.speed = 50;
         this.stamina = 50;
         this.agility = 50;
@@ -27,9 +29,10 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
         
     }        
     
-    public FootballPlayer(String name, int age, Position position,int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
+    public FootballPlayer(String name, int age, Position position, int number, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
         super(name, age);
         this.position = position;
+        this.number = number;
         this.speed = speed;
         this.stamina = stamina;
         this.agility = agility;
@@ -43,6 +46,7 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
     public FootballPlayer(FootballPlayer p){
         super(p);
         this.position = p.getPosition();
+        this.number = p.getNumber();
         this.speed = p.getSpeed();
         this.stamina = p.getStamina();
         this.agility = p.getAgility();
@@ -67,6 +71,14 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
     
     protected void setPosition(Position position){
         this.position = position;
+    }
+
+    public int getNumber(){
+        return this.number;
+    }
+
+    public void setNumber(int number){
+        this.number = number;
     }
     
     public int getSpeed(){
@@ -162,7 +174,7 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
             return false;
         Player p = (FootballPlayer) o;
         FootballPlayer fp = (FootballPlayer) o;
-        return super.equals(p)  && this.position == fp.getPosition() && this.team == fp.getTeam();
+        return super.equals(p)  && this.position == fp.getPosition() && this.number == fp.getNumber() && this.team == fp.getTeam();
     }
         
         

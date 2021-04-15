@@ -7,8 +7,8 @@ public class Winger extends FootballPlayer{
         super.setPosition(Position.WINGER);
     }
 
-    public Winger (String name, int age, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
-        super(name, age, Position.WINGER, speed, stamina, agility, heading, finishing, passing, team, career);
+    public Winger (String name, int age, int number, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
+        super(name, age, Position.WINGER, number,  speed, stamina, agility, heading, finishing, passing, team, career);
     }
 
     public Winger(Winger wg){

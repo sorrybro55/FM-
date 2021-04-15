@@ -7,8 +7,8 @@ public class Striker extends FootballPlayer{
         super.setPosition(Position.STRIKER);
     }
 
-    public Striker (String name, int age, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
-        super(name, age, Position.STRIKER, speed, stamina, agility, heading, finishing, passing, team, career);
+    public Striker (String name, int age, int number, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
+        super(name, age, Position.STRIKER, number, speed, stamina, agility, heading, finishing, passing, team, career);
     }
 
     public Striker(Striker st){

@@ -19,8 +19,8 @@ public class GoalKeeper extends FootballPlayer
         
     }
     
-    public GoalKeeper(String name, int age,int speed, int stamina, int agility, int heading, int finishing, int passing, int elasticity, String team, ArrayList<String> career){
-        super(name, age, Position.GOALKEEPER ,speed, stamina, agility, heading, finishing, passing,  team, career);
+    public GoalKeeper(String name, int age, int number,  int speed, int stamina, int agility, int heading, int finishing, int passing, int elasticity, String team, ArrayList<String> career){
+        super(name, age, Position.GOALKEEPER, number ,speed, stamina, agility, heading, finishing, passing,  team, career);
         this.elasticity = elasticity;
     }
     

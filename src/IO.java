@@ -42,6 +42,17 @@ public class IO {
         return age;
     }
 
+    public static int  chooseNumber(){
+        Scanner sc = new Scanner(System.in);
+        int number = 0;
+        while(number<0 || number>99){
+            System.out.print("Digite Idade: ");
+            number = sc.nextInt();
+
+        }
+        return number;
+    }
+
     public static int chooseAbility(String ability){
         Scanner sc = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
@@ -96,7 +107,7 @@ public class IO {
             option = sc.nextInt();
         }
         if(option ==1){
-            FootballTeam team = Controller.selectTeam(state);
+            FootballTeam team = TeamsController.selectTeam(state);
             if(team!=null)
                 return team.getName();
         }

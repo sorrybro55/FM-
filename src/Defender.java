@@ -7,8 +7,8 @@ public class Defender extends FootballPlayer{
         super.setPosition(Position.DEFENDER);
     }
 
-    public Defender (String name, int age, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
-        super(name, age, Position.DEFENDER, speed, stamina, agility, heading, finishing, passing, team, career);
+    public Defender (String name, int age, int number, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
+        super(name, age, Position.DEFENDER, number, speed, stamina, agility, heading, finishing, passing, team, career);
     }
 
     public Defender(Defender df){
