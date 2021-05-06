@@ -8,25 +8,19 @@ import java.util.Random;
  */
 public class Player{
     private String name;
-    private int age;
     
     
     public Player(){
-        this.name = generateName();
-        this.age = 20;
-        
-        
+        this.name = "Sem Nome";
     }        
     
-    public Player(String name, int age){
+    public Player(String name){
         this.name = name;
-        this.age = age;
         
     }   
     
     public Player(Player p){
-        this.name = p.getName(); 
-        this.age = p.getAge();
+        this.name = p.getName();
         
     }
     
@@ -37,18 +31,7 @@ public class Player{
     public void setName(String name){
         this.name = name;
     }
-    
-    public int getAge(){
-        return this.age;
-    }
-    
-    public void setAge(int age){
-        this.age = age;
-    }
-    
-    public void increaseAge(){
-        this.age +=1;
-    }
+
     
     public boolean equals(Object o){
         if (o == this)
@@ -56,27 +39,20 @@ public class Player{
         if(o == null || o.getClass() != this.getClass())
             return false;
         Player p = (Player) o;
-        return this.name == p.getName() && this.age == p.getAge();
+        return this.name == p.getName();
     }
         
         
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Nome: ").append(this.name).append("\nIdade: ").append(this.age);
+        sb.append("Nome: ").append(this.name);
         return sb.toString();
     }
     
     public Player clone(){
         return new Player(this);
     }
-    
-    private String generateName(){
-        String[] firstName = {"Joao", "Miguel","Tiago","Rui","Jose","Luis","Daniel","Pedro","Vicente","Diogo","Oscar","Fernando"};
-        String[] lastName = {"Silva", "Fernandes","Leite","Soares","Ferreira","Araujo","Lopes","Costa","Azevedo","Pinheiro","Cardoso","Abreu"};
-        int f = (int) (Math.random()*firstName.length);
-        int l = (int) (Math.random()*lastName.length);
-        return firstName[f] + " " +lastName[l];
-    }
+
     
 }
    

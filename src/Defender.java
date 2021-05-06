@@ -1,18 +1,24 @@
 import java.util.ArrayList;
 
+
+
 public class Defender extends FootballPlayer{
 
     public Defender(){
         super();
-        super.setPosition(Position.DEFENDER);
+
     }
 
-    public Defender (String name, int age, int number, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
-        super(name, age, Position.DEFENDER, number, speed, stamina, agility, heading, finishing, passing, team, career);
+    public Defender (String name,  int number, int speed, int stamina, int agility, int jumping, int heading, int finishing, int passing, String team, ArrayList<String> career){
+        super(name, number, speed, stamina, agility, jumping, heading, finishing, passing, team, career);
     }
 
     public Defender(Defender df){
         super(df);
+    }
+
+    public Position getPosition(){
+        return Position.DEFENDER;
     }
 
     public Defender clone(){
@@ -24,7 +30,6 @@ public class Defender extends FootballPlayer{
             return true;
         if(o == null || o.getClass() != this.getClass())
             return false;
-        FootballPlayer f = (FootballPlayer) o;
-        return super.equals(f);
+        return super.equals(o);
     }
 }

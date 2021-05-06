@@ -3,24 +3,27 @@ import java.util.ArrayList;
 public class FootballPlayer extends Player implements Comparable<FootballPlayer>
 {
     // instance variables - replace the example below with your own
-    private Position position;
+
     private int number;
     private int speed;
     private int stamina;
     private int agility;
+    private int jumping;
     private int heading;
     private int finishing;
     private int passing;
     private String team;
     private ArrayList<String> career;
+
+
     
     public FootballPlayer(){
         super();
-        this.position = Position.ND;
         this.number = -1;
         this.speed = 50;
         this.stamina = 50;
         this.agility = 50;
+        this.jumping = 50;
         this.heading = 50;
         this.finishing = 50;
         this.passing = 50;
@@ -29,13 +32,13 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
         
     }        
     
-    public FootballPlayer(String name, int age, Position position, int number, int speed, int stamina, int agility, int heading, int finishing, int passing, String team, ArrayList<String> career){
-        super(name, age);
-        this.position = position;
+    public FootballPlayer(String name,  int number, int speed, int stamina, int agility, int jumping, int heading, int finishing, int passing, String team, ArrayList<String> career){
+        super(name);
         this.number = number;
         this.speed = speed;
         this.stamina = stamina;
         this.agility = agility;
+        this.jumping = jumping;
         this.heading = heading;
         this.finishing = finishing;
         this.passing = passing;
@@ -45,11 +48,11 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
     
     public FootballPlayer(FootballPlayer p){
         super(p);
-        this.position = p.getPosition();
         this.number = p.getNumber();
         this.speed = p.getSpeed();
         this.stamina = p.getStamina();
         this.agility = p.getAgility();
+        this.jumping = p.getJumping();
         this.heading = p.getHeading();
         this.finishing = p.getFinishing();
         this.passing = p.getPassing();
@@ -66,11 +69,7 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
     }
     
     public Position getPosition(){
-        return this.position;
-    }
-    
-    protected void setPosition(Position position){
-        this.position = position;
+        return Position.ND;
     }
 
     public int getNumber(){
@@ -91,6 +90,10 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
     
     public int getAgility(){
         return this.agility;
+    }
+
+    public int getJumping(){
+        return this.jumping;
     }
     
     public int getHeading(){
@@ -130,6 +133,10 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
             this.agility = 0;
         else
             this.agility = agility;
+    }
+
+    public void setJumping(int jumoing){
+        this.jumping = jumping;
     }
     
     public void setHeading(int heading){
@@ -172,15 +179,14 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
             return true;
         if(o == null || o.getClass() != this.getClass())
             return false;
-        Player p = (FootballPlayer) o;
         FootballPlayer fp = (FootballPlayer) o;
-        return super.equals(p)  && this.position == fp.getPosition() && this.number == fp.getNumber() && this.team == fp.getTeam();
+        return super.equals(fp)  && this.getPosition() == fp.getPosition() && this.number == fp.getNumber() && this.team == fp.getTeam();
     }
         
         
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.toString()).append("\nPosicao: ").append(this.position).append("\nClube Atual: ").append(this.team);
+        sb.append(super.toString()).append("\nPosicao: ").append(this.getPosition()).append("\nClube Atual: ").append(this.team);
         sb.append("\nClubes Anteiores: ");
         for (String c : career)
             sb.append(c);
@@ -203,10 +209,6 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
         aux = this.getPosition().compareTo(fp.getPosition());
         if (aux != 0)
             return aux;
-        if (this.getAge() < fp.getAge())
-            return 1;
-        if (this.getAge() > fp.getAge())
-            return -1;
 
         return this.getName().compareTo(fp.getName());
 
@@ -218,6 +220,10 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
     
     public void increaseStamina(int inc){
         setStamina(this.stamina + inc);
+    }
+
+    public void increaseJumping(int inc){
+        setJumping(this.jumping + inc);
     }
     
     public void increaseAgility(int inc){
@@ -243,6 +249,10 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
     public void decreaseStamina(int dec){
         setStamina(this.stamina - dec);
     }
+
+    public void decreaseJumping(int dec){
+        setJumping(this.jumping - dec);
+    }
     
     public void decreaseAgility(int dec){
         setAgility(this.agility - dec);
@@ -264,6 +274,7 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
         increaseSpeed(inc);
         increaseStamina(inc);
         increaseAgility(inc);
+        increaseJumping(inc);
         increaseHeading(inc);
         increaseFinishing(inc);
         increasePassing(inc);
@@ -273,6 +284,7 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
         decreaseSpeed(dec);
         decreaseStamina(dec);
         decreaseAgility(dec);
+        decreaseJumping(dec);
         decreaseHeading(dec);
         decreaseFinishing(dec);
         decreasePassing(dec);
@@ -280,7 +292,7 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
         
     
     public int overall(){
-        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getHeading() + this.getFinishing() + this.getPassing()) / 6;
+        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing()) / 7;
     }
     
     public void switchTeam(String team){
@@ -292,23 +304,12 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
     public String stats(){
         StringBuilder sb = new StringBuilder();
         sb.append("Velocidade: ").append(this.speed).append("\nResistencia: ").append(this.stamina).append("\nDestreza: ").append(this.agility);
-        sb.append("\nJogo de Cabeca: ").append(this.heading).append("\nRemate: ").append(this.finishing);
+        sb.append("\nImpulsao: ").append(this.jumping).append("\nJogo de Cabeca: ").append(this.heading).append("\nRemate: ").append(this.finishing);
         sb.append("\nCapacidade de Passe: ").append(this.passing);
         return sb.toString();
     }
     
-    /*
-    public String menuDescription(){
-        StringBuilder sb =  new StringBuilder();
-        sb.append(this.getName()).append(" ").append(getAge()).append(" ").append(position).append(" ").append(team);
-        return sb.toString();
-    }
 
-    public String gameDescription(){
-        StringBuilder sb =  new StringBuilder();
-        sb.append(position.simple()).append(" ").append(this.getName()).append(" ").append(overall());
-        return sb.toString();
-    }*/
         
         
    

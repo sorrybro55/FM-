@@ -76,7 +76,7 @@ public class State {
 
     private String showPlayer(FootballPlayer fp){
         StringBuilder sb =  new StringBuilder();
-        sb.append("Nome:").append(fp.getName()).append(" Idade:").append(fp.getAge()).append(" Posicao:").append(fp.getPosition()).append(" Equipa:").append(fp.getTeam());
+        sb.append("Nome:").append(fp.getName()).append(" Posicao:").append(fp.getPosition()).append(" Equipa:").append(fp.getTeam());
         return sb.toString();
     }
 

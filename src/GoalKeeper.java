@@ -9,18 +9,16 @@ public class GoalKeeper extends FootballPlayer
 {
     private int elasticity;
 
-    /**
-     * Constructor for objects of class FieldPlayer
-     */
+
+
     public GoalKeeper(){
         super();
-        super.setPosition(Position.GOALKEEPER);
         this.elasticity = 50;
         
     }
     
-    public GoalKeeper(String name, int age, int number,  int speed, int stamina, int agility, int heading, int finishing, int passing, int elasticity, String team, ArrayList<String> career){
-        super(name, age, Position.GOALKEEPER, number ,speed, stamina, agility, heading, finishing, passing,  team, career);
+    public GoalKeeper(String name, int number,  int speed, int stamina, int agility, int jumping, int heading, int finishing, int passing, int elasticity, String team, ArrayList<String> career){
+        super(name, number ,speed, stamina, agility, jumping, heading, finishing, passing,  team, career);
         this.elasticity = elasticity;
     }
     
@@ -41,14 +39,19 @@ public class GoalKeeper extends FootballPlayer
         else
             this.elasticity = elasticity;
     }
+
+    public Position getPosition(){
+        return Position.GOALKEEPER;
+    }
     
     public GoalKeeper clone(){
         return new GoalKeeper(this);
     }
     
     public String toString(){
-
-        return super.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString()).append("\n Elasticidade: ").append(this.elasticity);
+        return sb.toString();
     }
     
     public boolean equals(Object o){
@@ -57,8 +60,7 @@ public class GoalKeeper extends FootballPlayer
         if(o == null || o.getClass() != this.getClass())
             return false;
         GoalKeeper gk = (GoalKeeper) o;
-        FootballPlayer f = (FootballPlayer) o;
-        return super.equals(f) && gk.getElasticity() == this.elasticity;
+        return super.equals(gk) && gk.getElasticity() == this.elasticity;
     }
     
     public void increaseElasticity(int inc){
@@ -81,7 +83,7 @@ public class GoalKeeper extends FootballPlayer
     
  
     public int overall (){
-        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getElasticity()) / 7;
+        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getElasticity()) / 8;
     }
     
     public String stats(){

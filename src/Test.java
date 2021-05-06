@@ -1,3 +1,4 @@
+
 import java.util.Iterator;
 import java.util.TreeSet;
 
@@ -35,7 +36,7 @@ public class Test
 
         //FootballTeam team3 = state.getTeam("Benfica");
         //System.out.println(team3);
-        Controller.run();
+        //Controller.run();
 
 
 
