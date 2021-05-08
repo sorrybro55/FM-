@@ -81,4 +81,19 @@ public class Winger extends FootballPlayer{
         sb.append(super.stats()).append("\nCruzamento: ").append(this.crossing);
         return sb.toString();
     }
+
+    public static Winger parse(String input){
+        String[] campos = input.split(",");
+        return new Winger(campos[0], Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]),
+                Integer.parseInt(campos[9]),
+                "Sem Equipa",
+                new ArrayList<>());
+    }
 }

@@ -31,4 +31,18 @@ public class Striker extends FootballPlayer{
             return false;
         return super.equals(o);
     }
+
+    public static Striker parse(String input) {
+        String[] campos = input.split(",");
+        return new Striker(campos[0], Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]),
+                "Sem Equipa",
+                new ArrayList<>());
+    }
 }

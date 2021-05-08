@@ -81,4 +81,19 @@ public class MidFielder extends FootballPlayer{
         sb.append(super.stats()).append("\nRecuperacao: ").append(this.recovery);
         return sb.toString();
     }
+
+    public static MidFielder parse(String input){
+        String[] campos = input.split(",");
+        return new MidFielder(campos[0], Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]),
+                Integer.parseInt(campos[9]),
+                "Sem Equipa",
+                new ArrayList<>());
+    }
 }
