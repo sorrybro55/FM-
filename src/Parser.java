@@ -11,9 +11,9 @@ import java.util.Map;
 public class Parser {
 
     public static void parse() throws LinhaIncorretaException {
-        List<String> linhas = lerFicheiro("output.txt");
+        List<String> linhas = lerFicheiro("logs.txt");
         Map<String, FootballTeam> equipas = new HashMap<>(); //nome, equipa
-        Map<Integer, FootballPlayer> jogadores = new HashMap<>(); //numero, jogador
+        Map<String, FootballPlayer> jogadores = new HashMap<>(); //numero, jogador
         List<FootballMatch> jogos = new ArrayList<>();
         FootballTeam ultima = null; FootballPlayer j = null;
         String[] linhaPartida;
@@ -27,31 +27,31 @@ public class Parser {
                     break;
                 case "Guarda-Redes":
                     j = GoalKeeper.parse(linhaPartida[1]);
-                    jogadores.put(j.getNumber(), j);
+                    jogadores.put(j.getName(), j);
                     if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
                     ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Defesa":
                     j = Defender.parse(linhaPartida[1]);
-                    jogadores.put(j.getNumber(), j);
+                    jogadores.put(j.getName(), j);
                     if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
                     ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Medio":
                     j = MidFielder.parse(linhaPartida[1]);
-                    jogadores.put(j.getNumber(), j);
+                    jogadores.put(j.getName(), j);
                     if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
                     ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Lateral":
                     j = Winger.parse(linhaPartida[1]);
-                    jogadores.put(j.getNumber(), j);
+                    jogadores.put(j.getName(), j);
                     if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
                     ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Avancado":
                     j = Striker.parse(linhaPartida[1]);
-                    jogadores.put(j.getNumber(), j);
+                    jogadores.put(j.getName(), j);
                     if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
                     ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
                     break;
@@ -79,7 +79,11 @@ public class Parser {
     public static List<String> lerFicheiro(String nomeFich) {
         List<String> lines;
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
-        catch(IOException exc) { lines = new ArrayList<>(); }
+        catch(IOException exc) {
+            System.out.println(exc.getMessage());
+            System.out.println("Nao deu");
+            lines = new ArrayList<>();
+        }
         return lines;
     }
 

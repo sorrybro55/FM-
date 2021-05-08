@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Controller {
-
+/*
     public static void run() {
     State state = StateController.generate();
 
@@ -34,7 +34,7 @@ public class Controller {
     public static void createTeam(State state){
 
     }
-
+*/
 
 }
 

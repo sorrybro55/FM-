@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class GameController {
-
+/*
     public static void makeGame(State state){
         FootballTeam home = selectTeam(state, "Casa");
         FootballTeam away = selectTeam(state, "Visitante");
@@ -63,6 +63,6 @@ public class GameController {
         return state.getTeam(option);
     }
 
-
+*/
 }
 

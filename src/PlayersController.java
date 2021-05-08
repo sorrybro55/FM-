@@ -6,7 +6,7 @@ public class PlayersController {
 
     }
 
-
+/*
     public  static void createPlayer(State state){
         String name = IO.chooseName();
         Position position = IO.choosePosition();
@@ -60,5 +60,5 @@ public class PlayersController {
 
     }
 
-
+*/
 }

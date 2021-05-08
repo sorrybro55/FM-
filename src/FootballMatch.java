@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class FootballMatch
@@ -9,7 +10,7 @@ public class FootballMatch
     private String teamAway;
     private int scoreHome;
     private int scoreAway;
-    private Date date;
+    private LocalDate date;
     private Timer timer;
     private MatchState state;
     private Map<Integer, FootballPlayer> squadHome;
@@ -24,7 +25,7 @@ public class FootballMatch
         this.teamAway = "Sem Nome";
         this.scoreHome = 0;
         this.scoreAway = 0;
-        this.date = new Date();
+        this.date = LocalDate.now();
         this.timer = new Timer();
         this.state = MatchState.TOSTART;
         this.squadHome = new HashMap<>();
@@ -36,9 +37,9 @@ public class FootballMatch
     }
 
 
-    public FootballMatch (String teamHome, String teamAway, int scoreHome, int scoreAway, Date date, Timer timer, MatchState state,
+    public FootballMatch (String teamHome, String teamAway, int scoreHome, int scoreAway, LocalDate date, Timer timer, MatchState state,
                           Map<Integer, FootballPlayer> squadHome, Map<Integer, FootballPlayer> squadAway, List<Integer> playersHome,
-                          List<Integer> playersAway, Map<Integer, Integer> substitutionsHome, Map<Integer, Integer> substitutionsAway  ){
+                          List<Integer> playersAway, Map<Integer, Integer> substitutionsHome, Map<Integer, Integer> substitutionsAway ){
         this.teamHome = teamHome;
         this.teamAway = teamAway;
         this.scoreHome = scoreHome;
@@ -49,7 +50,7 @@ public class FootballMatch
         setSquadHome(squadHome);
         setSquadAway(squadAway);
         setPlayersHome(playersHome);
-        setPalyersAway(playersAway);
+        setPlayersAway(playersAway);
         setSubstitutionsHome(substitutionsHome);
         setSubstitutionsAway(substitutionsAway);
     }
@@ -67,11 +68,58 @@ public class FootballMatch
         setSquadHome(match.getSquadHome());
         setSquadAway(match.getSquadAway());
         setPlayersHome(match.getPlayersHome());
-        setPalyersAway(match.getPlayersAway());
+        setPlayersAway(match.getPlayersAway());
         setSubstitutionsHome(match.getSubstitutionsHome());
         setSubstitutionsAway(match.getSubstitutionsAway());
     }
-    
+
+    public String getTeamHome(){
+        return this.teamHome;
+    }
+
+    public void setTeamHome(String teamHome){
+        this.teamHome = teamHome;
+    }
+
+    public String getTeamAway(){
+        return this.teamAway;
+    }
+
+    public void setTeamAway(String teamAway){
+        this.teamHome = teamAway;
+    }
+
+    public int getScoreHome(){
+        return this.scoreHome;
+    }
+
+    public void setScoreHome(int score){
+        this.scoreHome = score;
+    }
+
+    public int getScoreAway(){
+        return this.scoreAway;
+    }
+    public void setScoreAway(int score){
+        this.scoreAway = score;
+    }
+
+
+     public LocalDate getDate(){
+        return this.date;
+     }
+
+     public void setDate(LocalDate date){
+        this.date = date;
+     }
+
+     public Timer getTimer(){
+        return this.timer.clone();
+     }
+     public void setTimer(Timer timer){
+        this.timer = timer.clone();
+     }
+
     public MatchState getState(){
         return this.state;
     }
@@ -80,69 +128,64 @@ public class FootballMatch
         this.state = state;
     }
 
-
-    
-    public int getScoreHome(){
-        return this.scoreHome;
+    public Map<Integer, FootballPlayer> getSquadHome(){
+        return squadHome.values().stream().collect(Collectors.toMap(v->v.getNumber(),v->v.clone()));
     }
-    
-    public void setScoreHome(int score){
-        this.scoreHome = score;
-    }
-    
-    public int getScoreAway(){
-        return this.scoreAway;
-    }
-    public void setScoreAway(int score){
-        this.scoreAway = score;
-    }
-    
-    public FootballTeam getHome(){
-        return this.home.clone();
-    }
-    
-    public void setHome(FootballTeam home){
-        this.home = home.clone();
-    }
-    
-    public FootballTeam getAway(){
-        return this.away.clone();
-    }
-    
-    public void setAway(FootballTeam away){
-        this.away = away.clone();
+    public void setSquadHome(Map<Integer, FootballPlayer> squadHome){
+        this.squadHome = new HashMap<>();
+        for(Map.Entry<Integer, FootballPlayer> m : squadHome.entrySet())
+            this.squadHome.put(m.getKey(), m.getValue().clone());
     }
 
-    public ArrayList<FootballPlayer> getReplacedHome(){
-        ArrayList<FootballPlayer> ret = new ArrayList<>();
-        for(FootballPlayer fp : replacedHome)
-            ret.add(fp.clone());
-        return ret;
+    public Map<Integer, FootballPlayer> getSquadAway(){
+        return squadAway.values().stream().collect(Collectors.toMap(v->v.getNumber(),v->v.clone()));
     }
 
-    public void setReplacedHome(ArrayList<FootballPlayer> replacedHome){
-        this.replacedHome = new ArrayList<>();
-        for(FootballPlayer fp : replacedHome)
-            this.replacedHome.add(fp.clone());
+    public void setSquadAway(Map<Integer, FootballPlayer> squadAway){
+        this.squadAway = new HashMap<>();
+        for(Map.Entry<Integer, FootballPlayer> m : squadAway.entrySet())
+            this.squadAway.put(m.getKey(), m.getValue().clone());
     }
 
-    public ArrayList<FootballPlayer> getReplacedAway(){
-        ArrayList<FootballPlayer> ret = new ArrayList<>();
-        for(FootballPlayer fp : replacedAway)
-            ret.add(fp.clone());
-        return ret;
+    public List<Integer> getPlayersHome(){
+        return new ArrayList<>(this.playersHome);
     }
 
-    public void setReplacedAway(ArrayList<FootballPlayer> replacedAway){
-        this.replacedAway = new ArrayList<>();
-        for(FootballPlayer fp : replacedAway)
-            this.replacedAway.add(fp.clone());
+    public void setPlayersHome(List<Integer> playersHome){
+        this.playersHome = new ArrayList<>(playersHome);
     }
-   
+
+    public List<Integer> getPlayersAway(){
+        return new ArrayList<>(this.playersAway);
+    }
+
+    public void setPlayersAway(List<Integer> playersAway){
+        this.playersAway = new ArrayList<>(playersAway);
+    }
+
+    public Map<Integer, Integer> getSubstitutionsHome(){
+        return new HashMap<>(this.substitutionsHome);
+    }
+
+    public void setSubstitutionsHome(Map<Integer, Integer> substitutionsHome){
+        this.substitutionsHome = new HashMap<>(substitutionsHome);
+    }
+
+    public Map<Integer, Integer> getSubstitutionsAway(){
+        return new HashMap<>(this.substitutionsAway);
+    }
+
+    public void setSubstitutionsAway(Map<Integer, Integer> substitutionsAway){
+        this.substitutionsAway = new HashMap<>(substitutionsAway);
+    }
+
+
+
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Data: ").append(date);
         sb.append("Estado do Encontro: ").append(this.state);
-        sb.append(this.home).append(" ").append(this.getScoreHome()).append(" : ").append(this.away).append(this.getScoreAway());
+        sb.append(this.teamHome).append(" ").append(this.getScoreHome()).append(" : ").append(this.teamAway).append(this.getScoreAway());
         return sb.toString();
     }
     
@@ -156,49 +199,48 @@ public class FootballMatch
         if (o == null || this.getClass() != o.getClass())
             return false;
         FootballMatch f = (FootballMatch) o;
-        return this.state == f.getState() && this.scoreHome == f.getScoreHome() && this.scoreAway == f.getScoreAway() &&
-                this.home.equals(f.getHome()) && this.away.equals(f.getAway());
+        return this.teamHome.equals(f.getTeamHome()) && this.teamAway.equals(f.getTeamAway())
+                && this.scoreHome == f.getScoreHome() && this.scoreAway == f.getScoreAway()
+                && this.date.equals(f.getDate()) && this.state == f.getState() && this.timer.equals(f.getTimer())
+                && this.squadHome.equals(f.getSquadHome()) && this.squadAway.equals(f.getSquadAway())
+                && this.playersHome.equals(f.getPlayersHome()) && this.playersAway.equals(f.getPlayersAway())
+                && this.substitutionsHome.equals(f.getSubstitutionsHome()) && this.substitutionsAway.equals(f.getSubstitutionsAway());
+    }
+
+    public double clock(){
+        return this.timer.elapsedTimeTime();
     }
             
     
     public void startGame(){
         if(this.state == MatchState.TOSTART){
             this.setState(MatchState.FIRSTHALF);
-            this.beginning += System.currentTimeMillis();
+            timer.start();
         }
     }
     
-    public void pauseGame(){
+    public void pauseGameForIntervall(){
         if(this.state == MatchState.FIRSTHALF){
             this.setState(MatchState.INTERVALL);
-            this.elapsedTime += beginning - System.currentTimeMillis();
+            timer.stop();
         }
     }
 
-    public void stopGame(){
+    public void pauseGameForSubstitution(){
         if(this.state == MatchState.FIRSTHALF || this.state == MatchState.SECONDHALF ){
-            this.setState(MatchState.STOPED);
-            this.elapsedTime += beginning - System.currentTimeMillis();
+            this.timer.stop();
         }
     }
     
     public void restartGame(){
-        if(this.state == MatchState.INTERVALL) {
+        if(this.state == MatchState.INTERVALL)
             this.setState(MatchState.SECONDHALF);
-            this.beginning = System.currentTimeMillis();
-        }
-        if (this.state == MatchState.STOPED){
-            if (this.elapsedTime <= 1200000)
-                this.setState(MatchState.FIRSTHALF);
-            else
-                this.setState(MatchState.SECONDHALF);
-            this.beginning = System.currentTimeMillis();
-        }
+        this.timer.start();
     }
     
     public void endGame(){
+        this.timer.stop();
         this.setState(MatchState.FINISHED);
-        this.elapsedTime += beginning - System.currentTimeMillis();
     }
     
     public void goalHome(){
@@ -213,15 +255,11 @@ public class FootballMatch
     
     public String score(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.home).append(" ").append(this.getScoreHome()).append(" : ").append(this.away).append(this.getScoreAway());
+        sb.append(this.teamHome).append(" ").append(this.getScoreHome()).append(" : ").append(this.teamAway).append(this.getScoreAway());
         return sb.toString();
     }
 
-    public double clock(){
-        if(this.state == MatchState.FIRSTHALF || this.state == MatchState.SECONDHALF)
-            return this.elapsedTime + this.beginning - System.currentTimeMillis();
-        else return elapsedTime;
-    }
+
     
     public MatchResult result(){
         if (scoreHome == scoreAway) 
@@ -256,9 +294,17 @@ public class FootballMatch
             subsF.put(Integer.parseInt(sub[0]), Integer.parseInt(sub[1]));
         }
         return new FootballMatch(campos[0], campos[1], Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
-                LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2])),
-                jc, subsC, jf, subsF);
+                LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2])), new Timer(), MatchState.FINISHED,
+                new HashMap<>(), new HashMap<>(), jc, jf, subsC, subsF);
     }
+
+    /*
+
+    (String teamHome, String teamAway, int scoreHome, int scoreAway, Date date, Timer timer, MatchState state,
+                          Map<Integer, FootballPlayer> squadHome, Map<Integer, FootballPlayer> squadAway, List<Integer> playersHome,
+                          List<Integer> playersAway, Map<Integer, Integer> substitutionsHome, Map<Integer, Integer> substitutionsAway  )
+
+   */
 
 /*
     public void substitutionHome(int in, int out ){

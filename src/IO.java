@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class IO {
-
+/*
     public  static int initialMenu(){
         int option = -1;
         Scanner sc = new Scanner(System.in);
@@ -204,7 +204,7 @@ public class IO {
     }
 
 
-
+*/
 
 
 
