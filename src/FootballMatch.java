@@ -4,6 +4,7 @@ import java.util.*;
 
 public class FootballMatch
 {
+
     private String teamHome;
     private String teamAway;
     private int scoreHome;
@@ -11,30 +12,64 @@ public class FootballMatch
     private Date date;
     private Timer timer;
     private MatchState state;
-    private ArrayList<FootballPlayer> replacedHome;
-    private ArrayList<FootballPlayer> replacedAway;
+    private Map<Integer, FootballPlayer> squadHome;
+    private Map<Integer, FootballPlayer> squadAway;
+    private List<Integer> playersHome;
+    private List<Integer> playersAway;
+    private Map<Integer, Integer> substitutionsHome = new HashMap<>();
+    private Map<Integer, Integer> substitutionsAway = new HashMap<>();
 
-
-    public FootballMatch (){
-        this.state = MatchState.TOSTART;
+    public FootballMatch(){
+        this.teamHome = "Sem Nome";
+        this.teamAway = "Sem Nome";
         this.scoreHome = 0;
         this.scoreAway = 0;
+        this.date = new Date();
+        this.timer = new Timer();
+        this.state = MatchState.TOSTART;
+        this.squadHome = new HashMap<>();
+        this.squadAway = new HashMap<>();
+        this.playersHome = new ArrayList<>();
+        this.playersAway = new ArrayList<>();
+        this.substitutionsHome = new HashMap<>();
+        this.substitutionsAway = new HashMap<>();
+    }
+
+
+    public FootballMatch (String teamHome, String teamAway, int scoreHome, int scoreAway, Date date, Timer timer, MatchState state,
+                          Map<Integer, FootballPlayer> squadHome, Map<Integer, FootballPlayer> squadAway, List<Integer> playersHome,
+                          List<Integer> playersAway, Map<Integer, Integer> substitutionsHome, Map<Integer, Integer> substitutionsAway  ){
+        this.teamHome = teamHome;
+        this.teamAway = teamAway;
+        this.scoreHome = scoreHome;
+        this.scoreAway = scoreAway;
+        this.date = date;
+        setTimer(timer);
+        this.state = state;
+        setSquadHome(squadHome);
+        setSquadAway(squadAway);
+        setPlayersHome(playersHome);
+        setPalyersAway(playersAway);
+        setSubstitutionsHome(substitutionsHome);
+        setSubstitutionsAway(substitutionsAway);
     }
     
-    public FootballMatch(MatchState state, double beginning, double elapsedTime, int scoreH, int scoreA, FootballTeam home, FootballTeam away, ArrayList<FootballPlayer> replacedHome, ArrayList<FootballPlayer> replacedAway){
-        this.state = state;
-        this.beginning = beginning;
-        this.elapsedTime = elapsedTime;
-        this.scoreHome = scoreH;
-        this.scoreAway = scoreA;
-        this.home = home.clone();
-        this.away = away.clone();
-        setReplacedHome(replacedHome);
-        setReplacedAway(replacedAway);
-    }
+
     
     public FootballMatch(FootballMatch match){
-        this(match.getState(), match.getBeginning(), match.getElapsedTime(), match.getScoreHome(), match.getScoreAway(), match.getHome(), match.getAway(), match.getReplacedHome(), match.getReplacedAway());
+        this.teamHome = match.getTeamHome();
+        this.teamAway = match.getTeamAway();
+        this.scoreHome = match.getScoreHome();
+        this.scoreAway = match.getScoreAway();
+        this.date = match.getDate();
+        setTimer(match.getTimer());
+        this.state = match.getState();
+        setSquadHome(match.getSquadHome());
+        setSquadAway(match.getSquadAway());
+        setPlayersHome(match.getPlayersHome());
+        setPalyersAway(match.getPlayersAway());
+        setSubstitutionsHome(match.getSubstitutionsHome());
+        setSubstitutionsAway(match.getSubstitutionsAway());
     }
     
     public MatchState getState(){
@@ -45,20 +80,7 @@ public class FootballMatch
         this.state = state;
     }
 
-    public double getBeginning(){
-        return this.beginning;
-    }
 
-    public void setBeginning(int beginning){
-        this.beginning = beginning;
-    }
-
-    public double getElapsedTime(){
-        return this.elapsedTime;
-    }
-    public void setElapsedTime(int elapsedTime){
-        this.elapsedTime = elapsedTime;
-    }
     
     public int getScoreHome(){
         return this.scoreHome;

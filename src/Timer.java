@@ -1,4 +1,3 @@
-import java.sql.Time;
 
 public class Timer {
 
@@ -38,7 +37,7 @@ public class Timer {
         this.counter = counter;
     }
 
-    public Timer clone(Timer timer){
+    public Timer clone(){
         return new Timer(this);
     }
 
@@ -59,12 +58,18 @@ public class Timer {
 
 
 
+
     public void start(){
             this.beginning += System.currentTimeMillis();
     }
 
     public void stop(){
             this.counter += beginning - System.currentTimeMillis();
+    }
+
+    public void reset(){
+        this.beginning = 0;
+        this.counter = 0;
     }
 
     public double elapsedTimeTime(){
