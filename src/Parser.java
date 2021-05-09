@@ -81,7 +81,6 @@ public class Parser {
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
         catch(IOException exc) {
             System.out.println(exc.getMessage());
-            System.out.println("Nao deu");
             lines = new ArrayList<>();
         }
         return lines;
