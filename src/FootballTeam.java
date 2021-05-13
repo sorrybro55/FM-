@@ -94,7 +94,13 @@ public class FootballTeam implements Comparable<FootballTeam>
     public int compareTo(FootballTeam team){
         return this.getName().compareTo(team.getName());
     }
-
+    
+    /*
+    public int overallTeam(){
+        return this.squad.values().tomap(FootBallPlayer:: overall, FootballPlayer:: clone)).reduce(0, (a,b) -> (a+b)/this.squad.size()) 
+    }
+    */
+   
     public static FootballTeam parse(String input){
         String[] campos = input.split(",");
         return new FootballTeam(campos[0], new HashMap<>());
