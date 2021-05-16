@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class Parser {
 
-    public static void parse() throws LinhaIncorretaException {
-        List<String> linhas = lerFicheiro("logs.txt");
+    public static void parse(String filename, State state) throws LinhaIncorretaException {
+        List<String> linhas = lerFicheiro(filename);
         Map<String, FootballTeam> equipas = new HashMap<>(); //nome, equipa
         Map<String, FootballPlayer> jogadores = new HashMap<>(); //numero, jogador
         List<FootballMatch> jogos = new ArrayList<>();
@@ -66,13 +66,15 @@ public class Parser {
         }
 
         //debug
-        for (FootballTeam e: equipas.values()){
+        /*for (FootballTeam e: equipas.values()){
             System.out.println(e.toString());
         }
         for (FootballMatch jog: jogos){
             System.out.println(jog.toString());
-        }
-
+        }*/
+        state.setGames(jogos);
+        state.setPlayers(jogadores);
+        state.setTeams(equipas);
 
     }
 
@@ -85,6 +87,8 @@ public class Parser {
         }
         return lines;
     }
+
+
 
 
 }

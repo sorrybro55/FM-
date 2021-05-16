@@ -2,7 +2,7 @@
 import java.util.ArrayList;
 public class FootballPlayer extends Player implements Comparable<FootballPlayer>
 {
-    // instance variables - replace the example below with your own
+
 
     private int number;
     private int speed;
@@ -186,14 +186,14 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
         
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.toString()).append("\nPosicao: ").append(this.getPosition()).append("\nClube Atual: ").append(this.team);
-        sb.append("\nClubes Anteiores: ");
+        sb.append(super.toString()).append(" | Posição: ").append(this.getPosition())
+        .append("\nClube Atual: ").append(this.team).append(" | Clubes Anteiores: ");
         for (String c : career)
             sb.append(c);
-        sb.append("\nVelocidade: ").append(this.speed).append("\nResistencia: ").append(this.stamina).append("\nDestreza: ").append(this.agility);
-        sb.append("\nJogo de Cabeca: ").append(this.heading).append("\nRemate: ").append(this.finishing);
-        sb.append("\nCapacidade de Passe: ").append(this.passing);
-        
+        sb.append("\nVelocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
+        sb.append(" | Jogo de Cabeca: ").append(this.heading).append(" | Remate: ").append(this.finishing);
+        sb.append(" | Capacidade de Passe: ").append(this.passing);
+
         return sb.toString();
     }
 
@@ -300,12 +300,12 @@ public class FootballPlayer extends Player implements Comparable<FootballPlayer>
             career.add(this.team);
         this.team = team;
     }
-   
+
     public String stats(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Velocidade: ").append(this.speed).append("\nResistencia: ").append(this.stamina).append("\nDestreza: ").append(this.agility);
-        sb.append("\nImpulsao: ").append(this.jumping).append("\nJogo de Cabeca: ").append(this.heading).append("\nRemate: ").append(this.finishing);
-        sb.append("\nCapacidade de Passe: ").append(this.passing);
+        sb.append("Velocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
+        sb.append(" | Impulsao: ").append(this.jumping).append(" | Jogo de Cabeca: ").append(this.heading).append("| Remate: ").append(this.finishing);
+        sb.append("| Capacidade de Passe: ").append(this.passing);
         return sb.toString();
     }
     

@@ -1,12 +1,19 @@
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 public class PlayersController {
 
     public  static void run(State state){
+        transferPalyer(state);
 
     }
 
-/*
+    public static void showPlayer(State state){
+        
+
+    }
+
     public  static void createPlayer(State state){
         String name = IO.chooseName();
         Position position = IO.choosePosition();
@@ -28,7 +35,7 @@ public class PlayersController {
         if(position == Position.WINGER)
             recovery = IO.chooseAbility("Cruzamento");
 
-        String team = IO.chooseTeamName(state);
+        String team = "Sem Equipa";
 
         switch (position){
             case GOALKEEPER:
@@ -49,16 +56,53 @@ public class PlayersController {
         }
     }
 
-    public static FootballTeam selectTeam(State state){
+    public static void transferPalyer(State state){
+        String player = selectPlayer(state);
+        String team = selectTeam(state);
+        state.transferPlayer(player,team);
+
+    }
+
+    public static String selectPlayer(State state){
+        Iterator<Map.Entry<String, FootballPlayer>> iteratorPlayers = state.getPlayers().entrySet().iterator();
+        int option = IO.selectPlayer(iteratorPlayers);
+        iteratorPlayers = state.getPlayers().entrySet().iterator();
+        Map.Entry<String,FootballPlayer> mapEntryPlayer = null;
+        while(option>0){
+            mapEntryPlayer = iteratorPlayers.next();
+            option--;
+        }
+        if(mapEntryPlayer == null)
+            return null;
+        return mapEntryPlayer.getKey();
+    }
+
+    public static  String selectTeam(State state){
+        Iterator<Map.Entry<String, FootballTeam>> iteratorTeams = state.getTeams().entrySet().iterator();
+        int option = IO.selectTeam(iteratorTeams);
+        iteratorTeams = state.getTeams().entrySet().iterator();
+        Map.Entry<String,FootballTeam> mapEntryTeam = null;
+        while(option>0){
+            mapEntryTeam = iteratorTeams.next();
+            option--;
+        }
+        if(mapEntryTeam == null)
+            return null;
+        return mapEntryTeam.getKey();
+
+    }
+
+
+
+
+   /* public static FootballTeam selectTeam(State state){
         if(state.getTeams().size() ==0)
             return null;
         int option = IO.chooseTeam(state);
         return state.getTeam(option);
     }
-
-    public static void transferPalyer(State state){
-
-    }
-
 */
+
+
+
 }

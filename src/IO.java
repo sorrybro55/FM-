@@ -1,7 +1,12 @@
+import java.io.IOException;
+import java.util.InputMismatchException;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Map.Entry;
 
 public class IO {
-/*
+
     public  static int initialMenu(){
         int option = -1;
         Scanner sc = new Scanner(System.in);
@@ -20,6 +25,7 @@ public class IO {
         return option;
     }
 
+
     public  static String chooseName(){
         Scanner sc = new Scanner(System.in);
         String name = null;
@@ -31,20 +37,10 @@ public class IO {
         return name;
     }
 
-    public static int  chooseAge(){
-        Scanner sc = new Scanner(System.in);
-        int age = 0;
-        while(age<18 || age>40){
-            System.out.print("Digite Idade: ");
-            age = sc.nextInt();
-
-        }
-        return age;
-    }
 
     public static int  chooseNumber(){
         Scanner sc = new Scanner(System.in);
-        int number = 0;
+        int number = -1;
         while(number<0 || number>99){
             System.out.print("Digite Idade: ");
             number = sc.nextInt();
@@ -96,115 +92,77 @@ public class IO {
         }
     }
 
-    public static String chooseTeamName(State state){
+
+    public static int selectPlayer(Iterator<Map.Entry<String, FootballPlayer>> it){
         StringBuilder sb = new StringBuilder();
-        sb.append("Deseja escoler Equipa?\n");
-        sb.append("1.Sim ").append("2.Nao: ");
+        Map.Entry<String, FootballPlayer> e;
+        int i = 0;
+        while (it.hasNext()){
+            e = it.next();
+            sb.append(i+1).append(". ").append(e.getValue()).append('\n');
+            i++;
+            if(it.hasNext())
+                sb.append("\n");
+        }
         Scanner sc = new Scanner(System.in);
-        int option = 0;
-        while (option <1 || option > 2){
-            System.out.print(sb.toString());
-            option = sc.nextInt();
+        int option = -1;
+        System.out.println(i);
+        System.out.println(sb.toString());
+        while (option == -1){
+            System.out.println("Selecione Jogador: ");
+            try {
+                option = sc.nextInt();
+            }
+            catch (InputMismatchException exc){
+                System.out.println("Valor Invalido");
+                option = -1;
+                sc.nextLine();
+            }
+            if(option<1 || option>i){
+                System.out.println("Valor Invalido");
+                option = -1;
+            }
         }
-        if(option ==1){
-            FootballTeam team = TeamsController.selectTeam(state);
-            if(team!=null)
-                return team.getName();
-        }
-        return "Sem Equipa";
-
+        return option;
     }
 
-    public static int chooseTeam(State state){
-        if(state.getTeams().size() ==0)
-            return -1;
-        Scanner sc = new Scanner(System.in);
-        int option = 0;
-        int size = state.getTeams().size();
-        while(option<1 || option > size){
-            System.out.print(state.showTeams());
-            System.out.print("Escolha Equipa: ");
-            option = sc.nextInt();
-        }
-        return option-1;
-    }
-
-    public static int chooseTeam(State state, String player){
-        if(state.getTeams().size() ==0)
-            return -1;
-        Scanner sc = new Scanner(System.in);
-        int option = 0;
-        int size = state.getTeams().size();
-        while(option<1 || option > size){
-            System.out.print(state.showTeams());
-            System.out.printf("Escolha Equipa %s: \n",player);
-            option = sc.nextInt();
-        }
-        return option-1;
-    }
-
-    public static boolean wantToMakeChange(int player) {
-        Scanner sc = new Scanner(System.in);
+    public static int selectTeam(Iterator<Map.Entry<String, FootballTeam>> it){
         StringBuilder sb = new StringBuilder();
-        sb.append("Jogador ").append(player).append("\nDeseja fazer alteracao: 1.Sim  2.Nao: ");
-        int option = -1;
-        while (option < 0 || option > 2) {
-            System.out.println(sb.toString());
-            option = sc.nextInt();
+        Map.Entry<String, FootballTeam> e;
+        int i = 0;
+        while (it.hasNext()){
+            e = it.next();
+            sb.append(i+1).append(". ").append(e.getValue()).append('\n');
+            i++;
+            if(it.hasNext())
+                sb.append("\n");
         }
-        return option == 1;
-    }
-
-    public static int choosePlayerStartingHome(FootballMatch fm){
-        int option = -1;
         Scanner sc = new Scanner(System.in);
-        int size = fm.getHome().getStarting().size() - fm.getReplacedHome().size();
-        while (option < 1 || option > size) {
-            System.out.println(fm.showStartingHome());
-            System.out.println("Escolha Jogador: ");
-            option = sc.nextInt();
-        }
-        return option-1;
-    }
-
-    public static int choosePlayerBenchHome(FootballMatch fm){
         int option = -1;
-        Scanner sc = new Scanner(System.in);
-        int size = fm.getHome().getBench().size() - fm.getReplacedHome().size();
-        while (option < 1 || option > size) {
-            System.out.println(fm.showBenchHome());
-            System.out.println("Escolha Jogador: ");
-            option = sc.nextInt();
+        System.out.println(i);
+        System.out.println(sb.toString());
+        while (option == -1){
+            System.out.println("Selecione Equipa: ");
+            try {
+                option = sc.nextInt();
+            }
+            catch (InputMismatchException exc){
+                System.out.println("Valor Invalido");
+                option = -1;
+                sc.nextLine();
+            }
+            if(option<1 || option>i){
+                System.out.println("Valor Invalido");
+                option = -1;
+            }
         }
-        return option -1;
-    }
+        return option;
 
-    public static int choosePlayerStartingAway(FootballMatch fm){
-        int option = -1;
-        Scanner sc = new Scanner(System.in);
-        int size = fm.getAway().getStarting().size() - fm.getReplacedAway().size();
-        while (option < 1 || option > size) {
-            System.out.println(fm.showStartingAway());
-            System.out.println("Escolha Jogador: ");
-            option = sc.nextInt();
-        }
-        return option -1;
-    }
-
-    public static int choosePlayerBenchAway(FootballMatch fm){
-        int option = -1;
-        Scanner sc = new Scanner(System.in);
-        int size = fm.getAway().getBench().size() - fm.getReplacedAway().size();
-        while (option < 1 || option > size) {
-            System.out.println(fm.showBenchAway());
-            System.out.println("Escolha Jogador: ");
-            option = sc.nextInt();
-        }
-        return option -1;
     }
 
 
-*/
+
+
 
 
 

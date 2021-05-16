@@ -50,7 +50,7 @@ public class GoalKeeper extends FootballPlayer
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.toString()).append("\n Elasticidade: ").append(this.elasticity);
+        sb.append(super.toString()).append(" | Elasticidade: ").append(this.elasticity);
         return sb.toString();
     }
     
@@ -88,7 +88,7 @@ public class GoalKeeper extends FootballPlayer
     
     public String stats(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.stats()).append("\nElasticidade: ").append(this.elasticity);
+        sb.append(super.stats()).append(" | Elasticidade: ").append(this.elasticity);
         return sb.toString();
     }
 

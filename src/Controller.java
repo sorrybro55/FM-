@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Controller {
-/*
-    public static void run() {
-    State state = StateController.generate();
+
+    public static void run(State state) {
+
 
     while (true) {
             int option = IO.initialMenu();
@@ -11,7 +11,7 @@ public class Controller {
                 case 0:
                     return;
                 case 1:
-                    GameController.makeGame(state);
+                    //GameController.makeGame(state);
                     break;
                 case 2:
                     PlayersController.run(state);
@@ -31,10 +31,7 @@ public class Controller {
     }
 
 
-    public static void createTeam(State state){
 
-    }
-*/
 
 }
 

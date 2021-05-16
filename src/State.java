@@ -1,9 +1,14 @@
 import com.sun.source.tree.Tree;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class State {
+public class State implements Serializable {
 
     private Map<String, FootballPlayer> players;
     private Map<String, FootballTeam> teams;
@@ -77,6 +82,12 @@ public class State {
         sb.append("Numero de Equipas:").append(this.teams.size()).append("\n");
         sb.append("Numero de Jogos:").append(this.games.size());
         return sb.toString();
+    }
+
+    public void transferPlayer(String playerName, String teamName){
+        FootballPlayer fp = this.players.get(playerName);
+        fp.switchTeam(teamName);
+        this.teams.get(teamName).addPlayer(fp);
 
     }
 
@@ -103,9 +114,6 @@ public class State {
         return this.players.remove(name);
     }
 
-    public FootballPlayer removePlayer(FootballPlayer fp){
-        return this.removePlayer(fp.getName());
-    }
 
     public FootballTeam removeTeam(String name){
         return this.teams.remove(name);
@@ -126,9 +134,7 @@ public class State {
         return null;
     }
 
-    public FootballPlayer getPlayer(FootballPlayer fp){
-        return this.getPlayer(fp.getName());
-    }
+
 
     public FootballTeam getTeam(String name){
         if (this.teams.containsKey(name))
@@ -136,16 +142,6 @@ public class State {
         return null;
     }
 
-    public FootballTeam getTeam(FootballTeam team){
-        return this.getTeam(team.getName());
-    }
-
-    public FootballMatch getGame(int index){
-        FootballMatch f = this.games.get(index);
-        if(f != null)
-            return f.clone();
-        return null;
-    }
 
 
 
@@ -159,30 +155,94 @@ public class State {
             this.teams.replace(team.getName(), team.clone());
     }
 
+    public void parse(String filename) throws LinhaIncorretaException {
+        List<String> linhas = lerFicheiro(filename);
+        Map<String, FootballTeam> equipas = new HashMap<>(); //nome, equipa
+        Map<String, FootballPlayer> jogadores = new HashMap<>(); //numero, jogador
+        List<FootballMatch> jogos = new ArrayList<>();
+        FootballTeam ultima = null; FootballPlayer j = null;
+        String[] linhaPartida;
+        for (String linha : linhas) {
+            linhaPartida = linha.split(":", 2);
+            switch(linhaPartida[0]){
+                case "Equipa":
+                    FootballTeam e = FootballTeam.parse(linhaPartida[1]);
+                    equipas.put(e.getName(), e);
+                    ultima = e;
+                    break;
+                case "Guarda-Redes":
+                    j = GoalKeeper.parse(linhaPartida[1]);
+                    j.setTeam(ultima.getName());
+                    jogadores.put(j.getName(), j);
+                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
+                    break;
+                case "Defesa":
+                    j = Defender.parse(linhaPartida[1]);
+                    j.setTeam(ultima.getName());
+                    jogadores.put(j.getName(), j);
+                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
+                    break;
+                case "Medio":
+                    j = MidFielder.parse(linhaPartida[1]);
+                    j.setTeam(ultima.getName());
+                    jogadores.put(j.getName(), j);
+                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
+                    break;
+                case "Lateral":
+                    j = Winger.parse(linhaPartida[1]);
+                    j.setTeam(ultima.getName());
+                    jogadores.put(j.getName(), j);
+                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
+                    break;
+                case "Avancado":
+                    j = Striker.parse(linhaPartida[1]);
+                    j.setTeam(ultima.getName());
+                    jogadores.put(j.getName(), j);
+                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
+                    break;
+                case "Jogo":
+                    FootballMatch jo = FootballMatch.parse(linhaPartida[1]);
+                    jogos.add(jo);
+                    break;
+                default:
+                    throw new LinhaIncorretaException();
 
+            }
+        }
 
+        //debug
+        /*for (FootballTeam e: equipas.values()){
+            System.out.println(e.toString());
+        }
+        for (FootballMatch jog: jogos){
+            System.out.println(jog.toString());
+        }*/
+        this.setGames(jogos);
+        this.setPlayers(jogadores);
+        this.setTeams(equipas);
 
-
-
-            /*public String showPlayers(){
-        int index = 1;
-        StringBuilder sb =  new StringBuilder();
-        for(FootballPlayer fp : players)
-            sb.append(index++).append(" ").append(showPlayer(fp)).append("\n");
-        return sb.toString();
+    }
+    public static List<String> lerFicheiro(String nomeFich) {
+        List<String> lines;
+        try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
+        catch(IOException exc) {
+            System.out.println(exc.getMessage());
+            lines = new ArrayList<>();
+        }
+        return lines;
     }
 
-    public String showTeam(FootballTeam team){
-        return team.getName();
-    }
 
-    public String showTeams(){
-        int index = 1;
-        StringBuilder sb =  new StringBuilder();
-        for(FootballTeam t : teams)
-            sb.append(index++).append(" ").append(showTeam(t)).append("\n");
-        return sb.toString();
-    }*/
+
+
+
+
+
 
 
     }

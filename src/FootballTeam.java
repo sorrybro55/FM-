@@ -62,9 +62,11 @@ public class FootballTeam implements Comparable<FootballTeam>
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Nome da Equipa: ").append(this.name).append("\nPlantel:\n");
-        for (FootballPlayer fp : squad.values())
-            sb.append(fp.getName()).append("\n");
+        sb.append(this.name).append("\nPlantel:\n");
+        for (Map.Entry<Integer, FootballPlayer> me: squad.entrySet()) {
+            FootballPlayer fp = me.getValue();
+            sb.append(me.getKey()).append(" ").append(fp.getName()).append(" | ").append(fp.getPosition()).append("\n").append(fp.stats());
+        }
         return sb.toString();
     }
 

@@ -44,9 +44,7 @@ public class Player{
         
         
     public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Nome: ").append(this.name);
-        return sb.toString();
+        return this.name;
     }
     
     public Player clone(){

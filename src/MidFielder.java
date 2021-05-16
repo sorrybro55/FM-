@@ -48,7 +48,7 @@ public class MidFielder extends FootballPlayer{
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.toString()).append("\nRecuperacao: ").append(this.recovery);
+        sb.append(super.toString()).append(" | Recuperacao: ").append(this.recovery);
         return sb.toString();
     }
 
@@ -78,7 +78,7 @@ public class MidFielder extends FootballPlayer{
 
     public String stats(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.stats()).append("\nRecuperacao: ").append(this.recovery);
+        sb.append(super.stats()).append(" | Recuperacao: ").append(this.recovery);
         return sb.toString();
     }
 

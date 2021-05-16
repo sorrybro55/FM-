@@ -48,7 +48,7 @@ public class Winger extends FootballPlayer{
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.toString()).append("\nCruzamento: ").append(this.crossing);
+        sb.append(super.toString()).append(" | Cruzamento: ").append(this.crossing);
         return sb.toString();
     }
 
@@ -78,7 +78,7 @@ public class Winger extends FootballPlayer{
 
     public String stats(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.stats()).append("\nCruzamento: ").append(this.crossing);
+        sb.append(super.stats()).append(" | Cruzamento: ").append(this.crossing);
         return sb.toString();
     }
 
