@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 public class IO {
 
 
-
     public static void showPlayersDataBase(Iterator<FootballPlayer> it){
         FootballPlayer fp = null;
         StringBuilder sb = new StringBuilder();
@@ -45,11 +44,13 @@ public class IO {
             try {
                 number = sc.nextInt();
             } catch (InputMismatchException e){
-                System.out.println("Opção Invalida");
                 number = 0;
                 sc.nextLine();
-            }if(number <1)
-                System.out.println("Numero Invalido");
+            }
+            if(number <1){
+                System.out.println("Numero");
+                number = 0;
+            }
         }while (number == 0);
 
         return number;
@@ -60,11 +61,20 @@ public class IO {
         StringBuilder sb = new StringBuilder();
         sb.append("Digite Valor De ").append(ability).append(": ");
         int value = -1;
-        while( value < 0 || value >100){
+        do{
             System.out.print(sb.toString());
-            value = sc.nextInt();
+            try{
+                value = sc.nextInt();
+            }catch (InputMismatchException e){
+                value = -1;
+                sc.nextLine();
+            }
+            if(value <0){
+                System.out.println("Valor Invalido");
+                value = -1;
+            }
+        } while( value == -1);
 
-        }
         return value;
     }
 
@@ -78,10 +88,19 @@ public class IO {
         sb.append("5: Avancado:\n");
         sb.append("Escolha Posicao: ");
         int option = -1;
-        while(option <0 || option >5){
+        do{
             System.out.print(sb.toString());
-            option = sc.nextInt();
-        }
+            try{
+                option = sc.nextInt();
+            }catch (InputMismatchException e){
+                option = -1;
+                sc.nextLine();
+            }
+            if(option <1 || option > 5){
+                System.out.println("Valor Invalido");
+                option = -1;
+            }
+        }while (option == -1);
         switch (option){
             case 1:
                 return Position.GOALKEEPER;

@@ -22,19 +22,25 @@ public class Controller {
                 case 1:
                     break;
                 case 2:
-                    showPlayers();
+                    this.showPlayers();
                     break;
                 case 3:
-                    showTeams();
+                    this.showTeams();
                     break;
                 case 4:
-                    createPlayer();
+                    this.createPlayer();
                     break;
                 case 5:
-                    //StateController.save(state);
+                    this.createTeam();
                     break;
                 case 6:
                     transferPalyer();
+                    break;
+                case 7:
+                    //this.state.save()
+                    break;
+                case 8:
+                    //this.state.load();
                     break;
             }
         } while (option != 0) ;
@@ -56,12 +62,14 @@ public class Controller {
         do {
             menu.run();
             option = menu.getOption();
-            option--;
-            String teamName = teams.get(option);
-            FootballTeam team = this.state.getTeam(teamName);
-            IO.newLine();
-            IO.showTeam(team);
-            IO.pressEnter();
+            if(option !=0) {
+                option--;
+                String teamName = teams.get(option);
+                FootballTeam team = this.state.getTeam(teamName);
+                IO.newLine();
+                IO.showTeam(team);
+                IO.pressEnter();
+            }
 
         }while (option != 0);
 
@@ -87,7 +95,6 @@ public class Controller {
             recovery = IO.chooseAbility("Recuperacao");
         if(position == Position.WINGER)
             recovery = IO.chooseAbility("Cruzamento");
-
         String team = "Sem Equipa";
 
         switch (position){
@@ -142,6 +149,15 @@ public class Controller {
             return null;
         return mapEntryTeam.getKey();
     }
+
+    public void createTeam(){
+        String name = IO.chooseName();
+        FootballTeam team = new FootballTeam();
+        team.setName(name);
+        state.addTeam(team);
+
+    }
+
 }
 
 

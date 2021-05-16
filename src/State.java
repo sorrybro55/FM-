@@ -100,6 +100,7 @@ public class State implements Serializable {
 
     public void addPlayer(FootballPlayer fp) {
         this.players.putIfAbsent(fp.getName(),fp.clone());
+
     }
 
     public void addTeam(FootballTeam team){
