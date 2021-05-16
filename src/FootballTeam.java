@@ -66,7 +66,7 @@ public class FootballTeam implements Serializable, Comparable<FootballTeam>
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.name).append("\nPlantel:\n");
+        sb.append(this.name).append("\n\nPlantel:\n\n");
         Iterator<Map.Entry<Integer, FootballPlayer>> it = squad.entrySet().iterator();
         Map.Entry<Integer, FootballPlayer> me = null;
         while (it.hasNext()) {

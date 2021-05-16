@@ -64,8 +64,7 @@ public class Controller {
             menu.run();
             option = menu.getOption();
             if(option !=0) {
-                option--;
-                String teamName = teams.get(option);
+                String teamName = teams.get(option-1);
                 FootballTeam team = this.state.getTeam(teamName);
                 IO.newLine();
                 IO.showTeam(team);

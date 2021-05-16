@@ -305,8 +305,8 @@ public class FootballPlayer extends Player implements  Comparable<FootballPlayer
     public String stats(){
         StringBuilder sb = new StringBuilder();
         sb.append("Velocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
-        sb.append(" | Impulsao: ").append(this.jumping).append(" | Jogo de Cabeca: ").append(this.heading).append("| Remate: ").append(this.finishing);
-        sb.append("| Capacidade de Passe: ").append(this.passing);
+        sb.append(" | Impulsao: ").append(this.jumping).append(" | Jogo de Cabeca: ").append(this.heading).append(" | Remate: ").append(this.finishing);
+        sb.append(" | Capacidade de Passe: ").append(this.passing);
         return sb.toString();
     }
     

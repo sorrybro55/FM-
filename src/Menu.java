@@ -48,7 +48,6 @@ public class Menu {
         try{
             op = sc.nextInt();
         }catch (InputMismatchException e){
-            System.out.println("Opçao Invalida!!!");
             op = -1;
         }
         if(op<0 || op>this.options.size()){
