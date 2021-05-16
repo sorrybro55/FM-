@@ -1,6 +1,7 @@
 
+import java.io.Serializable;
 import java.util.ArrayList;
-public class FootballPlayer extends Player implements Comparable<FootballPlayer>
+public class FootballPlayer extends Player implements  Comparable<FootballPlayer>
 {
 
 

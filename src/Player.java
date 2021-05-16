@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Random;
 /**
@@ -6,7 +7,7 @@ import java.util.Random;
  * @author (seu name) 
  * 
  */
-public class Player{
+public class Player implements Serializable {
     private String name;
     
     

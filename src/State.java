@@ -1,11 +1,18 @@
-import com.sun.source.tree.Tree;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class State implements Serializable {
@@ -236,6 +243,23 @@ public class State implements Serializable {
             lines = new ArrayList<>();
         }
         return lines;
+    }
+
+    public void save(String fileName) throws IOException{
+        FileOutputStream fos = new FileOutputStream(fileName);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(this);
+        oos.flush();
+        oos.close();
+
+    }
+
+    public static State load(String fileName) throws ClassNotFoundException, IOException{
+        FileInputStream fis = new FileInputStream(fileName);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        State state  = (State) ois.readObject();
+        return state;
+
     }
 
 

@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,10 +38,10 @@ public class Controller {
                     transferPalyer();
                     break;
                 case 7:
-                    //this.state.save()
+                    this.save();
                     break;
                 case 8:
-                    //this.state.load();
+                    this.load();
                     break;
             }
         } while (option != 0) ;
@@ -156,6 +157,27 @@ public class Controller {
         team.setName(name);
         state.addTeam(team);
 
+    }
+
+    public void save(){
+        String fileName = IO.getFilame();
+        try{
+            this.state.save(fileName);
+            System.out.println("Gravado Com Sucesso");
+
+        }catch (IOException e){
+            System.out.println("Ficheiro Não Encontrado");
+        }
+    }
+
+    public void load(){
+        String fileName = IO.getFilame();
+        try{
+            this.state = State.load(fileName);
+            System.out.println("Carregado Com Sucesso");
+        }catch (IOException | ClassNotFoundException e){
+            System.out.println("Ficheiro Não Encontrado");
+        }
     }
 
 }

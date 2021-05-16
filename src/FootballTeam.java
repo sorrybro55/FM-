@@ -1,4 +1,8 @@
-import java.util.*;
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -8,7 +12,7 @@ import java.util.stream.Stream;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class FootballTeam implements Comparable<FootballTeam>
+public class FootballTeam implements Serializable, Comparable<FootballTeam>
 {
 
     private String name;

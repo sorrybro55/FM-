@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class FootballMatch
+public class FootballMatch implements Serializable
 {
 
     private String teamHome;

@@ -1,6 +1,6 @@
+import java.io.Serializable;
 
-
-public enum MatchState
+public enum MatchState implements Serializable
 {
     TOSTART, FIRSTHALF, SECONDHALF, INTERVALL, FINISHED;
     

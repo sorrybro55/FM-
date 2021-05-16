@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Timer {
+public class Timer implements Serializable {
 
     private double beginning;
     private double counter;

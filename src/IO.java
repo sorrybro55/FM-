@@ -192,6 +192,13 @@ public class IO {
         sc.nextLine();
     }
 
+    public static String getFilame(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Digite Nome Do Ficheiro.");
+        String fileName = sc.nextLine();
+        return fileName;
+    }
+
 
 
 

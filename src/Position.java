@@ -1,3 +1,4 @@
+import java.io.Serializable;
 
 /**
  * Enumeration class Position - write a description of the enum class here
@@ -5,7 +6,7 @@
  * @author (your name here)
  * @version (version number or date here)
  */
-public enum Position
+public enum Position implements Serializable
 {
     GOALKEEPER,
     DEFENDER,
