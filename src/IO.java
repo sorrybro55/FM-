@@ -7,22 +7,22 @@ import java.util.Map.Entry;
 
 public class IO {
 
-    public  static int initialMenu(){
-        int option = -1;
-        Scanner sc = new Scanner(System.in);
+
+
+    public static void showPlayersDataBase(Iterator<FootballPlayer> it){
+        FootballPlayer fp = null;
         StringBuilder sb = new StringBuilder();
-        sb.append("Menu Inicial\n\n");
-        sb.append(("0. Sair\n"));
-        sb.append("1. Fazer Jogo\n");
-        sb.append("2. Gerir Jogadores:\n");
-        sb.append("3. Gerir Equipas: \n");
-        sb.append("4. Ler Jogo\n");
-        sb.append("5. Gravar Jogo\n");
-        while(option <0 || option >5 ){
-            System.out.println(sb.toString());
-            option = sc.nextInt();
+        while(it.hasNext()){
+            fp = it.next();
+            sb.append(fp).append("\n");
+            if(it.hasNext())
+                sb.append("\n");
         }
-        return option;
+        System.out.println(sb.toString());
+    }
+
+    public static void showTeam(FootballTeam team){
+        System.out.println(team);
     }
 
 
@@ -32,7 +32,6 @@ public class IO {
         while(name == null){
             System.out.print("Digite Nome: ");
             name = sc.nextLine();
-
         }
         return name;
     }
@@ -40,12 +39,19 @@ public class IO {
 
     public static int  chooseNumber(){
         Scanner sc = new Scanner(System.in);
-        int number = -1;
-        while(number<0 || number>99){
-            System.out.print("Digite Idade: ");
-            number = sc.nextInt();
+        int number = 0;
+        do{
+            System.out.print("Digite Numero: ");
+            try {
+                number = sc.nextInt();
+            } catch (InputMismatchException e){
+                System.out.println("Opção Invalida");
+                number = 0;
+                sc.nextLine();
+            }if(number <1)
+                System.out.println("Numero Invalido");
+        }while (number == 0);
 
-        }
         return number;
     }
 
@@ -132,14 +138,12 @@ public class IO {
         int i = 0;
         while (it.hasNext()){
             e = it.next();
-            sb.append(i+1).append(". ").append(e.getValue()).append('\n');
+            sb.append(i+1).append(". ").append(e.getKey()).append('\n');
             i++;
-            if(it.hasNext())
-                sb.append("\n");
+
         }
         Scanner sc = new Scanner(System.in);
         int option = -1;
-        System.out.println(i);
         System.out.println(sb.toString());
         while (option == -1){
             System.out.println("Selecione Equipa: ");
@@ -158,6 +162,15 @@ public class IO {
         }
         return option;
 
+    }
+    public static void newLine(){
+        System.out.println();
+    }
+
+    public static  void pressEnter(){
+        System.out.print("Pressione Enter Para Continuar: ");
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
     }
 
 

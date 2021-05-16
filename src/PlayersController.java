@@ -4,13 +4,11 @@ import java.util.Map;
 
 public class PlayersController {
 
-    public  static void run(State state){
-        transferPalyer(state);
 
-    }
 
-    public static void showPlayer(State state){
-        
+    public static void showPlayers(State state){
+        Iterator<FootballPlayer> iteratorPlayer = state.getPlayers().values().iterator();
+        IO.showPlayersDataBase(iteratorPlayer);
 
     }
 
@@ -94,14 +92,6 @@ public class PlayersController {
 
 
 
-
-   /* public static FootballTeam selectTeam(State state){
-        if(state.getTeams().size() ==0)
-            return null;
-        int option = IO.chooseTeam(state);
-        return state.getTeam(option);
-    }
-*/
 
 
 

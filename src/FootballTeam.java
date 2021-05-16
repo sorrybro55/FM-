@@ -63,17 +63,32 @@ public class FootballTeam implements Comparable<FootballTeam>
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(this.name).append("\nPlantel:\n");
-        for (Map.Entry<Integer, FootballPlayer> me: squad.entrySet()) {
+        Iterator<Map.Entry<Integer, FootballPlayer>> it = squad.entrySet().iterator();
+        Map.Entry<Integer, FootballPlayer> me = null;
+        while (it.hasNext()) {
+            me = it.next();
             FootballPlayer fp = me.getValue();
-            sb.append(me.getKey()).append(" ").append(fp.getName()).append(" | ").append(fp.getPosition()).append("\n").append(fp.stats());
+            sb.append(me.getKey()).append(". ").append(fp.getName()).append(" | ").append(fp.getPosition()).append("\n").append(fp.stats()).append("\n");
+            if(it.hasNext())
+                sb.append("\n");
         }
         return sb.toString();
     }
 
 
     public void addPlayer(FootballPlayer fp){
-        if(fp != null)
-            squad.putIfAbsent(fp.getNumber(), fp.clone());
+        if (this.squad.containsKey(fp.getNumber())){
+            selectNewNumber(fp);
+        }
+        squad.put(fp.getNumber(), fp.clone());
+
+    }
+
+    private void selectNewNumber(FootballPlayer fp){
+        int i =1;
+        while(this.squad.containsKey(i))
+            i++;
+        fp.setNumber(i);
     }
 
     public FootballPlayer getPlayer(Integer number){

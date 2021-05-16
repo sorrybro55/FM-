@@ -14,7 +14,8 @@ public class Test
             System.out.println(e.getMessage());
         }
         //System.out.println(state);
-        Controller.run(state);
+        Controller controller = new Controller(state);
+        controller.run();
     }
 }
 
