@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class Controller {
     State state;
@@ -15,36 +16,62 @@ public class Controller {
     public  void run() {
 
         int option = -1;
-        Menu menu = new Menu(new String[]{"Fazer Jogo", "Ver Jogadores", "Ver Equipas","Criar Jogador", "Criar Equipa", "Transferir Jogador", "Gravar Estado", "Ler Estado"});
+        Menu menu = new Menu(new String[]{"Fazer Jogo", "Ver Resultados", "Ver Jogadores", "Ver Equipas","Criar Jogador", "Criar Equipa", "Transferir Jogador", "Gravar Estado", "Ler Estado"});
         do {
             menu.run();
             option = menu.getOption();
             switch (option) {
                 case 1:
+                    try{
+                        this.makeGame();
+                    }catch (NoTeamsException e){
+                        IO.message(e.getMessage());
+                    }
                     break;
                 case 2:
+                    this.showGames();
+                    break;
+
+                case 3:
                     this.showPlayers();
                     break;
-                case 3:
+                case 4:
                     this.showTeams();
                     break;
-                case 4:
+                case 5:
                     this.createPlayer();
                     break;
-                case 5:
+                case 6:
                     this.createTeam();
                     break;
-                case 6:
-                    transferPalyer();
-                    break;
                 case 7:
-                    this.save();
+                    transferPlayer();
                     break;
                 case 8:
+                    this.save();
+                    break;
+                case 9:
                     this.load();
                     break;
             }
         } while (option != 0) ;
+    }
+
+    public void makeGame () throws NoTeamsException{
+        Predicate<FootballTeam> p = FootballTeam::isComplete;
+        if (this.state.getTeams().values().stream().filter(p).count() <1)
+            throw new NoTeamsException();
+        String teamHome = this.selectTeam(p);
+        String teamAway = this.selectTeam(p);
+        FootballTeam home = this.state.getTeam(teamHome);
+        FootballTeam away = this.state.getTeam(teamAway);
+        FootballMatch fm = new FootballMatch(home, away);
+
+    }
+
+    public void showGames (){
+        List<FootballMatch> games = this.state.getGames();
+        IO.showGames(games.iterator());
     }
 
 
@@ -56,7 +83,7 @@ public class Controller {
         IO.pressEnter();
     }
 
-    public  void showTeams(){
+    public void showTeams(){
         List<String> teams = new ArrayList<>(this.state.getTeams().keySet());
         Menu menu = new Menu(teams, "*** Selecione Equipa ***");
         int option = -1;
@@ -74,6 +101,8 @@ public class Controller {
         }while (option != 0);
 
     }
+
+
 
     public  void createPlayer(){
         String name = IO.chooseName();
@@ -116,39 +145,36 @@ public class Controller {
         }
     }
 
-    public void transferPalyer(){
+    public void transferPlayer(){
+
         String player = selectPlayer();
         String team = selectTeam();
         state.transferPlayer(player,team);
     }
 
+
+
     public String selectPlayer(){
         Iterator<Map.Entry<String, FootballPlayer>> iteratorPlayers = state.getPlayers().entrySet().iterator();
-        int option = IO.selectPlayer(iteratorPlayers);
-        iteratorPlayers = state.getPlayers().entrySet().iterator();
-        Map.Entry<String,FootballPlayer> mapEntryPlayer = null;
-        while(option>0){
-            mapEntryPlayer = iteratorPlayers.next();
-            option--;
-        }
-        if(mapEntryPlayer == null)
-            return null;
-        return mapEntryPlayer.getKey();
+        String option = IO.selectPlayer(iteratorPlayers);
+        return option;
     }
+
+
 
     public  String selectTeam(){
         Iterator<Map.Entry<String, FootballTeam>> iteratorTeams = state.getTeams().entrySet().iterator();
-        int option = IO.selectTeam(iteratorTeams);
-        iteratorTeams = state.getTeams().entrySet().iterator();
-        Map.Entry<String,FootballTeam> mapEntryTeam = null;
-        while(option>0){
-            mapEntryTeam = iteratorTeams.next();
-            option--;
-        }
-        if(mapEntryTeam == null)
-            return null;
-        return mapEntryTeam.getKey();
+        String option = IO.selectTeam(iteratorTeams);
+        return option;
     }
+
+    public  String selectTeam(Predicate<FootballTeam> p){
+        Iterator<Map.Entry<String, FootballTeam>> iteratorTeams = state.getTeams().entrySet().stream().filter(team -> p.test(team.getValue())).iterator();
+        String option = IO.selectTeam(iteratorTeams);
+        return option;
+    }
+
+
 
     public void createTeam(){
         String name = IO.chooseName();
@@ -162,10 +188,10 @@ public class Controller {
         String fileName = IO.getFilame();
         try{
             this.state.save(fileName);
-            System.out.println("Gravado Com Sucesso");
+            IO.message("Gravado Com Sucesso");
 
         }catch (IOException e){
-            System.out.println("Ficheiro Não Encontrado");
+            IO.message("Ficheiro Não Encontrado");
         }
     }
 
@@ -173,9 +199,9 @@ public class Controller {
         String fileName = IO.getFilame();
         try{
             this.state = State.load(fileName);
-            System.out.println("Carregado Com Sucesso");
+            IO.message("Carregado Com Sucesso");
         }catch (IOException | ClassNotFoundException e){
-            System.out.println("Ficheiro Não Encontrado");
+            IO.message("Ficheiro Não Encontrado");
         }
     }
 

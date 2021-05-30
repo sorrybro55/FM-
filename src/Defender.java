@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 
 
-public class Defender extends FootballPlayer{
+public class Defender extends FootballPlayer implements center{
 
     public Defender(){
         super();
@@ -23,6 +23,10 @@ public class Defender extends FootballPlayer{
 
     public Defender clone(){
         return new Defender(this);
+    }
+
+    public int overall(){
+        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing()) / 7;
     }
 
     public boolean equals(Object o){

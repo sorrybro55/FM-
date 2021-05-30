@@ -1,7 +1,7 @@
 
 import java.io.Serializable;
 import java.util.ArrayList;
-public class FootballPlayer extends Player implements  Comparable<FootballPlayer>
+public abstract class FootballPlayer extends Player implements  Comparable<FootballPlayer>
 {
 
 
@@ -201,9 +201,7 @@ public class FootballPlayer extends Player implements  Comparable<FootballPlayer
 
 
     
-    public FootballPlayer clone(){
-        return new FootballPlayer(this);
-    }
+    public abstract FootballPlayer clone();
 
     public int compareTo(FootballPlayer fp){
         int aux;
@@ -292,9 +290,7 @@ public class FootballPlayer extends Player implements  Comparable<FootballPlayer
     }
         
     
-    public int overall(){
-        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing()) / 7;
-    }
+    public abstract int overall();
     
     public void switchTeam(String team){
         if(!this.team.equals("Sem Equipa"))

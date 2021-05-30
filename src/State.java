@@ -93,6 +93,9 @@ public class State implements Serializable {
 
     public void transferPlayer(String playerName, String teamName){
         FootballPlayer fp = this.players.get(playerName);
+        String team = fp.getTeam();
+        if(this.teams.containsKey(team))
+            this.teams.get(team).removePlayer(fp.getNumber());
         fp.switchTeam(teamName);
         this.teams.get(teamName).addPlayer(fp);
 

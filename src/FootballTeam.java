@@ -2,6 +2,7 @@ import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -115,6 +116,17 @@ public class FootballTeam implements Serializable, Comparable<FootballTeam>
     public int compareTo(FootballTeam team){
         return this.getName().compareTo(team.getName());
     }
+
+    public boolean isComplete(){
+        if (this.squad.size() < 11)
+            return false;
+        for (FootballPlayer fp : this.squad.values()){
+            if(fp instanceof GoalKeeper)
+                return true;
+        }
+            return false;
+    }
+
 
     public static FootballTeam parse(String input){
         String[] campos = input.split(",");

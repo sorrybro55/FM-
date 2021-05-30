@@ -1,8 +1,5 @@
 import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.Map.Entry;
 
 public class IO {
@@ -22,6 +19,17 @@ public class IO {
 
     public static void showTeam(FootballTeam team){
         System.out.println(team);
+    }
+
+    public static void showGames(Iterator<FootballMatch> it){
+        FootballMatch fm;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Jogos Realizados\n");
+        while (it.hasNext()){
+            fm = it.next();
+            sb.append(fm).append("\n");
+        }
+        System.out.println(sb.toString());
     }
 
 
@@ -118,12 +126,15 @@ public class IO {
     }
 
 
-    public static int selectPlayer(Iterator<Map.Entry<String, FootballPlayer>> it){
+
+    public static String selectPlayer(Iterator<Map.Entry<String, FootballPlayer>> it){
         StringBuilder sb = new StringBuilder();
+        List<String> playersName = new ArrayList<>();
         Map.Entry<String, FootballPlayer> e;
         int i = 0;
         while (it.hasNext()){
             e = it.next();
+            playersName.add(e.getKey());
             sb.append(i+1).append(". ").append(e.getValue()).append('\n');
             i++;
             if(it.hasNext())
@@ -131,7 +142,6 @@ public class IO {
         }
         Scanner sc = new Scanner(System.in);
         int option = -1;
-        System.out.println(i);
         System.out.println(sb.toString());
         while (option == -1){
             System.out.println("Selecione Jogador: ");
@@ -148,15 +158,21 @@ public class IO {
                 option = -1;
             }
         }
-        return option;
+        return playersName.get(option-1);
     }
 
-    public static int selectTeam(Iterator<Map.Entry<String, FootballTeam>> it){
+
+
+
+    public static String selectTeam(Iterator<Map.Entry<String, FootballTeam>> it){
         StringBuilder sb = new StringBuilder();
+        List<String> teamsName = new ArrayList<>();
         Map.Entry<String, FootballTeam> e;
+
         int i = 0;
         while (it.hasNext()){
             e = it.next();
+            teamsName.add(e.getKey());
             sb.append(i+1).append(". ").append(e.getKey()).append('\n');
             i++;
 
@@ -179,9 +195,14 @@ public class IO {
                 option = -1;
             }
         }
-        return option;
+        return teamsName.get(option-1);
 
     }
+
+    public static void message(String message){
+        System.out.println(message);
+    }
+
     public static void newLine(){
         System.out.println();
     }

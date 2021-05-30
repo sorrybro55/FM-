@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Striker extends FootballPlayer{
+public class Striker extends FootballPlayer implements center{
 
 
 
@@ -30,6 +30,10 @@ public class Striker extends FootballPlayer{
         if(o == null || o.getClass() != this.getClass())
             return false;
         return super.equals(o);
+    }
+
+    public int overall(){
+        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing()) / 7;
     }
 
     public static Striker parse(String input) {
