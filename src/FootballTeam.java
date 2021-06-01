@@ -1,9 +1,6 @@
 import java.io.Serializable;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -125,6 +122,81 @@ public class FootballTeam implements Serializable, Comparable<FootballTeam>
                 return true;
         }
             return false;
+    }
+
+    public List<Integer> bestEleven(){
+        List<Integer> allNumbers = new ArrayList<>(this.squad.keySet());
+        List<Integer> result = new ArrayList<>();
+        for(int i = 0; i<11; i++)
+            result.add(0);
+        Comparator<FootballPlayer> c = (p1,p2) -> p1.overall() - p2.overall();
+        List<FootballPlayer> goalKeepers = this.squad.values().stream().filter(p -> p instanceof GoalKeeper).sorted(c).collect(Collectors.toList());
+        List<FootballPlayer> defenders = this.squad.values().stream().filter(p -> p instanceof Defender).sorted(c).collect(Collectors.toList());
+        List<FootballPlayer> wingers = this.squad.values().stream().filter(p -> p instanceof Winger).sorted(c).collect(Collectors.toList());
+        List<FootballPlayer> midfielders = this.squad.values().stream().filter(p -> p instanceof MidFielder).sorted(c).collect(Collectors.toList());
+        List<FootballPlayer> strikers = this.squad.values().stream().filter(p -> p instanceof Striker).sorted(c).collect(Collectors.toList());
+        if(goalKeepers.size()>=1) {
+            result.set(0,goalKeepers.get(0).getNumber());
+            allNumbers.remove(result.get(0));
+        }
+        if(defenders.size() >=1){
+            result.set(1,defenders.get(0).getNumber());
+            allNumbers.remove(result.get(1));
+        }
+
+        if(defenders.size() >=2){
+            result.set(2,defenders.get(1).getNumber());
+            allNumbers.remove(result.get(2));
+        }
+
+        if(wingers.size() >=1){
+            result.set(3,wingers.get(0).getNumber());
+            allNumbers.remove(result.get(3));
+        }
+
+        if(wingers.size() >=2){
+            result.set(4,wingers.get(1).getNumber());
+            allNumbers.remove(result.get(4));
+        }
+
+        if(midfielders.size() >=1){
+            result.set(5,midfielders.get(0).getNumber());
+            allNumbers.remove(result.get(5));
+        }
+
+        if(midfielders.size() >=2){
+            result.set(6,midfielders.get(1).getNumber());
+            allNumbers.remove(result.get(6));
+        }
+
+        if(midfielders.size() >=3){
+            result.set(7,midfielders.get(2).getNumber());
+            allNumbers.remove(result.get(7));
+        }
+
+        if(midfielders.size() >=4){
+            result.set(8,midfielders.get(3).getNumber());
+            allNumbers.remove(result.get(8));
+        }
+
+        if(strikers.size() >=1){
+            result.set(9,strikers.get(0).getNumber());
+            allNumbers.remove(result.get(9));
+        }
+
+        if(strikers.size() >=2){
+            result.set(10,strikers.get(1).getNumber());
+            allNumbers.remove(result.get(10));
+        }
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) == 0){
+                result.set(i,allNumbers.get(0));
+                allNumbers.remove(0);
+            }
+        }
+
+        return result;
+
     }
 
 

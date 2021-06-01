@@ -93,8 +93,8 @@ public class FootballMatch implements Serializable
         this.state = MatchState.TOSTART;
         this.squadHome = home.getSquad();
         this.squadAway = away.getSquad();
-        this.playersHome = new ArrayList<>();
-        this.playersAway = new ArrayList<>();
+        this.playersHome = home.bestEleven();
+        this.playersAway = away.bestEleven();
         this.substitutionsHome = new HashMap<>();
         this.substitutionsAway = new HashMap<>();
         this.taticHome = new int[]{1,2,2,3,3};

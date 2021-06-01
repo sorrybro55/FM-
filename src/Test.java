@@ -18,39 +18,13 @@ public class Test
         //controller.run();
 
         ///*
-        FootballMatch fm = new FootballMatch();
-        FootballTeam team = state.getTeam("Mahler Athletic");
-        fm.setSquadHome(team.getSquad());
-        List<Integer> aux = new ArrayList<>(team.getSquad().keySet());
-        List<Integer> numbers = new ArrayList<>();
-        for(int i =0; i <11; i++)
-            numbers.add(aux.get(i));
-        fm.setPlayersHome(numbers);
-        //System.out.println(fm.getSquadHome().keySet());
-        //System.out.println(fm.getPlayersHome());
-
-        /*try{
-            fm.substitutionHome(20,17);}
-        catch (SubstitutionsException e){
-            System.out.println(e.getMessage());
-        }
-
-        System.out.println(fm.getPlayersHome());*/
-
-        try{
-            fm.substitutionHome(20,17);}
-        catch (SubstitutionsException e){
-            System.out.println(e.getMessage());
-        }
+        FootballTeam team1 = state.getTeam("Mahler Athletic");
+        FootballTeam team2 = state.getTeam("Wagner Athletic");
+        FootballMatch fm = new FootballMatch(team1,team2);
         MatchController mc = new MatchController(fm);
+        mc.run();
 
-        //System.out.println(fm.getPlayersHome());
-        //System.out.println(fm.getSquadHome().keySet());
-        //System.out.println(fm.getSubstitutionsHome());
 
-        mc.setElevenHome();
-
-        //*/
     }
 }
 

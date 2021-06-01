@@ -204,8 +204,8 @@ public class IO {
         StringBuilder sb = new StringBuilder();
         while(it.hasNext()){
             fp = it.next();
-            sb.append(fp.getNumber()).append(" | ").append(fp.getName()).append(" | ").append(fp.getPosition()).append("\n");
-            sb.append(fp.stats());
+            sb.append(fp.getNumber()).append(" | ").append(fp.getName()).append(" | ").append(fp.getPosition()).append(" | ");
+            sb.append("Overall: ").append(fp.overall());
             if(it.hasNext())
                 sb.append("\n");
         }
