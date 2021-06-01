@@ -5,29 +5,41 @@ public class Menu {
     private List<String> options;
     private int option;
     private String title;
+    private String out;
 
     public Menu(String [] options){
         this.options = Arrays.asList(options);
         this.option = 0;
         this.title = "*** Menu ***";
+        this.out = "Sair";
     }
 
     public Menu(List<String> options){
         this.options = new ArrayList<>(options);
         this.option = 0;
         this.title = "*** Menu ***";
+        this.out = "Sair";
     }
 
     public Menu(String [] options, String title){
         this.options = Arrays.asList(options);
         this.option = 0;
         this.title = title;
+        this.out = "Sair";
     }
 
     public Menu(List<String> options, String title){
         this.options = new ArrayList<>(options);
         this.option = 0;
         this.title = title;
+    }
+
+    public Menu(String[] options, String out, String title ){
+        this.options = Arrays.asList(options);
+        this.option = 0;
+        this.title = title;
+        this.out = out;
+
     }
 
 
@@ -39,7 +51,8 @@ public class Menu {
             System.out.print(". ");
             System.out.println(this.options.get(i));
         }
-        System.out.println("0. Sair");
+        System.out.print("0. ");
+        System.out.println(out);
     }
     private int readOption(){
         int op;

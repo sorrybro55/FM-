@@ -185,7 +185,7 @@ public class Controller {
     }
 
     public void save(){
-        String fileName = IO.getFilame();
+        String fileName = IO.getFileName();
         try{
             this.state.save(fileName);
             IO.message("Gravado Com Sucesso");
@@ -196,7 +196,7 @@ public class Controller {
     }
 
     public void load(){
-        String fileName = IO.getFilame();
+        String fileName = IO.getFileName();
         try{
             this.state = State.load(fileName);
             IO.message("Carregado Com Sucesso");

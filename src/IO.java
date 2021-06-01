@@ -199,6 +199,20 @@ public class IO {
 
     }
 
+    public static void showPlayers(Iterator<FootballPlayer> it){
+        FootballPlayer fp = null;
+        StringBuilder sb = new StringBuilder();
+        while(it.hasNext()){
+            fp = it.next();
+            sb.append(fp.getNumber()).append(" | ").append(fp.getName()).append(" | ").append(fp.getPosition()).append("\n");
+            sb.append(fp.stats());
+            if(it.hasNext())
+                sb.append("\n");
+        }
+        System.out.println(sb.toString());
+
+    }
+
     public static void message(String message){
         System.out.println(message);
     }
@@ -213,7 +227,7 @@ public class IO {
         sc.nextLine();
     }
 
-    public static String getFilame(){
+    public static String getFileName(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite Nome Do Ficheiro.");
         String fileName = sc.nextLine();

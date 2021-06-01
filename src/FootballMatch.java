@@ -251,15 +251,48 @@ public class FootballMatch implements Serializable
                 && this.substitutionsHome.equals(f.getSubstitutionsHome()) && this.substitutionsAway.equals(f.getSubstitutionsAway());
     }
 
+    private List<FootballPlayer> bench(String team){
+        List<FootballPlayer> result = new ArrayList<>();
+        if(team == teamHome){
+            for(FootballPlayer fp : squadHome.values())
+                if(!playersHome.contains(fp.getNumber()))
+                    result.add(fp.clone());
+        }
+        else{
+            for(FootballPlayer fp : squadAway.values())
+                if(!playersAway.contains(fp.getNumber()))
+                    result.add(fp.clone());
+        }
+        return result;
+
+    }
+
+    public List<FootballPlayer> benchHome(){
+        return bench(teamHome);
+    }
+
+    public List<FootballPlayer> benchAway(){
+        return bench(teamAway);
+    }
+
+    public List<FootballPlayer> playingHome(){
+        return playing(teamHome);
+    }
+
+    public List<FootballPlayer> playingAway(){
+        return playing(teamAway);
+    }
+
+
     private List<FootballPlayer> playing(String team){
         List<FootballPlayer> result = new ArrayList<>();
         if(team == teamHome){
             for (int i : this.playersHome)
-                result.add(squadHome.get(i));
+                result.add(squadHome.get(i).clone());
         }
         else{
             for (int i : this.playersAway)
-                result.add(squadAway.get(i));
+                result.add(squadAway.get(i).clone());
         }
         return result;
     }
@@ -396,6 +429,8 @@ public class FootballMatch implements Serializable
         return wingersOverall(this.teamAway) + midfieldersOverall(this.teamAway) + strikersOverall(this.teamAway);
     }
 
+
+
     private void substitution(String team, int in, int out) throws SubstitutionsException{
         List<Integer> numbers;
         Map<Integer,FootballPlayer> squad;
@@ -410,17 +445,25 @@ public class FootballMatch implements Serializable
             squad = this.squadAway;
             substituions = this.substitutionsAway;
         }
-        if(this.state != MatchState.TOSTART && substituions.keySet().size()>=3)
-            throw new SubstitutionsException("Não Pode Realizar Mais Substituições");
-        if(substituions.containsKey(in) || substituions.containsKey(out))
-            throw new SubstitutionsException("Substituição Invalida");
-        if(!squad.containsKey(in) || !numbers.contains(out))
-            throw new SubstitutionsException("Substituição Invalida");
+        if(numbers.contains(in) && numbers.contains(out)){
+            int fst = numbers.indexOf(in);
+            int snd = numbers.indexOf(out);
+            Collections.swap(numbers,fst,snd);
+        }
+        else {
 
-        int index = numbers.indexOf(out);
-        numbers.set(index,in);
-        if(this.state != MatchState.TOSTART)
-            substituions.put(out,in);
+            if (this.state != MatchState.TOSTART && substituions.keySet().size() >= 3)
+                throw new SubstitutionsException("Não Pode Realizar Mais Substituições");
+            if (substituions.containsKey(in) || substituions.containsKey(out))
+                throw new SubstitutionsException("Substituição Invalida");
+            if (!squad.containsKey(in) || !numbers.contains(out))
+                throw new SubstitutionsException("Substituição Invalida");
+
+            int index = numbers.indexOf(out);
+            numbers.set(index, in);
+            if (this.state != MatchState.TOSTART)
+                substituions.put(out, in);
+        }
 
     }
 
