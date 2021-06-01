@@ -23,34 +23,43 @@ public class Controller {
             switch (option) {
                 case 1:
                     try{
+                        IO.newLine();
                         this.makeGame();
                     }catch (NoTeamsException e){
                         IO.message(e.getMessage());
                     }
                     break;
                 case 2:
+                    IO.newLine();
                     this.showGames();
                     break;
 
                 case 3:
+                    IO.newLine();
                     this.showPlayers();
                     break;
                 case 4:
+                    IO.newLine();
                     this.showTeams();
                     break;
                 case 5:
+                    IO.newLine();
                     this.createPlayer();
                     break;
                 case 6:
+                    IO.newLine();
                     this.createTeam();
                     break;
                 case 7:
+                    IO.newLine();
                     transferPlayer();
                     break;
                 case 8:
+                    IO.newLine();
                     this.save();
                     break;
                 case 9:
+                    IO.newLine();
                     this.load();
                     break;
             }
@@ -66,6 +75,9 @@ public class Controller {
         FootballTeam home = this.state.getTeam(teamHome);
         FootballTeam away = this.state.getTeam(teamAway);
         FootballMatch fm = new FootballMatch(home, away);
+        MatchController mc = new MatchController(fm);
+        mc.run();
+        this.state.addGame(mc.getMatch());
 
     }
 

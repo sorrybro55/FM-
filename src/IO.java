@@ -46,7 +46,7 @@ public class IO {
 
     public static int  chooseNumber(){
         Scanner sc = new Scanner(System.in);
-        int number = 0;
+        int number = -1;
         do{
             System.out.print("Digite Numero: ");
             try {
@@ -55,11 +55,11 @@ public class IO {
                 number = 0;
                 sc.nextLine();
             }
-            if(number <1){
-                System.out.println("Numero");
-                number = 0;
+            if(number <0){
+                System.out.println("Numero Invalido");
+                number = -1;
             }
-        }while (number == 0);
+        }while (number == -1);
 
         return number;
     }
@@ -204,6 +204,8 @@ public class IO {
         StringBuilder sb = new StringBuilder();
         while(it.hasNext()){
             fp = it.next();
+            if(fp.getNumber()<10)
+                sb.append(" ");
             sb.append(fp.getNumber()).append(" | ").append(fp.getName()).append(" | ").append(fp.getPosition()).append(" | ");
             sb.append("Overall: ").append(fp.overall());
             if(it.hasNext())

@@ -15,14 +15,9 @@ public class Test
             System.out.println(e.getMessage());
         }
         Controller controller = new Controller(state);
-        //controller.run();
+        controller.run();
 
-        ///*
-        FootballTeam team1 = state.getTeam("Mahler Athletic");
-        FootballTeam team2 = state.getTeam("Wagner Athletic");
-        FootballMatch fm = new FootballMatch(team1,team2);
-        MatchController mc = new MatchController(fm);
-        mc.run();
+
 
 
     }

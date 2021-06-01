@@ -12,7 +12,6 @@ public class FootballMatch implements Serializable
     private int scoreHome;
     private int scoreAway;
     private LocalDate date;
-    private Timer timer;
     private MatchState state;
     private Map<Integer, FootballPlayer> squadHome;
     private Map<Integer, FootballPlayer> squadAway;
@@ -30,7 +29,6 @@ public class FootballMatch implements Serializable
         this.scoreHome = 0;
         this.scoreAway = 0;
         this.date = LocalDate.now();
-        this.timer = new Timer();
         this.state = MatchState.TOSTART;
         this.squadHome = new HashMap<>();
         this.squadAway = new HashMap<>();
@@ -38,12 +36,12 @@ public class FootballMatch implements Serializable
         this.playersAway = new ArrayList<>();
         this.substitutionsHome = new HashMap<>();
         this.substitutionsAway = new HashMap<>();
-        this.taticHome = new int[]{1,2,2,3,3};
-        this.taticAway = new int[]{1,2,2,3,3};
+        this.taticHome = new int[]{1,2,2,4,2};
+        this.taticAway = new int[]{1,2,2,4,2};
     }
 
 
-    public FootballMatch (String teamHome, String teamAway, int scoreHome, int scoreAway, LocalDate date, Timer timer, MatchState state,
+    public FootballMatch (String teamHome, String teamAway, int scoreHome, int scoreAway, LocalDate date,  MatchState state,
                           Map<Integer, FootballPlayer> squadHome, Map<Integer, FootballPlayer> squadAway, List<Integer> playersHome,
                           List<Integer> playersAway, Map<Integer, Integer> substitutionsHome, Map<Integer, Integer> substitutionsAway, int[] taticHome, int[] taticAway ){
         this.teamHome = teamHome;
@@ -51,7 +49,6 @@ public class FootballMatch implements Serializable
         this.scoreHome = scoreHome;
         this.scoreAway = scoreAway;
         this.date = date;
-        setTimer(timer);
         this.state = state;
         setSquadHome(squadHome);
         setSquadAway(squadAway);
@@ -71,7 +68,6 @@ public class FootballMatch implements Serializable
         this.scoreHome = match.getScoreHome();
         this.scoreAway = match.getScoreAway();
         this.date = match.getDate();
-        setTimer(match.getTimer());
         this.state = match.getState();
         setSquadHome(match.getSquadHome());
         setSquadAway(match.getSquadAway());
@@ -89,7 +85,6 @@ public class FootballMatch implements Serializable
         this.scoreHome = 0;
         this.scoreAway = 0;
         this.date = LocalDate.now();
-        this.timer = new Timer();
         this.state = MatchState.TOSTART;
         this.squadHome = home.getSquad();
         this.squadAway = away.getSquad();
@@ -97,8 +92,8 @@ public class FootballMatch implements Serializable
         this.playersAway = away.bestEleven();
         this.substitutionsHome = new HashMap<>();
         this.substitutionsAway = new HashMap<>();
-        this.taticHome = new int[]{1,2,2,3,3};
-        this.taticAway = new int[]{1,2,2,3,3};
+        this.taticHome = new int[]{1,2,2,4,2};
+        this.taticAway = new int[]{1,2,2,4,2};
     }
 
     public String getTeamHome(){
@@ -141,12 +136,6 @@ public class FootballMatch implements Serializable
         this.date = date;
      }
 
-     public Timer getTimer(){
-        return this.timer.clone();
-     }
-     public void setTimer(Timer timer){
-        this.timer = timer.clone();
-     }
 
     public MatchState getState(){
         return this.state;
@@ -245,7 +234,7 @@ public class FootballMatch implements Serializable
         FootballMatch f = (FootballMatch) o;
         return this.teamHome.equals(f.getTeamHome()) && this.teamAway.equals(f.getTeamAway())
                 && this.scoreHome == f.getScoreHome() && this.scoreAway == f.getScoreAway()
-                && this.date.equals(f.getDate()) && this.state == f.getState() && this.timer.equals(f.getTimer())
+                && this.date.equals(f.getDate()) && this.state == f.getState()
                 && this.squadHome.equals(f.getSquadHome()) && this.squadAway.equals(f.getSquadAway())
                 && this.playersHome.equals(f.getPlayersHome()) && this.playersAway.equals(f.getPlayersAway())
                 && this.substitutionsHome.equals(f.getSubstitutionsHome()) && this.substitutionsAway.equals(f.getSubstitutionsAway());
@@ -477,43 +466,28 @@ public class FootballMatch implements Serializable
 
 
 
-
-
-
-
-    public double clock(){
-        return this.timer.elapsedTimeTime();
-    }
             
     
     public void startGame(){
         if(this.state == MatchState.TOSTART){
             this.setState(MatchState.FIRSTHALF);
-            timer.start();
         }
     }
     
-    public void pauseGameForIntervall(){
+    public void itervall(){
         if(this.state == MatchState.FIRSTHALF){
             this.setState(MatchState.INTERVALL);
-            timer.stop();
         }
     }
 
-    public void pauseGameForSubstitution(){
-        if(this.state == MatchState.FIRSTHALF || this.state == MatchState.SECONDHALF ){
-            this.timer.stop();
-        }
-    }
     
     public void restartGame(){
         if(this.state == MatchState.INTERVALL)
             this.setState(MatchState.SECONDHALF);
-        this.timer.start();
+
     }
     
     public void endGame(){
-        this.timer.stop();
         this.setState(MatchState.FINISHED);
     }
     
@@ -529,7 +503,7 @@ public class FootballMatch implements Serializable
     
     public String score(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.teamHome).append(" ").append(this.getScoreHome()).append(" : ").append(this.teamAway).append(this.getScoreAway());
+        sb.append(this.teamHome).append(" ").append(this.getScoreHome()).append(" : ").append(this.getScoreAway()).append(" ").append(this.teamAway);
         return sb.toString();
     }
 
@@ -568,7 +542,7 @@ public class FootballMatch implements Serializable
             subsF.put(Integer.parseInt(sub[0]), Integer.parseInt(sub[1]));
         }
         return new FootballMatch(campos[0], campos[1], Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
-                LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2])), new Timer(), MatchState.FINISHED,
+                LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2])), MatchState.FINISHED,
                 new HashMap<>(), new HashMap<>(), jc, jf, subsC, subsF, new int[]{1,2,2,3,3}, new int[]{1,2,2,3,3});
     }
 
