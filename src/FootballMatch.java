@@ -396,6 +396,44 @@ public class FootballMatch implements Serializable
         return wingersOverall(this.teamAway) + midfieldersOverall(this.teamAway) + strikersOverall(this.teamAway);
     }
 
+    private void substitution(String team, int in, int out) throws SubstitutionsException{
+        List<Integer> numbers;
+        Map<Integer,FootballPlayer> squad;
+        Map<Integer, Integer> substituions;
+        if(team == teamHome){
+            numbers = this.playersHome;
+            squad = this.squadHome;
+            substituions = this.substitutionsHome;
+        }
+        else{
+            numbers = this.playersAway;
+            squad = this.squadAway;
+            substituions = this.substitutionsAway;
+        }
+        if(this.state != MatchState.TOSTART && substituions.keySet().size()>=3)
+            throw new SubstitutionsException("Não Pode Realizar Mais Substituições");
+        if(substituions.containsKey(in) || substituions.containsKey(out))
+            throw new SubstitutionsException("Substituição Invalida");
+        if(!squad.containsKey(in) || !numbers.contains(out))
+            throw new SubstitutionsException("Substituição Invalida");
+
+        int index = numbers.indexOf(out);
+        numbers.set(index,in);
+        if(this.state != MatchState.TOSTART)
+            substituions.put(out,in);
+
+    }
+
+    public void substitutionHome (int in, int out) throws SubstitutionsException{
+        this.substitution(this.teamHome, in, out);
+    }
+
+    public void substitutionAway (int in, int out) throws SubstitutionsException{
+        this.substitution(this.teamAway, in, out);
+    }
+
+
+
 
 
 

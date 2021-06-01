@@ -15,10 +15,10 @@ public class Test
             System.out.println(e.getMessage());
         }
         Controller controller = new Controller(state);
-        controller.run();
+        //controller.run();
 
 
-        /*FootballMatch fm = new FootballMatch();
+        FootballMatch fm = new FootballMatch();
         FootballTeam team = state.getTeam("Mahler Athletic");
         fm.setSquadHome(team.getSquad());
         List<Integer> aux = new ArrayList<>(team.getSquad().keySet());
@@ -26,11 +26,27 @@ public class Test
         for(int i =0; i <11; i++)
             numbers.add(aux.get(i));
         fm.setPlayersHome(numbers);
-        System.out.println(team.getPlayer(32).overall() + " " + team.getPlayer(32).getPosition());
-        System.out.println(team.getPlayer(11).overall() + " " + team.getPlayer(11).getPosition());
-        System.out.println(team.getPlayer(12).overall() + " " + team.getPlayer(12).getPosition());
-        System.out.println(numbers);
-        System.out.println(fm.goalKeeperOverall(fm.getTeamHome()));*/
+        System.out.println(fm.getSquadHome().keySet());
+        System.out.println(fm.getPlayersHome());
+
+        try{
+            fm.substitutionHome(20,17);}
+        catch (SubstitutionsException e){
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(fm.getPlayersHome());
+
+        try{
+            fm.substitutionHome(30,20);}
+        catch (SubstitutionsException e){
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(fm.getPlayersHome());
+        System.out.println(fm.getSubstitutionsHome());
+
+
 
     }
 }
