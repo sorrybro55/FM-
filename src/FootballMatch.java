@@ -38,14 +38,14 @@ public class FootballMatch implements Serializable
         this.playersAway = new ArrayList<>();
         this.substitutionsHome = new HashMap<>();
         this.substitutionsAway = new HashMap<>();
-        this.taticHome = new int[]{1,4,3,3};
-        this.taticAway = new int[]{1,4,3,3};
+        this.taticHome = new int[]{1,2,2,3,3};
+        this.taticAway = new int[]{1,2,2,3,3};
     }
 
 
     public FootballMatch (String teamHome, String teamAway, int scoreHome, int scoreAway, LocalDate date, Timer timer, MatchState state,
                           Map<Integer, FootballPlayer> squadHome, Map<Integer, FootballPlayer> squadAway, List<Integer> playersHome,
-                          List<Integer> playersAway, Map<Integer, Integer> substitutionsHome, Map<Integer, Integer> substitutionsAway ){
+                          List<Integer> playersAway, Map<Integer, Integer> substitutionsHome, Map<Integer, Integer> substitutionsAway, int[] taticHome, int[] taticAway ){
         this.teamHome = teamHome;
         this.teamAway = teamAway;
         this.scoreHome = scoreHome;
@@ -59,8 +59,8 @@ public class FootballMatch implements Serializable
         setPlayersAway(playersAway);
         setSubstitutionsHome(substitutionsHome);
         setSubstitutionsAway(substitutionsAway);
-        this.taticHome = new int[]{1,2,2,3,3};
-        this.taticAway = new int[]{1,2,2,3,3};
+        setTaticHome(taticHome);
+        setTaticAway(taticAway);
     }
     
 
@@ -79,8 +79,8 @@ public class FootballMatch implements Serializable
         setPlayersAway(match.getPlayersAway());
         setSubstitutionsHome(match.getSubstitutionsHome());
         setSubstitutionsAway(match.getSubstitutionsAway());
-        this.taticHome = new int[]{1,4,3,3};
-        this.taticAway = new int[]{1,4,3,3};
+        setTaticHome(match.getTaticHome());
+        setTaticAway(match.getTaticAway());
     }
 
     public FootballMatch(FootballTeam home, FootballTeam away){
@@ -97,8 +97,8 @@ public class FootballMatch implements Serializable
         this.playersAway = new ArrayList<>();
         this.substitutionsHome = new HashMap<>();
         this.substitutionsAway = new HashMap<>();
-        this.taticHome = new int[]{1,4,3,3};
-        this.taticAway = new int[]{1,4,3,3};
+        this.taticHome = new int[]{1,2,2,3,3};
+        this.taticAway = new int[]{1,2,2,3,3};
     }
 
     public String getTeamHome(){
@@ -251,22 +251,154 @@ public class FootballMatch implements Serializable
                 && this.substitutionsHome.equals(f.getSubstitutionsHome()) && this.substitutionsAway.equals(f.getSubstitutionsAway());
     }
 
-    /*public double overallHome(){
-        double result = 0;
-        int number, position = 0;
-        number = this.playersHome.get(position);
-        position++;
-        result += squadHome.get(number).overall();
-
-        for(int i = 0; i<taticHome[1]; i++){
-            number = this.playersHome.get(position);
-            if(squadHome.get(number) instanceof center)
-            position++;
+    private List<FootballPlayer> playing(String team){
+        List<FootballPlayer> result = new ArrayList<>();
+        if(team == teamHome){
+            for (int i : this.playersHome)
+                result.add(squadHome.get(i));
         }
-
-
+        else{
+            for (int i : this.playersAway)
+                result.add(squadAway.get(i));
+        }
         return result;
-    }*/
+    }
+
+    private List<FootballPlayer> playing(String team, Position pos){
+        List<FootballPlayer> players = this.playing(team);
+        List<FootballPlayer> resutl = new ArrayList<>();
+        int taticIndex = 0, playersIndex = 0;
+        int[] tatic;
+
+        if(team == teamHome)
+            tatic = taticHome;
+        else
+            tatic = taticAway;
+
+        switch (pos){
+            case GOALKEEPER:
+                taticIndex = 0;
+                break;
+            case DEFENDER:
+                taticIndex = 1;
+                break;
+            case WINGER:
+                taticIndex = 2;
+                break;
+            case MIDFIELDER:
+                taticIndex = 3;
+                break;
+            case STRIKER:
+                taticIndex = 4;
+                break;
+        }
+        for(int i = 0; i<taticIndex; i++)
+            playersIndex += tatic[i];
+
+        for(int i = playersIndex; i<playersIndex+tatic[taticIndex]; i++)
+            resutl.add(players.get(i));
+        return resutl;
+    }
+
+    private double goalKeeperOverall(String team){
+        List<FootballPlayer> goalKeepers = this.playing(team, Position.GOALKEEPER);
+        double result = 0;
+        FootballPlayer goalKeeper = goalKeepers.get(0);
+        if (goalKeeper instanceof GoalKeeper)
+            result += goalKeeper.overall();
+        else
+            result += goalKeeper.overall()*0.3;
+        return result;
+    }
+
+
+
+    private double defendersOverall(String team){
+        List<FootballPlayer> defenders = this.playing(team, Position.DEFENDER);
+        double result = 0;
+        for(FootballPlayer defender : defenders){
+            if(defender instanceof Defender)
+                result += defender.overall();
+            else if (defender instanceof center)
+                result += defender.overall()*0.8;
+            else
+                result += defender.overall()*0.5;
+        }
+        return result;
+    }
+
+    private double wingersOverall(String team){
+        List<FootballPlayer> wingers = this.playing(team, Position.WINGER);
+        double result = 0;
+        for(FootballPlayer winger : wingers ){
+            if(winger instanceof Winger)
+                result += winger.overall();
+            else if (winger instanceof row)
+                result += winger.overall()*0.8;
+            else
+                result += winger.overall()*0.5;
+        }
+        return result;
+    }
+
+    private double midfieldersOverall(String team){
+        List<FootballPlayer> midfielders = this.playing(team, Position.MIDFIELDER);
+        double result = 0;
+        for(FootballPlayer midfielder : midfielders ){
+            if(midfielder instanceof MidFielder)
+                result += midfielder.overall();
+            else
+                result += midfielder.overall()*0.8;
+        }
+        return result;
+    }
+
+    private double strikersOverall(String team){
+        List<FootballPlayer> strikers = this.playing(team, Position.STRIKER);
+        double result = 0;
+        for(FootballPlayer striker : strikers ){
+            if(striker instanceof Striker)
+                result += striker.overall();
+            else if (striker instanceof center)
+                result += striker.overall()*0.8;
+            else
+                result += striker.overall()*0.5;
+        }
+        return result;
+    }
+
+
+    public double overallHome(){
+        return goalKeeperOverall(this.teamHome) + defendersOverall(this.teamHome) + wingersOverall(this.teamHome) +
+                midfieldersOverall(this.teamHome) + strikersOverall(this.teamHome);
+    }
+
+    public double overallAway(){
+        return goalKeeperOverall(this.teamAway) + defendersOverall(this.teamAway) + wingersOverall(this.teamAway) +
+                midfieldersOverall(this.teamAway) + strikersOverall(this.teamAway);
+    }
+
+    public double defensiveOverallHome(){
+        return goalKeeperOverall(this.teamHome) + defendersOverall(this.teamHome) + wingersOverall(this.teamHome) +
+                midfieldersOverall(this.teamHome);
+    }
+
+    public double defensiveOverallAway(){
+        return goalKeeperOverall(this.teamAway) + defendersOverall(this.teamAway) + wingersOverall(this.teamAway) +
+                midfieldersOverall(this.teamAway);
+    }
+
+    public double ofensiveOverallHome(){
+        return wingersOverall(this.teamHome) + midfieldersOverall(this.teamHome) + strikersOverall(this.teamHome);
+    }
+
+    public double ofensiveOverallAway(){
+        return wingersOverall(this.teamAway) + midfieldersOverall(this.teamAway) + strikersOverall(this.teamAway);
+    }
+
+
+
+
 
     public double clock(){
         return this.timer.elapsedTimeTime();
@@ -356,7 +488,7 @@ public class FootballMatch implements Serializable
         }
         return new FootballMatch(campos[0], campos[1], Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
                 LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2])), new Timer(), MatchState.FINISHED,
-                new HashMap<>(), new HashMap<>(), jc, jf, subsC, subsF);
+                new HashMap<>(), new HashMap<>(), jc, jf, subsC, subsF, new int[]{1,2,2,3,3}, new int[]{1,2,2,3,3});
     }
 
 
