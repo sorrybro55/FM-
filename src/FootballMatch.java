@@ -508,17 +508,6 @@ public class FootballMatch implements Serializable
     }
 
 
-    
-    public MatchResult result(){
-        if (scoreHome == scoreAway) 
-            return MatchResult.DRAW;
-        if (scoreHome > scoreAway) 
-            return MatchResult.WIN;
-        else
-            return MatchResult.LOSS;
-        
-    }
-
 
     public static FootballMatch parse(String input){
         String[] campos = input.split(",");
