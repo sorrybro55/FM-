@@ -244,12 +244,12 @@ public class FootballMatch implements Serializable
         List<FootballPlayer> result = new ArrayList<>();
         if(team == teamHome){
             for(FootballPlayer fp : squadHome.values())
-                if(!playersHome.contains(fp.getNumber()))
+                if(!playersHome.contains(fp.getNumber()) && !this.substitutionsHome.containsKey(fp.getNumber()))
                     result.add(fp.clone());
         }
         else{
             for(FootballPlayer fp : squadAway.values())
-                if(!playersAway.contains(fp.getNumber()))
+                if(!playersAway.contains(fp.getNumber()) && !this.substitutionsAway.containsKey(fp.getNumber()))
                     result.add(fp.clone());
         }
         return result;
@@ -507,33 +507,60 @@ public class FootballMatch implements Serializable
         return sb.toString();
     }
 
+    public void decreaseStats(int value){
+        for(Integer number : this.playersHome){
+            this.squadHome.get(number).decreaseStats(value);
+        }
+
+        for(Integer number : this.playersAway){
+            this.squadAway.get(number).decreaseStats(value);
+        }
+    }
 
 
-    public static FootballMatch parse(String input){
+
+    public static FootballMatch parse(String input) {
         String[] campos = input.split(",");
         String[] data = campos[4].split("-");
         List<Integer> jc = new ArrayList<>();
         List<Integer> jf = new ArrayList<>();
         Map<Integer, Integer> subsC = new HashMap<>();
         Map<Integer, Integer> subsF = new HashMap<>();
-        for (int i = 5; i < 16; i++){
+        for (int i = 5; i < 16; i++) {
             jc.add(Integer.parseInt(campos[i]));
         }
-        for (int i = 16; i < 19; i++){
+        for (int i = 16; i < 19; i++) {
             String[] sub = campos[i].split("->");
             subsC.put(Integer.parseInt(sub[0]), Integer.parseInt(sub[1]));
         }
-        for (int i = 19; i < 30; i++){
+        for (int i = 19; i < 30; i++) {
             jf.add(Integer.parseInt(campos[i]));
         }
-        for (int i = 30; i < 33; i++){
+        for (int i = 30; i < 33; i++) {
             String[] sub = campos[i].split("->");
             subsF.put(Integer.parseInt(sub[0]), Integer.parseInt(sub[1]));
         }
-        return new FootballMatch(campos[0], campos[1], Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
-                LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2])), MatchState.FINISHED,
-                new HashMap<>(), new HashMap<>(), jc, jf, subsC, subsF, new int[]{1,2,2,3,3}, new int[]{1,2,2,3,3});
-    }
+
+
+        for (int i = 0; i < 11; i++) {
+            int num = jc.get(i);
+            if (subsC.containsKey(num)) {
+                jc.set(i, subsC.get(num));
+            }
+        }
+
+        for (int i = 0; i < 11; i++) {
+            int num = jf.get(i);
+            if (subsF.containsKey(num)) {
+                jf.set(i, subsF.get(num));
+            }
+        }
+
+
+            return new FootballMatch(campos[0], campos[1], Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
+                    LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2])), MatchState.FINISHED,
+                    new HashMap<>(), new HashMap<>(), jc, jf, subsC, subsF, new int[]{1, 2, 2, 3, 3}, new int[]{1, 2, 2, 3, 3});
+        }
 
 
 }

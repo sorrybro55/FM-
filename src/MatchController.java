@@ -120,6 +120,7 @@ public class MatchController {
                     IO.message(match.score());
                 }
             }
+            this.match.decreaseStats(5);
         }
         this.match.endGame();
         IO.newLine();
@@ -249,6 +250,79 @@ public class MatchController {
         Random random = new Random();
         int r = random.nextInt(10);
         return possibilities.get(r);
+    }
+
+    public void calculateResult(){
+        List<Integer> results = new ArrayList<>();
+        double overallHome = this.match.overallHome();
+        double overallAway = this.match.overallAway();
+        double totalOverall = overallHome + overallAway;
+        double ofensiveOverallHome = this.match.ofensiveOverallHome();
+        double defensiveOverallHome = this.match.defensiveOverallHome();
+        double ofensiveOverallAway = this.match.ofensiveOverallAway();
+        double defensiveOverallAway = this.match.defensiveOverallAway();
+        overallHome *= 0.7;
+        overallAway *= 0.7;
+
+        int i = (int) (overallHome*100/totalOverall)/10;
+        int j = (int) (overallAway*100/totalOverall)/10;
+        int k = 10 - i - j;
+        for(int l=0; l<i; l++)
+            results.add(1);
+        for(int l=0; l<j; l++  )
+            results.add(0);
+        for(int l=0; l<k; l++)
+            results.add(2);
+        Random random = new Random();
+        int w = random.nextInt(10);
+        int winner = results.get(w);
+
+
+        int difHA = (int) ((ofensiveOverallHome *10) /(ofensiveOverallHome+defensiveOverallAway));
+        List<Integer> possiblesGoals = new ArrayList<>();
+        k = 10 - difHA;
+        for(i = 0; i<k; i++)
+            possiblesGoals.add(0);
+        for (i = 0; i< difHA; i++)
+            possiblesGoals.add(i+1);
+        int r = random.nextInt(10);
+        int goalsHome = possiblesGoals.get(r);
+
+
+
+        int difAH = (int) ((ofensiveOverallAway *10) /(ofensiveOverallAway+defensiveOverallHome));
+        possiblesGoals.clear();
+        k = 10 - difAH;
+        for(i = 0; i<k; i++)
+            possiblesGoals.add(0);
+        for (i = 0; i< difAH; i++)
+            possiblesGoals.add(i+1);
+        r = random.nextInt(10);
+        int goalsAway = possiblesGoals.get(r);
+
+
+        if(winner == 0 && goalsHome != goalsAway){
+            goalsHome = goalsAway;
+        }
+
+        if(winner == 1 && goalsHome <=goalsAway){
+            while (goalsHome <= goalsAway)
+                goalsHome++;
+        }
+
+
+        if(winner == 2 && goalsAway <= goalsHome){
+            while (goalsAway <= goalsHome)
+                goalsAway++;
+        }
+
+        this.match.setScoreHome(goalsHome);
+        this.match.setScoreAway(goalsAway);
+        this.match.endGame();
+        IO.newLine();
+        IO.message("Resultado");
+        IO.message(match.score());
+
     }
 
 

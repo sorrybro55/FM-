@@ -70,14 +70,33 @@ public class Controller {
         Predicate<FootballTeam> p = FootballTeam::isComplete;
         if (this.state.getTeams().values().stream().filter(p).count() <1)
             throw new NoTeamsException();
-        String teamHome = this.selectTeam(p);
-        String teamAway = this.selectTeam(p);
-        FootballTeam home = this.state.getTeam(teamHome);
-        FootballTeam away = this.state.getTeam(teamAway);
-        FootballMatch fm = new FootballMatch(home, away);
-        MatchController mc = new MatchController(fm);
-        mc.run();
-        this.state.addGame(mc.getMatch());
+
+        Menu menu = new Menu(new String[]{"Jogo Completo", "Simular Resultado"},"***Tipo de Jogo***");
+        int option = -1;
+
+        do{
+            menu.run();
+            option = menu.getOption();
+        }while (option <0 || option>2);
+
+        if(option !=0){
+
+            String teamHome = this.selectTeam(p);
+            String teamAway = this.selectTeam(p);
+            FootballTeam home = this.state.getTeam(teamHome);
+            FootballTeam away = this.state.getTeam(teamAway);
+            FootballMatch fm = new FootballMatch(home, away);
+            MatchController mc = new MatchController(fm);
+
+            if (option == 1)
+                mc.run();
+            else
+                mc.calculateResult();
+            this.state.addGame(mc.getMatch());
+
+        }
+
+
 
     }
 
