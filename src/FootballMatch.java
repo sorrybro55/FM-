@@ -341,7 +341,7 @@ public class FootballMatch implements Serializable
         for(FootballPlayer defender : defenders){
             if(defender instanceof Defender)
                 result += defender.overall();
-            else if (defender instanceof center)
+            else if (defender instanceof Center)
                 result += defender.overall()*0.8;
             else
                 result += defender.overall()*0.5;
@@ -355,7 +355,7 @@ public class FootballMatch implements Serializable
         for(FootballPlayer winger : wingers ){
             if(winger instanceof Winger)
                 result += winger.overall();
-            else if (winger instanceof row)
+            else if (winger instanceof Row)
                 result += winger.overall()*0.8;
             else
                 result += winger.overall()*0.5;
@@ -381,7 +381,7 @@ public class FootballMatch implements Serializable
         for(FootballPlayer striker : strikers ){
             if(striker instanceof Striker)
                 result += striker.overall();
-            else if (striker instanceof center)
+            else if (striker instanceof Center)
                 result += striker.overall()*0.8;
             else
                 result += striker.overall()*0.5;

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class MidFielder extends FootballPlayer implements center, row{
+public class MidFielder extends FootballPlayer implements Center, Row{
 
 
     private int recovery;
