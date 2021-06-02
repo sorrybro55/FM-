@@ -173,6 +173,8 @@ public class IO {
         while (it.hasNext()){
             e = it.next();
             teamsName.add(e.getKey());
+            if(i+1<10)
+                sb.append(" ");
             sb.append(i+1).append(". ").append(e.getKey()).append('\n');
             i++;
 

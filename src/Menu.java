@@ -32,6 +32,7 @@ public class Menu {
         this.options = new ArrayList<>(options);
         this.option = 0;
         this.title = title;
+        this.out = "Sair";
     }
 
     public Menu(String[] options, String out, String title ){

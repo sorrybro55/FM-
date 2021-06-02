@@ -176,37 +176,6 @@ public class Controller {
         }
     }
 
-    public void transferPlayer(){
-
-        String player = selectPlayer();
-        String team = selectTeam();
-        state.transferPlayer(player,team);
-    }
-
-
-
-    public String selectPlayer(){
-        Iterator<Map.Entry<String, FootballPlayer>> iteratorPlayers = state.getPlayers().entrySet().iterator();
-        String option = IO.selectPlayer(iteratorPlayers);
-        return option;
-    }
-
-
-
-    public  String selectTeam(){
-        Iterator<Map.Entry<String, FootballTeam>> iteratorTeams = state.getTeams().entrySet().iterator();
-        String option = IO.selectTeam(iteratorTeams);
-        return option;
-    }
-
-    public  String selectTeam(Predicate<FootballTeam> p){
-        Iterator<Map.Entry<String, FootballTeam>> iteratorTeams = state.getTeams().entrySet().stream().filter(team -> p.test(team.getValue())).iterator();
-        String option = IO.selectTeam(iteratorTeams);
-        return option;
-    }
-
-
-
     public void createTeam(){
         String name = IO.chooseName();
         FootballTeam team = new FootballTeam();
@@ -214,6 +183,30 @@ public class Controller {
         state.addTeam(team);
 
     }
+
+    public void transferPlayer(){
+        Iterator<Map.Entry<String, FootballPlayer>> iteratorPlayers = state.getPlayers().entrySet().iterator();
+        String player = IO.selectPlayer(iteratorPlayers);
+        String team = selectTeam();
+        state.transferPlayer(player,team);
+    }
+
+
+    public String selectTeam(){
+        Iterator<Map.Entry<String, FootballTeam>> iteratorTeams = state.getTeams().entrySet().iterator();
+        String option = IO.selectTeam(iteratorTeams);
+        return option;
+    }
+
+    public String selectTeam(Predicate<FootballTeam> p){
+        Iterator<Map.Entry<String, FootballTeam>> iteratorTeams = state.getTeams().entrySet().stream().filter(team -> p.test(team.getValue())).iterator();
+        String option = IO.selectTeam(iteratorTeams);
+        return option;
+    }
+
+
+
+
 
     public void save(){
         String fileName = IO.getFileName();
