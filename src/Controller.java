@@ -90,7 +90,7 @@ public class Controller {
             if (option == 1)
                 mc.run();
             else
-                mc.calculateResult();
+                mc.simulation();
             this.state.addGame(mc.getMatch());
 
         }

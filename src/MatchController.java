@@ -3,39 +3,25 @@ import java.util.*;
 public class MatchController {
     private FootballMatch match;
     private int attacking;
+    private Map<Integer,Map<Integer, Integer>> futureSubstitutionsHome;
+    private Map<Integer,Map<Integer, Integer>> futureSubstitutionsAway;
 
-    public MatchController(){
-        this.match = new FootballMatch();
-        this.attacking = 1;
-    }
 
     public MatchController(FootballMatch fm){
         this.match = fm.clone();
         this.attacking = 1;
-    }
-
-    public MatchController(MatchController mc){
-        this.match = mc.getMatch();
-        this.attacking = mc.getAttacking();
-    }
-
-    public MatchController clone(){
-        return new MatchController(this);
+        this.futureSubstitutionsHome = new TreeMap<>();
+        this.futureSubstitutionsAway = new TreeMap<>();
     }
 
     public FootballMatch getMatch(){
         return  this.match.clone();
     }
 
-    public void setMatch(FootballMatch fm){
-        this.match = fm;
-    }
 
-    public int getAttacking(){
-        return this.attacking;
-    }
 
-    public String teamAttacking(){
+
+    private String teamAttacking(){
         if(this.attacking ==1)
             return this.match.getTeamHome();
         else
@@ -49,15 +35,24 @@ public class MatchController {
             this.attacking = 1;
     }
 
-    public void run(){
+    public void matchPresentation(){
         IO.message(match.toString());
         IO.newLine();
+    }
+
+    private void lineUpHome(){
         this.substitutionsHome();
         this.selectTaticHome();
         IO.newLine();
+    }
+
+    private void lineUpAway(){
         this.substitutionsAway();
         this.selectTaticAway();
         IO.newLine();
+    }
+
+    private void lineUps(){
         IO.message(match.toString());
         IO.newLine();
         IO.message("***Alinhamentos***");
@@ -66,6 +61,14 @@ public class MatchController {
         IO.newLine();
         IO.message(match.getTeamAway());
         IO.showPlayers(match.playingAway().iterator());
+
+    }
+
+    public void run(){
+        this.matchPresentation();
+        this.lineUpHome();
+        this.lineUpAway();
+        this.lineUps();
         this.match.startGame();
         IO.newLine();
         IO.message("Inicio da Partida");
@@ -128,6 +131,64 @@ public class MatchController {
         IO.message(match.score());
     }
 
+    public void simulation(){
+        this.matchPresentation();
+        this.lineUpHome();
+        this.programSubstitutionsHome();
+        this.lineUpAway();
+        this.programSubstitutionsAway();
+        this.match.startGame();
+        for(int i=0; i<10; i++){
+            int decision = this.decision();
+            switch (decision){
+                case 0:
+                    this.switchAttacking();
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    if(this.attacking ==1)
+                        this.match.goalHome();
+                    else
+                        this.match.goalAway();
+                    this.switchAttacking();
+                    break;
+            }
+            if(i==2 || i== 5 || i ==8) {
+                if(futureSubstitutionsHome.containsKey(i))
+                for(Map.Entry<Integer,Integer> me: this.futureSubstitutionsHome.get(i).entrySet())
+                    try {
+                        this.match.substitutionHome(me.getKey(),me.getValue());
+                    }catch (SubstitutionsException e) {
+                        IO.message(e.getMessage());
+                    }
+                if(futureSubstitutionsAway.containsKey(i))
+                    for(Map.Entry<Integer,Integer> me: this.futureSubstitutionsAway.get(i).entrySet())
+                        try {
+                            this.match.substitutionAway(me.getKey(),me.getValue());
+                        }catch (SubstitutionsException e) {
+                            IO.message(e.getMessage());
+                        }
+            }
+
+            if(i==5){
+                match.itervall();
+                if(this.attacking == 1)
+                    this.switchAttacking();
+                match.restartGame();
+            }
+
+
+            this.match.decreaseStats(5);
+        }
+        this.match.endGame();
+        IO.newLine();
+        IO.message("Fim do Jogo");
+        IO.message(match.score());
+    }
+
+
+
     private void selectTatic(String team){
         int[] actualTatic;
         if(team.equals(match.getTeamHome()))
@@ -159,11 +220,11 @@ public class MatchController {
         }
     }
 
-    public void selectTaticHome(){
+    private void selectTaticHome(){
         selectTatic(match.getTeamHome());
     }
 
-    public void selectTaticAway(){
+    private void selectTaticAway(){
         selectTatic(match.getTeamAway());
     }
 
@@ -220,8 +281,87 @@ public class MatchController {
     public void substitutionsAway(){
         this.substitutions(match.getTeamAway());
     }
-    
-    public int decision(){
+
+
+    private void programSubstitutions(String team){
+        List<FootballPlayer> playing;
+        List<FootballPlayer> bench;
+        Map<Integer,FootballPlayer> squad;
+        Map<Integer,Map<Integer,Integer>> subs= new TreeMap<>();
+
+        int option = -1;
+        IO.message(team);
+        Menu menu =  new Menu(new String[]{"Sim"},"Não", "Deseja Programar Alterações?");
+        do{
+            if (team == match.getTeamHome()){
+                playing = match.playingHome();
+                bench = match.benchHome();
+            }
+            else{
+                playing = match.playingAway();
+                bench = match.benchAway();
+            }
+            IO.message("***Titulares***");
+            IO.showPlayers(playing.iterator());
+            IO.newLine();
+            IO.message("***Banco***");
+            IO.showPlayers(bench.iterator());
+            menu.run();
+            option = menu.getOption();
+            if(option ==1){
+
+                IO.message("Selecione Jogador dos Titulares");
+                int out = IO.chooseNumber();
+                IO.message("Selecione Jogador dos Titulares/Banco");
+                int in = IO.chooseNumber();
+                Menu timeMenu = new Menu(new String[]{"Primeira Parte","Segunda Parte"},"Intervalo","Escolha Momento");
+                int timOption = -1;
+                do{
+                    timeMenu.run();
+                    timOption = timeMenu.getOption();
+                }while (timOption <0 || timOption >2);
+                int substitutionTime = 5;
+                if (timOption == 1)
+                    substitutionTime = 2;
+                else if(timOption == 0)
+                    substitutionTime = 5;
+                else if(timOption == 2)
+                    substitutionTime = 8;
+                try {
+                    if(team == match.getTeamHome()){
+                        match.substitutionHome(in, out);
+                        match.substitutionHome(out,in);
+                        futureSubstitutionsHome.putIfAbsent(substitutionTime,new TreeMap<>());
+                        futureSubstitutionsHome.get(substitutionTime).put(in,out);
+
+                    }
+                    else{
+                        match.substitutionAway(in, out);
+                        match.substitutionAway(out,in);
+                        futureSubstitutionsAway.putIfAbsent(substitutionTime,new TreeMap<>());
+                        futureSubstitutionsAway.get(substitutionTime).put(in,out);
+                    }
+
+
+                }catch (SubstitutionsException e){
+                    IO.message(e.getMessage());
+                }
+
+            }
+
+        } while (option != 0);
+
+    }
+
+    public void programSubstitutionsHome(){
+        this.programSubstitutions(this.match.getTeamHome());
+    }
+
+    public void programSubstitutionsAway(){
+        this.programSubstitutions(this.match.getTeamAway());
+    }
+
+    private int decision(){
         List<Integer> possibilities = new ArrayList<>();
         double attack, defense;
         if (this.attacking == 1){
@@ -252,7 +392,14 @@ public class MatchController {
         return possibilities.get(r);
     }
 
+
+/*
     public void calculateResult(){
+        this.matchPresentation();
+        this.lineUpHome();
+        this.programSubstitutionsHome();
+        this.lineUpAway();
+        this.programSubstitutionsAway();
         List<Integer> results = new ArrayList<>();
         double overallHome = this.match.overallHome();
         double overallAway = this.match.overallAway();
@@ -324,6 +471,7 @@ public class MatchController {
         IO.message(match.score());
 
     }
+    */
 
 
 

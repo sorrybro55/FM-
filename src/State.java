@@ -1,18 +1,16 @@
 
+import com.sun.source.tree.Tree;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class State implements Serializable {
@@ -22,8 +20,8 @@ public class State implements Serializable {
     private List<FootballMatch> games;
 
     public State(){
-        this.players = new HashMap<>();
-        this.teams = new HashMap<>();
+        this.players = new TreeMap<>();
+        this.teams = new TreeMap<>();
         this.games = new ArrayList<>();
     }
 
@@ -40,21 +38,28 @@ public class State implements Serializable {
     }
 
     public Map<String, FootballPlayer> getPlayers() {
-        return this.players.values().stream().collect(Collectors.toMap(p->p.getName(), p->p.clone()));
+        Map<String, FootballPlayer> r = new TreeMap<>();
+        for(Map.Entry<String, FootballPlayer> me : this.players.entrySet())
+            r.put(me.getKey(), me.getValue().clone());
+        return r;
+
     }
 
     public void setPlayers(Map<String, FootballPlayer> players){
-        this.players = new HashMap<>();
+        this.players = new TreeMap<>();
         for(Map.Entry<String, FootballPlayer> m : players.entrySet())
             this.players.put(m.getKey(), m.getValue().clone());
     }
 
     public Map<String, FootballTeam> getTeams() {
-        return this.teams.values().stream().collect(Collectors.toMap(t->t.getName(), t->t.clone()));
+        Map<String, FootballTeam> r = new TreeMap<>();
+        for(Map.Entry<String, FootballTeam> me : this.teams.entrySet())
+            r.put(me.getKey(), me.getValue().clone());
+        return r;
     }
 
     public void setTeams(Map<String, FootballTeam> teams){
-        this.teams = new HashMap<>();
+        this.teams = new TreeMap<>();
         for (Map.Entry<String, FootballTeam> m : teams.entrySet())
             this.teams.put(m.getKey(), m.getValue().clone());
     }
@@ -168,8 +173,8 @@ public class State implements Serializable {
 
     public void parse(String filename) throws LinhaIncorretaException {
         List<String> linhas = lerFicheiro(filename);
-        Map<String, FootballTeam> equipas = new HashMap<>(); //nome, equipa
-        Map<String, FootballPlayer> jogadores = new HashMap<>(); //numero, jogador
+        Map<String, FootballTeam> equipas = new TreeMap<>(); //nome, equipa
+        Map<String, FootballPlayer> jogadores = new TreeMap<>(); //numero, jogador
         List<FootballMatch> jogos = new ArrayList<>();
         FootballTeam ultima = null; FootballPlayer j = null;
         String[] linhaPartida;
