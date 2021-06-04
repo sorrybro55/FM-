@@ -23,31 +23,25 @@ public class Controller {
             switch (option) {
                 case 1:
                     try{
-                        IO.newLine();
                         this.makeGame();
                     }catch (NoTeamsException e){
                         IO.message(e.getMessage());
                     }
                     break;
                 case 2:
-                    IO.newLine();
                     this.showGames();
                     break;
 
                 case 3:
-                    IO.newLine();
                     this.managePlayers();
                     break;
                 case 4:
-                    IO.newLine();
                     this.manageTeams();
                     break;
                 case 5:
-                    IO.newLine();
                     this.save();
                     break;
                 case 6:
-                    IO.newLine();
                     this.load();
                     break;
             }
@@ -97,6 +91,7 @@ public class Controller {
         int option = -1;
         do {
 
+            IO.newLine();
             menu.run();
             option = menu.getOption();
             if(option !=0) {
@@ -115,6 +110,7 @@ public class Controller {
         Menu menu = new Menu(new String[]{"Ver Jogadores","Transferir Jogador","Criar Jogador","Apagar Jogador"},"***Selecione Opção***");
         int option = -1;
         do{
+            IO.newLine();
             menu.run();
             option = menu.getOption();
             switch (option){
@@ -240,6 +236,7 @@ public class Controller {
         Menu menu = new Menu(new String[]{"Ver Equipas","Criar Equipas","Apagar Equipa"},"***Selecione Opção***");
         int option = -1;
         do{
+            IO.newLine();
             menu.run();
             option = menu.getOption();
             switch (option){
@@ -355,6 +352,7 @@ public class Controller {
 
 
     public void save(){
+        IO.newLine();
         String fileName = IO.getFileName();
         try{
             this.state.save(fileName);
@@ -366,6 +364,7 @@ public class Controller {
     }
 
     public void load(){
+        IO.newLine();
         String fileName = IO.getFileName();
         try{
             this.state = State.load(fileName);
