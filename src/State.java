@@ -1,5 +1,4 @@
 
-import com.sun.source.tree.Tree;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -143,7 +142,6 @@ public class State implements Serializable {
     }
 
 
-
     public FootballTeam getTeam(String name){
         if (this.teams.containsKey(name))
             return this.teams.get(name).clone();
@@ -152,8 +150,8 @@ public class State implements Serializable {
 
 
 
-    public void parse(String filename) throws LinhaIncorretaException {
-        List<String> linhas = lerFicheiro(filename);
+    public void parse(String filename) throws LinhaIncorretaException, IOException {
+        List<String> linhas = readFile(filename);
         Map<String, FootballTeam> equipas = new TreeMap<>(); //nome, equipa
         Map<String, FootballPlayer> jogadores = new TreeMap<>(); //numero, jogador
         List<FootballMatch> jogos = new ArrayList<>();
@@ -224,13 +222,8 @@ public class State implements Serializable {
         this.setTeams(equipas);
 
     }
-    public static List<String> lerFicheiro(String nomeFich) {
-        List<String> lines;
-        try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
-        catch(IOException exc) {
-            System.out.println(exc.getMessage());
-            lines = new ArrayList<>();
-        }
+    public static List<String> readFile(String nomeFich) throws IOException{
+        List<String> lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8);
         return lines;
     }
 

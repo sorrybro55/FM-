@@ -134,7 +134,7 @@ public class FootballTeam implements Serializable{
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < 11; i++)
             result.add(0);
-        Comparator<FootballPlayer> c = (p1, p2) -> p1.overall() - p2.overall();
+        Comparator<FootballPlayer> c = (p1, p2) -> p2.overall() - p1.overall();
         List<FootballPlayer> goalKeepers = this.squad.values().stream().filter(p -> p instanceof GoalKeeper).sorted(c).collect(Collectors.toList());
         List<FootballPlayer> defenders = this.squad.values().stream().filter(p -> p instanceof Defender).sorted(c).collect(Collectors.toList());
         List<FootballPlayer> wingers = this.squad.values().stream().filter(p -> p instanceof Winger).sorted(c).collect(Collectors.toList());

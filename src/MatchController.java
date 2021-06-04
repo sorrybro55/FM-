@@ -35,7 +35,7 @@ public class MatchController {
             this.attacking = 1;
     }
 
-    public void matchPresentation(){
+    private void matchPresentation(){
         IO.message(match.toString());
         IO.newLine();
     }
@@ -195,28 +195,28 @@ public class MatchController {
             tatic = match.getTaticHome();
         else
             tatic = match.getTaticAway();
-
         int r = 0;
         for(int i=0; i<FootballMatch.tatics.length; i++)
             if(Arrays.equals(FootballMatch.tatics[i], tatic))
                 r = i;
-
-        String[] options = {"442", "433", "352"};
-        options[r] += " - atual";
-        Menu menu = new Menu(options, "Sair","Modelo tatico:" );
         int option = -1;
         do{
+            String[] options = {"442", "433", "352"};
+            options[r] += " *";
+            Menu menu = new Menu(options, "Prosseguir","Modelo tatico:" );
             IO.newLine();
             menu.run();
             option = menu.getOption();
-        }while (option <0 || option> options.length);
-        if (option !=0)
-        {
-            if(team.equals(match.getTeamHome()))
-                match.setTaticHome(FootballMatch.tatics[option-1]);
-            else
-                match.setTaticAway(FootballMatch.tatics[option-1]);
-        }
+            if (option !=0)
+            {
+                r = option-1;
+                if(team.equals(match.getTeamHome()))
+                    match.setTaticHome(FootballMatch.tatics[option-1]);
+                else
+                    match.setTaticAway(FootballMatch.tatics[option-1]);
+            }
+        }while (option != 0 );
+
     }
 
     private void selectTaticHome(){
@@ -274,11 +274,11 @@ public class MatchController {
         } while (option != 0);
 
     }
-    public void substitutionsHome(){
+    private void substitutionsHome(){
         this.substitutions(match.getTeamHome());
     }
 
-    public void substitutionsAway(){
+    private void substitutionsAway(){
         this.substitutions(match.getTeamAway());
     }
 
@@ -368,11 +368,11 @@ public class MatchController {
 
     }
 
-    public void programSubstitutionsHome(){
+    private void programSubstitutionsHome(){
         this.programSubstitutions(this.match.getTeamHome());
     }
 
-    public void programSubstitutionsAway(){
+    private void programSubstitutionsAway(){
         this.programSubstitutions(this.match.getTeamAway());
     }
 

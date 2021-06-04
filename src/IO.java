@@ -111,77 +111,7 @@ public class IO {
         }
     }
 
-    public static String selectPlayer(Iterator<Map.Entry<String, FootballPlayer>> it){
-        StringBuilder sb = new StringBuilder();
-        List<String> playersName = new ArrayList<>();
-        Map.Entry<String, FootballPlayer> e;
-        int i = 0;
-        while (it.hasNext()){
-            e = it.next();
-            playersName.add(e.getKey());
-            sb.append(i+1).append(". ").append(e.getValue()).append('\n');
-            i++;
-            if(it.hasNext())
-                sb.append("\n");
-        }
-        Scanner sc = new Scanner(System.in);
-        int option = -1;
-        System.out.println(sb.toString());
-        while (option == -1){
-            System.out.println("Selecione Jogador: ");
-            try {
-                option = sc.nextInt();
-            }
-            catch (InputMismatchException exc){
-                System.out.println("Valor Invalido");
-                option = -1;
-                sc.nextLine();
-            }
-            if(option<1 || option>i){
-                System.out.println("Valor Invalido");
-                option = -1;
-            }
-        }
-        return playersName.get(option-1);
-    }
 
-
-
-
-    public static String selectTeam(Iterator<Map.Entry<String, FootballTeam>> it){
-        StringBuilder sb = new StringBuilder();
-        List<String> teamsName = new ArrayList<>();
-        Map.Entry<String, FootballTeam> e;
-
-        int i = 0;
-        while (it.hasNext()){
-            e = it.next();
-            teamsName.add(e.getKey());
-            sb.append(i+1).append(". ").append(e.getKey()).append('\n');
-            i++;
-
-        }
-        Scanner sc = new Scanner(System.in);
-        int option = -1;
-        System.out.println(sb.toString());
-        while (option == -1){
-            System.out.println("Selecione Equipa: ");
-            try {
-                option = sc.nextInt();
-            }
-            catch (InputMismatchException exc){
-                System.out.println("Valor Invalido");
-                option = -1;
-                sc.nextLine();
-            }
-            if(option<1 || option>i){
-                System.out.println("Valor Invalido");
-                option = -1;
-            }
-        }
-        return teamsName.get(option-1);
-
-    }
 
     public static void showPlayers(Iterator<FootballPlayer> it){
         FootballPlayer fp = null;
@@ -190,15 +120,13 @@ public class IO {
             fp = it.next();
             if(fp.getNumber()<10)
                 sb.append(" ");
-            sb.append(fp.getNumber()).append(" | ").append(fp.getName()).append(" | ").append(fp.getPosition()).append(" | ");
-            sb.append("Overall: ").append(fp.overall());
+            sb.append(fp.toStringSimple());
             if(it.hasNext())
                 sb.append("\n");
         }
         System.out.println(sb);
 
     }
-
 
     public static void showFutureSubstitutions(Iterator<Map.Entry<Integer,Map<Integer,Integer>>> it){
         StringBuilder sb = new StringBuilder();

@@ -57,8 +57,9 @@ public class Controller {
 
     public void makeGame () throws NoTeamsException{
         Predicate<FootballTeam> p = FootballTeam::isComplete;
-        if (this.state.getTeams().values().stream().filter(p).count() <1)
+        if (this.state.getTeams().values().stream().filter(p).count() <1) {
             throw new NoTeamsException();
+        }
 
         Menu menu = new Menu(new String[]{"Jogo Completo", "Simular Resultado"},"***Tipo de Jogo***");
         int option = -1;
@@ -72,7 +73,11 @@ public class Controller {
         if(option !=0){
 
             String teamHome = this.selectTeam(p);
+            if(teamHome == null)
+                return;
             String teamAway = this.selectTeam(p);
+            if(teamAway == null)
+                return;
             FootballTeam home = this.state.getTeam(teamHome);
             FootballTeam away = this.state.getTeam(teamAway);
             FootballMatch fm = new FootballMatch(home, away);
@@ -158,7 +163,11 @@ public class Controller {
 
     public void transferPlayer(){
         String player = this.selectPlayer();
+        if(player == null)
+            return;
         String team = this.selectTeam();
+        if(team == null)
+            return;
         state.transferPlayer(player,team);
     }
 
@@ -297,27 +306,48 @@ public class Controller {
     }
 
 
-
     public String selectPlayer(){
-        Iterator<Map.Entry<String, FootballPlayer>> iteratorPlayers = state.getPlayers().entrySet().iterator();
-        String option = IO.selectPlayer(iteratorPlayers);
-        return option;
+        List<String> players = new ArrayList<>(this.state.getPlayers().keySet());
+        Menu menu = new Menu(players, "***Selecione Jogador***");
+        int option = -1;
+        do{
+            menu.run();
+            option = menu.getOption();
+        }while (option<0 || option>players.size());
+        if(option !=0)
+            return players.get(option-1);
+        return null;
     }
+
 
 
     public String selectTeam(){
-        Iterator<Map.Entry<String, FootballTeam>> iteratorTeams = state.getTeams().entrySet().iterator();
-        String option = IO.selectTeam(iteratorTeams);
-        return option;
+        List<String> teams = new ArrayList<>(state.getTeams().keySet());
+        Menu menu = new Menu(teams,"Escolha Equipas");
+        int option = -1;
+        do{
+            menu.run();
+            option = menu.getOption();
+        }while (option <0 || option >teams.size());
+        if(option!=0)
+            return teams.get(option-1);
+        return null;
     }
 
     public String selectTeam(Predicate<FootballTeam> p){
-        Iterator<Map.Entry<String, FootballTeam>> iteratorTeams = state.getTeams().entrySet().stream().filter(team -> p.test(team.getValue())).iterator();
-        String option = IO.selectTeam(iteratorTeams);
-        return option;
+        List<String> teams = state.getTeams().entrySet().stream().filter(team -> p.test(team.getValue())).map(Map.Entry::getKey).collect(Collectors.toList());
+        Menu menu = new Menu(teams,"Escolha Equipas");
+        int option = -1;
+        do{
+            menu.run();
+            option = menu.getOption();
+        }while (option <0 || option >teams.size());
+        if(option!=0)
+            return teams.get(option-1);
+        return null;
     }
 
-
+    
 
     public void save(){
         String fileName = IO.getFileName();
