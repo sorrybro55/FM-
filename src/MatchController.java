@@ -56,6 +56,7 @@ public class MatchController {
         IO.message(match.toString());
         IO.newLine();
         IO.message("***Alinhamentos***");
+        IO.newLine();
         IO.message(match.getTeamHome());
         IO.showPlayers(match.playingHome().iterator());
         IO.newLine();
@@ -72,11 +73,13 @@ public class MatchController {
         this.match.startGame();
         IO.newLine();
         IO.message("Inicio da Partida");
+        IO.newLine();
 
 
         for(int i=0; i<10; i++){
-            IO.newLine();
+
             IO.message("Ataque: " + this.teamAttacking());
+            IO.newLine();
             IO.pressEnter();
             int decision = this.decision();
             switch (decision){
@@ -85,7 +88,7 @@ public class MatchController {
                     this.switchAttacking();
                     break;
                 case 1:
-                    IO.message("Lance Perigoso");
+                    IO.message("Lance Perigoso!");
                     break;
                 case 2:
                     IO.message("Golo!!!");
@@ -96,7 +99,9 @@ public class MatchController {
                     this.switchAttacking();
                     break;
             }
+            IO.newLine();
             IO.message(match.score());
+            IO.newLine();
             IO.pressEnter();
 
             if(i==5){
@@ -105,6 +110,7 @@ public class MatchController {
                     this.switchAttacking();
                 IO.newLine();
                 IO.message("Intervalo");
+                IO.newLine();
                 IO.message(match.score());
             }
 
@@ -116,11 +122,13 @@ public class MatchController {
                 IO.newLine();
                 this.substitutionsAway();
                 this.selectTaticAway();
+                IO.newLine();
                 if(i==5){
                     match.restartGame();
-                    IO.newLine();
                     IO.message("Inicio da Segunda Parte");
+                    IO.newLine();
                     IO.message(match.score());
+                    IO.newLine();
                 }
             }
             this.match.decreaseStats(5);
@@ -183,7 +191,7 @@ public class MatchController {
         }
         this.match.endGame();
         IO.newLine();
-        IO.message("Fim do Jogo");
+        IO.message("Resultado Final");
         IO.message(match.score());
     }
 
@@ -201,9 +209,10 @@ public class MatchController {
                 r = i;
         int option = -1;
         do{
+            int overall = (int) (team.equals(match.getTeamHome())? match.overallHome() : match.overallAway());
             String[] options = {"442", "433", "352"};
             options[r] += " *";
-            Menu menu = new Menu(options, "Prosseguir","Modelo tatico:" );
+            Menu menu = new Menu(options, "Prosseguir","*** Modelo tatico ***\nOverall Equipa: " + overall );
             IO.newLine();
             menu.run();
             option = menu.getOption();
@@ -237,7 +246,7 @@ public class MatchController {
         IO.message(team);
         Menu menu =  new Menu(new String[]{"Sim"},"Não", "Deseja Fazer Alterações?");
         do{
-            if (team == match.getTeamHome()){
+            if (team.equals(match.getTeamHome())){
                 playing = match.playingHome();
                 bench = match.benchHome();
             }
@@ -245,22 +254,24 @@ public class MatchController {
                 playing = match.playingAway();
                 bench = match.benchAway();
             }
-            IO.message("***Titulares***");
+            IO.newLine();
+            IO.message("*** Titulares ***");
             IO.showPlayers(playing.iterator());
             IO.newLine();
-            IO.message("***Banco***");
+            IO.message("*** Banco ***");
             IO.showPlayers(bench.iterator());
             IO.newLine();
             menu.run();
             option = menu.getOption();
             if(option ==1){
 
+                IO.newLine();
                 IO.message("Selecione Jogador dos Titulares");
                 int out = IO.chooseNumber();
                 IO.message("Selecione Jogador dos Titulares/Banco");
                 int in = IO.chooseNumber();
                 try {
-                    if(team == match.getTeamHome())
+                    if(team.equals(match.getTeamHome()))
                         match.substitutionHome(in, out);
                     else
                         match.substitutionAway(in, out);
@@ -303,13 +314,13 @@ public class MatchController {
 
             }
             IO.newLine();
-            IO.message("***Titulares***");
+            IO.message("*** Titulares ***");
             IO.showPlayers(playing.iterator());
             IO.newLine();
-            IO.message("***Banco***");
+            IO.message("*** Banco ***");
             IO.showPlayers(bench.iterator());
             IO.newLine();
-            IO.message("***Substituições Programadas***");
+            IO.message("*** Substituições Programadas ***");
             if(team.equals(this.match.getTeamHome()))
                 IO.showFutureSubstitutions(this.futureSubstitutionsHome.entrySet().iterator());
             else

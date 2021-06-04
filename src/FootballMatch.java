@@ -293,7 +293,7 @@ public class FootballMatch implements Serializable
         int taticIndex = 0, playersIndex = 0;
         int[] tatic;
 
-        if(team == teamHome)
+        if(team.equals(teamHome))
             tatic = taticHome;
         else
             tatic = taticAway;
@@ -392,13 +392,13 @@ public class FootballMatch implements Serializable
 
 
     public double overallHome(){
-        return goalKeeperOverall(this.teamHome) + defendersOverall(this.teamHome) + wingersOverall(this.teamHome) +
-                midfieldersOverall(this.teamHome) + strikersOverall(this.teamHome);
+        return (goalKeeperOverall(this.teamHome) + defendersOverall(this.teamHome) + wingersOverall(this.teamHome) +
+                midfieldersOverall(this.teamHome) + strikersOverall(this.teamHome))/11;
     }
 
     public double overallAway(){
-        return goalKeeperOverall(this.teamAway) + defendersOverall(this.teamAway) + wingersOverall(this.teamAway) +
-                midfieldersOverall(this.teamAway) + strikersOverall(this.teamAway);
+        return (goalKeeperOverall(this.teamAway) + defendersOverall(this.teamAway) + wingersOverall(this.teamAway) +
+                midfieldersOverall(this.teamAway) + strikersOverall(this.teamAway))/11;
     }
 
     public double defensiveOverallHome(){
@@ -424,16 +424,16 @@ public class FootballMatch implements Serializable
     private void substitution(String team, int in, int out) throws SubstitutionsException{
         List<Integer> numbers;
         Map<Integer,FootballPlayer> squad;
-        Map<Integer, Integer> substituions;
+        Map<Integer, Integer> substitutions;
         if(team == teamHome){
             numbers = this.playersHome;
             squad = this.squadHome;
-            substituions = this.substitutionsHome;
+            substitutions = this.substitutionsHome;
         }
         else{
             numbers = this.playersAway;
             squad = this.squadAway;
-            substituions = this.substitutionsAway;
+            substitutions = this.substitutionsAway;
         }
         if(numbers.contains(in) && numbers.contains(out)){
             int fst = numbers.indexOf(in);
@@ -442,9 +442,9 @@ public class FootballMatch implements Serializable
         }
         else {
 
-            if (this.state != MatchState.TOSTART && substituions.keySet().size() >= 3)
+            if (this.state != MatchState.TOSTART && substitutions.keySet().size() >= 3)
                 throw new SubstitutionsException("Não Pode Realizar Mais Substituições");
-            if (substituions.containsKey(in) || substituions.containsKey(out))
+            if (substitutions.containsKey(in) || substitutions.containsKey(out))
                 throw new SubstitutionsException("Substituição Invalida");
             if (!squad.containsKey(in) || !numbers.contains(out))
                 throw new SubstitutionsException("Substituição Invalida");
@@ -452,7 +452,7 @@ public class FootballMatch implements Serializable
             int index = numbers.indexOf(out);
             numbers.set(index, in);
             if (this.state != MatchState.TOSTART)
-                substituions.put(out, in);
+                substitutions.put(out, in);
         }
 
     }

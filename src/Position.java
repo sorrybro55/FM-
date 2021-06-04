@@ -21,7 +21,7 @@ public enum Position implements Serializable
            case GOALKEEPER: return "Guarda-Redes";
            case DEFENDER: return "Defesa";
            case MIDFIELDER: return "Medio";
-           case STRIKER: return "Avançaado";
+           case STRIKER: return "Avançado";
            case WINGER: return "Lateral";
            default: return "Indefinido";
         }
