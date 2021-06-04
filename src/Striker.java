@@ -68,7 +68,8 @@ public class Striker extends FootballPlayer {
     }
 
     public int overall(){
-        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing() + this.positioning) / 8;
+        return (int) (this.getSpeed() + this.getStamina()*0.8 + this.getAgility() + this.getJumping()
+                + this.getHeading() + this.getFinishing()*1.2 + this.getPassing()*0.8 + this.positioning*1.2) / 8;
     }
 
     public String toString(){

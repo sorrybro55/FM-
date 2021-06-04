@@ -62,7 +62,8 @@ public class Defender extends FootballPlayer{
     }
 
     public int overall(){
-        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing()) + this.marking/ 8;
+        return (int) (this.getSpeed()*0.8 + this.getStamina()*0.7 + this.getAgility()*0.8 + this.getJumping()*1.5
+                + this.getHeading()*1.5 + this.getFinishing()*0.4 + this.getPassing()*0.8 + this.marking*1.5) / 8;
     }
 
     public boolean equals(Object o){

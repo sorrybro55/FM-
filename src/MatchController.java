@@ -302,13 +302,14 @@ public class MatchController {
                 bench = match.benchAway();
 
             }
+            IO.newLine();
             IO.message("***Titulares***");
             IO.showPlayers(playing.iterator());
             IO.newLine();
             IO.message("***Banco***");
             IO.showPlayers(bench.iterator());
             IO.newLine();
-            IO.message("***Substituições***");
+            IO.message("***Substituições Programadas***");
             if(team.equals(this.match.getTeamHome()))
                 IO.showFutureSubstitutions(this.futureSubstitutionsHome.entrySet().iterator());
             else
@@ -319,9 +320,10 @@ public class MatchController {
             option = menu.getOption();
             if(option ==1){
 
-                IO.message("Selecione Jogador Primeiro Jogador (Titulares)");
+                IO.newLine();
+                IO.message("Selecione Primeiro Jogador (Titulares)");
                 int out = IO.chooseNumber();
-                IO.message("Selecione Jogador Segundo Jogador");
+                IO.message("Selecione Segundo Jogador");
                 int in = IO.chooseNumber();
                 Menu timeMenu = new Menu(new String[]{"Primeira Parte","Segunda Parte"},"Intervalo","Escolha Momento");
                 int timOption = -1;

@@ -54,7 +54,7 @@ public class Controller {
             throw new NoTeamsException();
         }
 
-        Menu menu = new Menu(new String[]{"Jogo Completo", "Simular Resultado"},"***Tipo de Jogo***");
+        Menu menu = new Menu(new String[]{"Jogo Completo", "Simular Resultado"},"*** Tipo de Jogo ***");
         int option = -1;
 
         do{
@@ -86,7 +86,14 @@ public class Controller {
 
     }
     public void showGames(){
-        List<String> games = this.state.getGames().stream().map(FootballMatch::score).collect(Collectors.toList());
+        List<String> games = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        for(FootballMatch fm : this.state.getGames()){
+            sb.setLength(0);
+            sb.append(fm.getTeamHome()).append(" - ").append(fm.getTeamAway());
+            games.add(sb.toString());
+
+        }
         Menu menu = new Menu(games, "*** Selecione Jogo ***");
         int option = -1;
         do {
@@ -107,7 +114,7 @@ public class Controller {
 
     public void managePlayers(){
 
-        Menu menu = new Menu(new String[]{"Ver Jogadores","Transferir Jogador","Criar Jogador","Apagar Jogador"},"***Selecione Opção***");
+        Menu menu = new Menu(new String[]{"Ver Jogadores","Transferir Jogador","Criar Jogador","Apagar Jogador"},"*** Selecione Opção ***");
         int option = -1;
         do{
             IO.newLine();
@@ -233,7 +240,7 @@ public class Controller {
 
     public void manageTeams(){
 
-        Menu menu = new Menu(new String[]{"Ver Equipas","Criar Equipas","Apagar Equipa"},"***Selecione Opção***");
+        Menu menu = new Menu(new String[]{"Ver Equipas","Criar Equipas","Apagar Equipa"},"*** Selecione Opção ***");
         int option = -1;
         do{
             IO.newLine();
@@ -241,15 +248,12 @@ public class Controller {
             option = menu.getOption();
             switch (option){
                 case 1:
-                    IO.newLine();
                     this.showTeams();
                     break;
                 case 2:
-                    IO.newLine();
                     this.createTeam();
                     break;
                 case 3:
-                    IO.newLine();
                     this.deleteTeams();
                     break;
             }
@@ -268,6 +272,7 @@ public class Controller {
         int option = -1;
         do {
 
+            IO.newLine();
             menu.run();
             option = menu.getOption();
             if(option !=0) {
@@ -285,6 +290,7 @@ public class Controller {
 
 
     public void createTeam(){
+        IO.newLine();
         String name = IO.chooseName();
         FootballTeam team = new FootballTeam();
         team.setName(name);
@@ -297,6 +303,7 @@ public class Controller {
             List<String> teams = new ArrayList<>(this.state.getTeams().keySet());
             Menu menu = new Menu(teams, "*** Selecione Equipa ***");
 
+            IO.newLine();
             menu.run();
             option = menu.getOption();
             if(option !=0) {
@@ -310,7 +317,7 @@ public class Controller {
 
     public String selectPlayer(){
         List<String> players = new ArrayList<>(this.state.getPlayers().keySet());
-        Menu menu = new Menu(players, "***Selecione Jogador***");
+        Menu menu = new Menu(players, "*** Selecione Jogador ***");
         int option = -1;
         do{
             menu.run();
@@ -325,9 +332,10 @@ public class Controller {
 
     public String selectTeam(){
         List<String> teams = new ArrayList<>(state.getTeams().keySet());
-        Menu menu = new Menu(teams,"Escolha Equipas");
+        Menu menu = new Menu(teams,"*** Escolha Equipa ***");
         int option = -1;
         do{
+            IO.newLine();
             menu.run();
             option = menu.getOption();
         }while (option <0 || option >teams.size());
@@ -338,9 +346,10 @@ public class Controller {
 
     public String selectTeam(Predicate<FootballTeam> p){
         List<String> teams = state.getTeams().entrySet().stream().filter(team -> p.test(team.getValue())).map(Map.Entry::getKey).collect(Collectors.toList());
-        Menu menu = new Menu(teams,"Escolha Equipas");
+        Menu menu = new Menu(teams,"*** Escolha Equipa ***");
         int option = -1;
         do{
+            IO.newLine();
             menu.run();
             option = menu.getOption();
         }while (option <0 || option >teams.size());

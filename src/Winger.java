@@ -77,7 +77,8 @@ public class Winger extends FootballPlayer {
 
 
     public int overall (){
-        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getCrossing()) / 8;
+        return (int) (this.getSpeed()*1.5 + this.getStamina()*1.5 + this.getAgility()*1.5 + this.getJumping()*0.2
+                + this.getHeading()*0.2 + this.getFinishing()*0.8 + this.getPassing()*0.8 + this.crossing*1.5) / 8;
     }
 
     public String toStringSimple(){

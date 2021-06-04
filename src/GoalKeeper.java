@@ -82,7 +82,8 @@ public class GoalKeeper extends FootballPlayer
     
  
     public int overall (){
-        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getElasticity()) / 8;
+        return (int) (this.getSpeed()*0.8 + this.getStamina()*0.8 + this.getAgility()*1.8 + this.getJumping()*1.7 +
+                this.getHeading()*0.2 + this.getFinishing()*0.2 + this.getPassing()*0.5 + this.elasticity*2) / 8;
     }
     
     public String toStringSimple(){

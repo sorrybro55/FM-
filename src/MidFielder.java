@@ -84,7 +84,8 @@ public class MidFielder extends FootballPlayer {
 
 
     public int overall (){
-        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getRecovery()) / 8;
+        return (int) (this.getSpeed()*0.8 + this.getStamina()*1.5 + this.getAgility()*0.9 + this.getJumping()*0.5
+                + this.getHeading()*0.5 + this.getFinishing()*0.8 + this.getPassing()*1.5 + this.recovery * 1.5) / 8;
     }
 
 

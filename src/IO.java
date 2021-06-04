@@ -168,9 +168,10 @@ public class IO {
     }
 
     public static  void pressEnter(){
-        System.out.println("Pressione Enter Para Continuar!");
+        System.out.print("Pressione Enter Para Continuar! ");
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
+        System.out.println();
     }
 
     public static String getFileName(){
