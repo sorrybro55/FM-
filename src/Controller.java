@@ -89,9 +89,9 @@ public class Controller {
         List<String> games = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         for(FootballMatch fm : this.state.getGames()){
-            sb.setLength(0);
             sb.append(fm.getTeamHome()).append(" - ").append(fm.getTeamAway());
             games.add(sb.toString());
+            sb.setLength(0);
 
         }
         Menu menu = new Menu(games, "*** Selecione Jogo ***");
