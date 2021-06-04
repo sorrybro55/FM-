@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 /**
  * Write a description of class Team here.
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class FootballTeam implements Serializable, Comparable<FootballTeam> {
+public class FootballTeam implements Serializable{
 
     private String name;
     private Map<Integer, FootballPlayer> squad;
@@ -64,13 +64,13 @@ public class FootballTeam implements Serializable, Comparable<FootballTeam> {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.name).append("\nOverall :").append((int)this.overall()).append("\n\nPlantel:\n\n");
+        sb.append(this.name).append("\nOverall: ").append((int)this.overall()).append("\n\nPlantel:\n\n");
         Iterator<Map.Entry<Integer, FootballPlayer>> it = squad.entrySet().iterator();
         Map.Entry<Integer, FootballPlayer> me = null;
         while (it.hasNext()) {
             me = it.next();
             FootballPlayer fp = me.getValue();
-            sb.append(me.getKey()).append(". ").append(fp.getName()).append(" | ").append(fp.getPosition()).append("\n").append(fp.stats()).append("\n");
+            sb.append(fp.toStringSimple()).append("\n");
             if (it.hasNext())
                 sb.append("\n");
         }
@@ -101,18 +101,23 @@ public class FootballTeam implements Serializable, Comparable<FootballTeam> {
     }
 
 
-    public FootballPlayer removePlayer(Integer number) {
-        return this.squad.remove(number);
+    public void removePlayer(Integer number) {
+        this.squad.remove(number);
     }
 
-    public void updatePlayer(FootballPlayer fp) {
-        if (this.squad.containsValue(fp))
-            this.squad.replace(fp.getNumber(), fp.clone());
+    public void removePlayer(String name) {
+        int number = -1;
+        for(Map.Entry<Integer,FootballPlayer> me : this.squad.entrySet()){
+            if(me.getValue().getName().equals(name)){
+                number = me.getKey();
+                break;
+            }
+        }
+         this.squad.remove(number);
     }
 
-    public int compareTo(FootballTeam team) {
-        return this.getName().compareTo(team.getName());
-    }
+
+
 
     public boolean isComplete() {
         if (this.squad.size() < 11)

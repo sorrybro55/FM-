@@ -75,9 +75,9 @@ public class MidFielder extends FootballPlayer {
         return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getRecovery()) / 8;
     }
 
-    public String stats(){
+    public String toStringSimple(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.stats()).append(" | Recuperacao: ").append(this.recovery);
+        sb.append(super.toStringSimple()).append(" | Recuperacao: ").append(this.recovery);
         return sb.toString();
     }
 

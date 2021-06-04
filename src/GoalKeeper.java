@@ -86,9 +86,9 @@ public class GoalKeeper extends FootballPlayer
         return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getElasticity()) / 8;
     }
     
-    public String stats(){
+    public String toStringSimple(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.stats()).append(" | Elasticidade: ").append(this.elasticity);
+        sb.append(super.toStringSimple()).append(" | Elasticidade: ").append(this.elasticity);
         return sb.toString();
     }
 

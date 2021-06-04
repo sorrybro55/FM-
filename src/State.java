@@ -120,21 +120,19 @@ public class State implements Serializable {
         this.games.add(match.clone());
     }
 
-    public FootballPlayer removePlayer(String name){
-        return this.players.remove(name);
+    public void removePlayer(String name){
+        FootballPlayer fp = this.players.remove(name);
+        if (this.teams.containsKey(fp.getTeam()))
+            this.teams.get(fp.getTeam()).removePlayer(name);
+
     }
 
 
-    public FootballTeam removeTeam(String name){
-        return this.teams.remove(name);
-    }
-
-    public FootballTeam removeTeam(FootballTeam team){
-        return this.removeTeam(team.getName());
-    }
-
-    public FootballMatch removeGame(int index){
-        return this.games.remove(index);
+    public void removeTeam(String name){
+        for(FootballPlayer fp: this.players.values())
+            if(fp.getTeam().equals(name))
+                fp.setTeam("Sem Equipa");
+        this.teams.remove(name);
     }
 
 

@@ -1,10 +1,10 @@
 
 import java.io.Serializable;
 import java.util.ArrayList;
-public abstract class FootballPlayer extends Player
+public abstract class FootballPlayer implements Serializable
 {
 
-
+    private String name;
     private int number;
     private int speed;
     private int stamina;
@@ -19,7 +19,7 @@ public abstract class FootballPlayer extends Player
 
     
     public FootballPlayer(){
-        super();
+        this.name = "Sem Nome";
         this.number = -1;
         this.speed = 50;
         this.stamina = 50;
@@ -34,7 +34,7 @@ public abstract class FootballPlayer extends Player
     }        
     
     public FootballPlayer(String name,  int number, int speed, int stamina, int agility, int jumping, int heading, int finishing, int passing, String team, ArrayList<String> career){
-        super(name);
+        this.name = name;
         this.number = number;
         this.speed = speed;
         this.stamina = stamina;
@@ -48,7 +48,7 @@ public abstract class FootballPlayer extends Player
     }   
     
     public FootballPlayer(FootballPlayer p){
-        super(p);
+        this.name = p.getName();
         this.number = p.getNumber();
         this.speed = p.getSpeed();
         this.stamina = p.getStamina();
@@ -59,6 +59,14 @@ public abstract class FootballPlayer extends Player
         this.passing = p.getPassing();
         this.team = p.getTeam();
         setCareer(p.getCareer());
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
     
     public String getTeam(){
@@ -168,11 +176,11 @@ public abstract class FootballPlayer extends Player
     }
     
     public ArrayList<String> getCareer(){
-        return (ArrayList<String>) this.career.clone();
+        return new ArrayList<>(this.career);
     }
     
     public void setCareer(ArrayList<String> career){
-        this.career = (ArrayList<String>) career.clone();
+        this.career = new ArrayList<>(career);
     }
     
     public boolean equals(Object o){
@@ -181,20 +189,29 @@ public abstract class FootballPlayer extends Player
         if(o == null || o.getClass() != this.getClass())
             return false;
         FootballPlayer fp = (FootballPlayer) o;
-        return super.equals(fp)  && this.getPosition() == fp.getPosition() && this.number == fp.getNumber() && this.team == fp.getTeam();
+        return this.name.equals(fp.getName())  && this.getPosition() == fp.getPosition() && this.team.equals(fp.getTeam());
     }
         
         
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.toString()).append(" | Posição: ").append(this.getPosition())
+        sb.append(this.name).append(" | Posição: ").append(this.getPosition())
         .append("\nClube Atual: ").append(this.team).append(" | Clubes Anteiores: ");
         for (String c : career)
             sb.append(c);
         sb.append("\nOverall: ").append(this.overall()).append(" | Velocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
-        sb.append(" | Jogo de Cabeca: ").append(this.heading).append(" | Remate: ").append(this.finishing);
+        sb.append(" | Impulsao: ").append(this.jumping).append(" | Jogo de Cabeca: ").append(this.heading).append(" | Remate: ").append(this.finishing);
         sb.append(" | Capacidade de Passe: ").append(this.passing);
 
+        return sb.toString();
+    }
+
+    public String toStringSimple(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.number).append(" | ").append(this.name).append(" | ").append(this.getPosition()).append("\n");
+        sb.append("Overall: ").append(this.overall()).append(" | Velocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
+        sb.append(" | Impulsao: ").append(this.jumping).append(" | Jogo de Cabeca: ").append(this.heading).append(" | Remate: ").append(this.finishing);
+        sb.append(" | Capacidade de Passe: ").append(this.passing);
         return sb.toString();
     }
 
@@ -289,13 +306,7 @@ public abstract class FootballPlayer extends Player
         this.team = team;
     }
 
-    public String stats(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Velocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
-        sb.append(" | Impulsao: ").append(this.jumping).append(" | Jogo de Cabeca: ").append(this.heading).append(" | Remate: ").append(this.finishing);
-        sb.append(" | Capacidade de Passe: ").append(this.passing);
-        return sb.toString();
-    }
+
     
 
         

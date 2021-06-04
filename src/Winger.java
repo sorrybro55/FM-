@@ -76,9 +76,9 @@ public class Winger extends FootballPlayer {
         return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getCrossing()) / 8;
     }
 
-    public String stats(){
+    public String toStringSimple(){
         StringBuilder sb = new StringBuilder();
-        sb.append(super.stats()).append(" | Cruzamento: ").append(this.crossing);
+        sb.append(super.toStringSimple()).append(" | Cruzamento: ").append(this.crossing);
         return sb.toString();
     }
 

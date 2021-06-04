@@ -16,7 +16,7 @@ public class Controller {
     public  void run() {
 
         int option = -1;
-        Menu menu = new Menu(new String[]{"Fazer Jogo", "Ver Resultados", "Ver Jogadores", "Ver Equipas","Criar Jogador", "Criar Equipa", "Transferir Jogador", "Gravar Estado", "Ler Estado"});
+        Menu menu = new Menu(new String[]{"Fazer Jogo", "Ver Resultados", "Gerir Jogadores", "Gerir Equipas","Gravar Estado", "Ler Estado"});
         do {
             IO.newLine();
             menu.run();
@@ -37,29 +37,17 @@ public class Controller {
 
                 case 3:
                     IO.newLine();
-                    this.showPlayers();
+                    this.managePlayers();
                     break;
                 case 4:
                     IO.newLine();
-                    this.showTeams();
+                    this.manageTeams();
                     break;
                 case 5:
                     IO.newLine();
-                    this.createPlayer();
-                    break;
-                case 6:
-                    IO.newLine();
-                    this.createTeam();
-                    break;
-                case 7:
-                    IO.newLine();
-                    transferPlayer();
-                    break;
-                case 8:
-                    IO.newLine();
                     this.save();
                     break;
-                case 9:
+                case 6:
                     IO.newLine();
                     this.load();
                     break;
@@ -118,6 +106,36 @@ public class Controller {
 
     }
 
+    public void managePlayers(){
+
+        Menu menu = new Menu(new String[]{"Ver Jogadores","Transferir Jogador","Criar Jogador","Apagar Jogador"},"***Selecione Opção***");
+        int option = -1;
+        do{
+            menu.run();
+            option = menu.getOption();
+            switch (option){
+                case 1:
+                    IO.newLine();
+                    this.showPlayers();
+                    break;
+                case 2:
+                    IO.newLine();
+                    this.transferPlayer();
+                    break;
+                case 3:
+                    IO.newLine();
+                    this.createPlayer();
+                    break;
+                case 4:
+                    IO.newLine();
+                    this.deletePlayers();
+                    break;
+            }
+
+        }while (option !=0);
+
+    }
+
 
     public void showPlayers(){
         List<String> players = new ArrayList<>(this.state.getPlayers().keySet());
@@ -136,32 +154,15 @@ public class Controller {
             }
 
         }while (option != 0);
-
     }
 
-    public void showTeams(){
-        List<String> teams = new ArrayList<>(this.state.getTeams().keySet());
-        Menu menu = new Menu(teams, "*** Selecione Equipa ***");
-        int option = -1;
-        do {
-
-            menu.run();
-            option = menu.getOption();
-            if(option !=0) {
-                String teamName = teams.get(option-1);
-                    FootballTeam team = this.state.getTeam(teamName);
-                    IO.newLine();
-                    IO.showTeam(team);
-                    IO.pressEnter();
-            }
-
-        }while (option != 0);
-
+    public void transferPlayer(){
+        String player = this.selectPlayer();
+        String team = this.selectTeam();
+        state.transferPlayer(player,team);
     }
 
-
-
-    public  void createPlayer(){
+    public void createPlayer(){
         String name = IO.chooseName();
         Position position = IO.choosePosition();
         int number = IO.chooseNumber();
@@ -202,19 +203,100 @@ public class Controller {
         }
     }
 
+
+    public void deletePlayers(){
+        int option = -1;
+        do {
+            List<String> players = new ArrayList<>(this.state.getPlayers().keySet());
+            Menu menu = new Menu(players, "*** Selecione Jogador ***");
+            menu.run();
+            option = menu.getOption();
+            if(option !=0) {
+                String playerName = players.get(option-1);
+                this.state.removePlayer(playerName);
+            }
+
+        }while (option != 0);
+    }
+
+
+
+    public void manageTeams(){
+
+        Menu menu = new Menu(new String[]{"Ver Equipas","Criar Equipas","Apagar Equipa"},"***Selecione Opção***");
+        int option = -1;
+        do{
+            menu.run();
+            option = menu.getOption();
+            switch (option){
+                case 1:
+                    IO.newLine();
+                    this.showTeams();
+                    break;
+                case 2:
+                    IO.newLine();
+                    this.createTeam();
+                    break;
+                case 3:
+                    IO.newLine();
+                    this.deleteTeams();
+                    break;
+            }
+
+        }while (option !=0);
+
+    }
+
+
+
+
+
+    public void showTeams(){
+        List<String> teams = new ArrayList<>(this.state.getTeams().keySet());
+        Menu menu = new Menu(teams, "*** Selecione Equipa ***");
+        int option = -1;
+        do {
+
+            menu.run();
+            option = menu.getOption();
+            if(option !=0) {
+                String teamName = teams.get(option-1);
+                    FootballTeam team = this.state.getTeam(teamName);
+                    IO.newLine();
+                    IO.showTeam(team);
+                    IO.pressEnter();
+            }
+
+        }while (option != 0);
+
+    }
+
+
+
     public void createTeam(){
         String name = IO.chooseName();
         FootballTeam team = new FootballTeam();
         team.setName(name);
         state.addTeam(team);
-
     }
 
-    public void transferPlayer(){
-        String player = this.selectPlayer();
-        String team = selectTeam();
-        state.transferPlayer(player,team);
+    public void deleteTeams(){
+        int option = -1;
+        do {
+            List<String> teams = new ArrayList<>(this.state.getTeams().keySet());
+            Menu menu = new Menu(teams, "*** Selecione Equipa ***");
+
+            menu.run();
+            option = menu.getOption();
+            if(option !=0) {
+                String teamName = teams.get(option-1);
+                this.state.removeTeam(teamName);
+            }
+
+        }while (option != 0);
     }
+
+
 
     public String selectPlayer(){
         Iterator<Map.Entry<String, FootballPlayer>> iteratorPlayers = state.getPlayers().entrySet().iterator();
