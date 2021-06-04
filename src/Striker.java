@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Striker extends FootballPlayer implements Center{
+public class Striker extends FootballPlayer {
 
 
 

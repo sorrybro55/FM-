@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Controller {
     State state;
@@ -17,6 +18,7 @@ public class Controller {
         int option = -1;
         Menu menu = new Menu(new String[]{"Fazer Jogo", "Ver Resultados", "Ver Jogadores", "Ver Equipas","Criar Jogador", "Criar Equipa", "Transferir Jogador", "Gravar Estado", "Ler Estado"});
         do {
+            IO.newLine();
             menu.run();
             option = menu.getOption();
             switch (option) {
@@ -74,6 +76,7 @@ public class Controller {
         int option = -1;
 
         do{
+            IO.newLine();
             menu.run();
             option = menu.getOption();
         }while (option <0 || option>2);
@@ -95,22 +98,45 @@ public class Controller {
 
         }
 
+    }
+    public void showGames(){
+        List<String> games = this.state.getGames().stream().map(FootballMatch::score).collect(Collectors.toList());
+        Menu menu = new Menu(games, "*** Selecione Jogo ***");
+        int option = -1;
+        do {
 
+            menu.run();
+            option = menu.getOption();
+            if(option !=0) {
+                FootballMatch fm = this.state.getGames().get(option-1);
+                IO.newLine();
+                IO.showGame(fm);
+                IO.pressEnter();
+            }
+
+        }while (option != 0);
 
     }
 
-    public void showGames (){
-        List<FootballMatch> games = this.state.getGames();
-        IO.showGames(games.iterator());
-    }
 
+    public void showPlayers(){
+        List<String> players = new ArrayList<>(this.state.getPlayers().keySet());
+        Menu menu = new Menu(players, "*** Selecione Jogador ***");
+        int option = -1;
+        do {
 
+            menu.run();
+            option = menu.getOption();
+            if(option !=0) {
+                String playerName = players.get(option-1);
+                    FootballPlayer player = this.state.getPlayer(playerName);
+                    IO.newLine();
+                    IO.showPlayer(player);
+                    IO.pressEnter();
+            }
 
-    public  void showPlayers(){
-        Iterator<FootballPlayer> iteratorPlayer = this.state.getPlayers().values().iterator();
-        IO.newLine();
-        IO.showPlayersDataBase(iteratorPlayer);
-        IO.pressEnter();
+        }while (option != 0);
+
     }
 
     public void showTeams(){
@@ -118,14 +144,15 @@ public class Controller {
         Menu menu = new Menu(teams, "*** Selecione Equipa ***");
         int option = -1;
         do {
+
             menu.run();
             option = menu.getOption();
             if(option !=0) {
                 String teamName = teams.get(option-1);
-                FootballTeam team = this.state.getTeam(teamName);
-                IO.newLine();
-                IO.showTeam(team);
-                IO.pressEnter();
+                    FootballTeam team = this.state.getTeam(teamName);
+                    IO.newLine();
+                    IO.showTeam(team);
+                    IO.pressEnter();
             }
 
         }while (option != 0);
@@ -184,10 +211,15 @@ public class Controller {
     }
 
     public void transferPlayer(){
-        Iterator<Map.Entry<String, FootballPlayer>> iteratorPlayers = state.getPlayers().entrySet().iterator();
-        String player = IO.selectPlayer(iteratorPlayers);
+        String player = this.selectPlayer();
         String team = selectTeam();
         state.transferPlayer(player,team);
+    }
+
+    public String selectPlayer(){
+        Iterator<Map.Entry<String, FootballPlayer>> iteratorPlayers = state.getPlayers().entrySet().iterator();
+        String option = IO.selectPlayer(iteratorPlayers);
+        return option;
     }
 
 
@@ -205,16 +237,14 @@ public class Controller {
 
 
 
-
-
     public void save(){
         String fileName = IO.getFileName();
         try{
             this.state.save(fileName);
-            IO.message("Gravado Com Sucesso");
+            IO.message("Gravado Com Sucesso!");
 
         }catch (IOException e){
-            IO.message("Ficheiro Não Encontrado");
+            IO.message("Ficheiro Não Encontrado!");
         }
     }
 
@@ -222,9 +252,9 @@ public class Controller {
         String fileName = IO.getFileName();
         try{
             this.state = State.load(fileName);
-            IO.message("Carregado Com Sucesso");
+            IO.message("Carregado Com Sucesso!");
         }catch (IOException | ClassNotFoundException e){
-            IO.message("Ficheiro Não Encontrado");
+            IO.message("Ficheiro Não Encontrado!");
         }
     }
 

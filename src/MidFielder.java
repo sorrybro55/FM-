@@ -1,10 +1,9 @@
 import java.util.ArrayList;
 
-public class MidFielder extends FootballPlayer implements Center, Row{
+public class MidFielder extends FootballPlayer {
 
 
     private int recovery;
-
 
     public MidFielder(){
         super();

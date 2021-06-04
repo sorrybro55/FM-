@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 
-public class Winger extends FootballPlayer implements Row{
+public class Winger extends FootballPlayer {
 
     private int crossing;
 

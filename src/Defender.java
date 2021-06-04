@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 
 
-public class Defender extends FootballPlayer implements Center{
+public class Defender extends FootballPlayer{
 
     public Defender(){
         super();

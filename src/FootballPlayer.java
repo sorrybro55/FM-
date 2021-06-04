@@ -191,7 +191,7 @@ public abstract class FootballPlayer extends Player
         .append("\nClube Atual: ").append(this.team).append(" | Clubes Anteiores: ");
         for (String c : career)
             sb.append(c);
-        sb.append("\nVelocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
+        sb.append("\nOverall: ").append(this.overall()).append(" | Velocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
         sb.append(" | Jogo de Cabeca: ").append(this.heading).append(" | Remate: ").append(this.finishing);
         sb.append(" | Capacidade de Passe: ").append(this.passing);
 

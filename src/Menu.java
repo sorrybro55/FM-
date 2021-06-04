@@ -46,7 +46,7 @@ public class Menu {
 
 
     private void showMenu(){
-        System.out.println("\n" + this.title);
+        System.out.println(this.title);
         for(int i = 0;i <options.size(); i++){
             System.out.print(i+1);
             System.out.print(". ");

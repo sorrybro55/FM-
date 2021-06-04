@@ -106,12 +106,6 @@ public class State implements Serializable {
 
     }
 
-    private String showPlayer(FootballPlayer fp){
-        StringBuilder sb =  new StringBuilder();
-        sb.append("Nome:").append(fp.getName()).append(" Posicao:").append(fp.getPosition()).append(" Equipa:").append(fp.getTeam());
-        return sb.toString();
-    }
-
 
     public void addPlayer(FootballPlayer fp) {
         this.players.putIfAbsent(fp.getName(),fp.clone());
@@ -159,17 +153,6 @@ public class State implements Serializable {
     }
 
 
-
-
-    public void updatePlayer(FootballPlayer fp){
-        if(this.players.containsValue(fp))
-            this.players.replace(fp.getName(), fp.clone());
-    }
-
-    public void updateTeam(FootballTeam team){
-        if(this.teams.containsValue(team))
-            this.teams.replace(team.getName(), team.clone());
-    }
 
     public void parse(String filename) throws LinhaIncorretaException {
         List<String> linhas = lerFicheiro(filename);

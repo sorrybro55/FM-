@@ -190,33 +190,32 @@ public class MatchController {
 
 
     private void selectTatic(String team){
-        int[] actualTatic;
+        int[] tatic;
         if(team.equals(match.getTeamHome()))
-            actualTatic = match.getTaticHome();
+            tatic = match.getTaticHome();
         else
-            actualTatic = match.getTaticAway();
-        int[][] tatics ={ {1,2,2,4,2}, {1,2,2,3,3}, {1,3,2,3,2}};
-        int r = 0;
-        for(int i=0; i<tatics.length; i++)
-            if(Arrays.equals(tatics[i], actualTatic))
-                r = i;
+            tatic = match.getTaticAway();
 
-            System.out.println(r);
+        int r = 0;
+        for(int i=0; i<FootballMatch.tatics.length; i++)
+            if(Arrays.equals(FootballMatch.tatics[i], tatic))
+                r = i;
 
         String[] options = {"442", "433", "352"};
         options[r] += " - atual";
         Menu menu = new Menu(options, "Sair","Modelo tatico:" );
         int option = -1;
         do{
+            IO.newLine();
             menu.run();
             option = menu.getOption();
         }while (option <0 || option> options.length);
         if (option !=0)
         {
-            if(team == match.getTeamHome())
-                match.setTaticHome(tatics[option-1]);
+            if(team.equals(match.getTeamHome()))
+                match.setTaticHome(FootballMatch.tatics[option-1]);
             else
-                match.setTaticAway(tatics[option-1]);
+                match.setTaticAway(FootballMatch.tatics[option-1]);
         }
     }
 
@@ -251,6 +250,7 @@ public class MatchController {
             IO.newLine();
             IO.message("***Banco***");
             IO.showPlayers(bench.iterator());
+            IO.newLine();
             menu.run();
             option = menu.getOption();
             if(option ==1){
@@ -286,62 +286,77 @@ public class MatchController {
     private void programSubstitutions(String team){
         List<FootballPlayer> playing;
         List<FootballPlayer> bench;
-        Map<Integer,FootballPlayer> squad;
-        Map<Integer,Map<Integer,Integer>> subs= new TreeMap<>();
 
         int option = -1;
         IO.message(team);
         Menu menu =  new Menu(new String[]{"Sim"},"Não", "Deseja Programar Alterações?");
         do{
-            if (team == match.getTeamHome()){
+            if (team.equals(match.getTeamHome())){
                 playing = match.playingHome();
                 bench = match.benchHome();
+
+
             }
             else{
                 playing = match.playingAway();
                 bench = match.benchAway();
+
             }
             IO.message("***Titulares***");
             IO.showPlayers(playing.iterator());
             IO.newLine();
             IO.message("***Banco***");
             IO.showPlayers(bench.iterator());
+            IO.newLine();
+            IO.message("***Substituições***");
+            if(team.equals(this.match.getTeamHome()))
+                IO.showFutureSubstitutions(this.futureSubstitutionsHome.entrySet().iterator());
+            else
+                IO.showFutureSubstitutions(this.futureSubstitutionsAway.entrySet().iterator());
+
+            IO.newLine();
             menu.run();
             option = menu.getOption();
             if(option ==1){
 
-                IO.message("Selecione Jogador dos Titulares");
+                IO.message("Selecione Jogador Primeiro Jogador (Titulares)");
                 int out = IO.chooseNumber();
-                IO.message("Selecione Jogador dos Titulares/Banco");
+                IO.message("Selecione Jogador Segundo Jogador");
                 int in = IO.chooseNumber();
                 Menu timeMenu = new Menu(new String[]{"Primeira Parte","Segunda Parte"},"Intervalo","Escolha Momento");
                 int timOption = -1;
                 do{
+                    IO.newLine();
                     timeMenu.run();
                     timOption = timeMenu.getOption();
                 }while (timOption <0 || timOption >2);
                 int substitutionTime = 5;
                 if (timOption == 1)
                     substitutionTime = 2;
-                else if(timOption == 0)
-                    substitutionTime = 5;
                 else if(timOption == 2)
                     substitutionTime = 8;
                 try {
-                    if(team == match.getTeamHome()){
+                    if(team.equals(match.getTeamHome())){
                         match.substitutionHome(in, out);
                         match.substitutionHome(out,in);
                         futureSubstitutionsHome.putIfAbsent(substitutionTime,new TreeMap<>());
-                        futureSubstitutionsHome.get(substitutionTime).put(in,out);
+                        this.cleanFutureSubstitutionHome(in,out);
+                        if(this.futureSubstitutionsHome.values().stream().mapToInt(Map::size).sum() <3 && match.getPlayersHome().contains(out) && ! match.getPlayersHome().contains(in)) {
+                                futureSubstitutionsHome.get(substitutionTime).put(in,out);
+                            }
+
 
                     }
                     else{
                         match.substitutionAway(in, out);
                         match.substitutionAway(out,in);
                         futureSubstitutionsAway.putIfAbsent(substitutionTime,new TreeMap<>());
-                        futureSubstitutionsAway.get(substitutionTime).put(in,out);
-                    }
+                        this.cleanFutureSubstitutionAway(in, out);
+                        if(this.futureSubstitutionsAway.values().stream().mapToInt(Map::size).sum() <3 && match.getPlayersAway().contains(out) && ! match.getPlayersAway().contains(in)) {
+                            futureSubstitutionsAway.get(substitutionTime).put(in,out);
+                        }
 
+                    }
 
                 }catch (SubstitutionsException e){
                     IO.message(e.getMessage());
@@ -359,6 +374,22 @@ public class MatchController {
 
     public void programSubstitutionsAway(){
         this.programSubstitutions(this.match.getTeamAway());
+    }
+
+    private void cleanFutureSubstitutionHome(int in, int out){
+        for(Map<Integer,Integer> me : this.futureSubstitutionsHome.values()){
+            me.remove(in);
+            me.entrySet().removeIf(entry -> (out == (entry.getValue())));
+        }
+
+    }
+
+    private void cleanFutureSubstitutionAway(int in, int out){
+        for(Map<Integer,Integer> me : this.futureSubstitutionsHome.values()){
+            me.remove(in);
+            me.entrySet().removeIf(entry -> (out == (entry.getValue())));
+        }
+
     }
 
     private int decision(){

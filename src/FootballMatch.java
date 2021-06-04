@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 public class FootballMatch implements Serializable
 {
+    public static final int [][] tatics = { {1,2,2,4,2}, {1,2,2,3,3}, {1,3,2,3,2}};
 
     private String teamHome;
     private String teamAway;
@@ -341,7 +342,7 @@ public class FootballMatch implements Serializable
         for(FootballPlayer defender : defenders){
             if(defender instanceof Defender)
                 result += defender.overall();
-            else if (defender instanceof Center)
+            else if (defender instanceof MidFielder || defender instanceof Striker)
                 result += defender.overall()*0.8;
             else
                 result += defender.overall()*0.5;
@@ -355,7 +356,7 @@ public class FootballMatch implements Serializable
         for(FootballPlayer winger : wingers ){
             if(winger instanceof Winger)
                 result += winger.overall();
-            else if (winger instanceof Row)
+            else if (winger instanceof MidFielder )
                 result += winger.overall()*0.8;
             else
                 result += winger.overall()*0.5;
@@ -381,7 +382,7 @@ public class FootballMatch implements Serializable
         for(FootballPlayer striker : strikers ){
             if(striker instanceof Striker)
                 result += striker.overall();
-            else if (striker instanceof Center)
+            else if (striker instanceof Defender || striker instanceof MidFielder)
                 result += striker.overall()*0.8;
             else
                 result += striker.overall()*0.5;
@@ -504,6 +505,7 @@ public class FootballMatch implements Serializable
     public String score(){
         StringBuilder sb = new StringBuilder();
         sb.append(this.teamHome).append(" ").append(this.getScoreHome()).append(" : ").append(this.getScoreAway()).append(" ").append(this.teamAway);
+
         return sb.toString();
     }
 

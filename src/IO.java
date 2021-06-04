@@ -5,32 +5,18 @@ import java.util.Map.Entry;
 public class IO {
 
 
-    public static void showPlayersDataBase(Iterator<FootballPlayer> it){
-        FootballPlayer fp = null;
-        StringBuilder sb = new StringBuilder();
-        while(it.hasNext()){
-            fp = it.next();
-            sb.append(fp).append("\n");
-            if(it.hasNext())
-                sb.append("\n");
-        }
-        System.out.println(sb.toString());
-    }
-
     public static void showTeam(FootballTeam team){
         System.out.println(team);
     }
 
-    public static void showGames(Iterator<FootballMatch> it){
-        FootballMatch fm;
-        StringBuilder sb = new StringBuilder();
-        sb.append("Jogos Realizados\n");
-        while (it.hasNext()){
-            fm = it.next();
-            sb.append(fm).append("\n");
-        }
-        System.out.println(sb.toString());
+    public static void showPlayer(FootballPlayer player){
+        System.out.println(player);
     }
+
+    public static void showGame(FootballMatch fm){
+        System.out.println(fm);
+    }
+
 
 
     public  static String chooseName(){
@@ -125,8 +111,6 @@ public class IO {
         }
     }
 
-
-
     public static String selectPlayer(Iterator<Map.Entry<String, FootballPlayer>> it){
         StringBuilder sb = new StringBuilder();
         List<String> playersName = new ArrayList<>();
@@ -173,8 +157,6 @@ public class IO {
         while (it.hasNext()){
             e = it.next();
             teamsName.add(e.getKey());
-            if(i+1<10)
-                sb.append(" ");
             sb.append(i+1).append(". ").append(e.getKey()).append('\n');
             i++;
 
@@ -213,7 +195,39 @@ public class IO {
             if(it.hasNext())
                 sb.append("\n");
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
+
+    }
+
+
+    public static void showFutureSubstitutions(Iterator<Map.Entry<Integer,Map<Integer,Integer>>> it){
+        StringBuilder sb = new StringBuilder();
+        Map.Entry<Integer,Map<Integer,Integer>> me = null;
+        while(it.hasNext()){
+            me = it.next();
+            String when = null;
+            switch (me.getKey())
+            {
+                case 2 :
+                    when = "Primeira Parte";
+                    break;
+                case 8:
+                    when = "Segunda Parte";
+                    break;
+                default:
+                    when = "Intervalo";
+
+            }
+            if(!me.getValue().isEmpty())
+                sb.append(when).append(": ");
+            for(Map.Entry<Integer,Integer> x: me.getValue().entrySet())
+                sb.append(x.getValue()).append(" -> ").append(x.getKey()).append("   ");
+            if(!me.getValue().isEmpty())
+                sb.append("\n");
+        }
+
+            System.out.print(sb);
+
 
     }
 
@@ -226,14 +240,14 @@ public class IO {
     }
 
     public static  void pressEnter(){
-        System.out.print("Pressione Enter Para Continuar: ");
+        System.out.println("Pressione Enter Para Continuar!");
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
     }
 
     public static String getFileName(){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Digite Nome Do Ficheiro.");
+        System.out.print("Digite Nome Do Ficheiro: ");
         String fileName = sc.nextLine();
         return fileName;
     }
