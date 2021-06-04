@@ -59,8 +59,7 @@ public class GoalKeeper extends FootballPlayer
             return true;
         if(o == null || o.getClass() != this.getClass())
             return false;
-        GoalKeeper gk = (GoalKeeper) o;
-        return super.equals(gk) && gk.getElasticity() == this.elasticity;
+        return super.equals(o);
     }
     
     public void increaseElasticity(int inc){

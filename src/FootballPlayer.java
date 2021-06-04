@@ -145,7 +145,12 @@ public abstract class FootballPlayer implements Serializable
     }
 
     public void setJumping(int jumping){
-        this.jumping = jumping;
+        if(jumping >100)
+            this.jumping = 100;
+        else if(jumping <0)
+            this.jumping = 0;
+        else
+            this.jumping = jumping;
     }
     
     public void setHeading(int heading){

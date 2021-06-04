@@ -25,7 +25,12 @@ public class MidFielder extends FootballPlayer {
     }
 
     public void setRecovery(int recovery){
-        this.recovery = recovery;
+        if(recovery> 100)
+            this.recovery= 100;
+        else if(recovery < 0)
+            this.recovery = 0;
+        else
+            this.recovery = recovery;
     }
 
     public Position getPosition(){
@@ -41,8 +46,7 @@ public class MidFielder extends FootballPlayer {
             return true;
         if(o == null || o.getClass() != this.getClass())
             return false;
-        MidFielder md = (MidFielder) o;
-        return super.equals(md) && this.recovery == md.getRecovery();
+        return super.equals(o);
     }
 
     public String toString(){
@@ -50,6 +54,14 @@ public class MidFielder extends FootballPlayer {
         sb.append(super.toString()).append(" | Recuperacao: ").append(this.recovery);
         return sb.toString();
     }
+
+    public String toStringSimple(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toStringSimple()).append(" | Recuperacao: ").append(this.recovery);
+        return sb.toString();
+    }
+
+
 
 
     public void increaseRecovery(int inc){
@@ -75,11 +87,7 @@ public class MidFielder extends FootballPlayer {
         return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing() + this.getRecovery()) / 8;
     }
 
-    public String toStringSimple(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(super.toStringSimple()).append(" | Recuperacao: ").append(this.recovery);
-        return sb.toString();
-    }
+
 
     public static MidFielder parse(String input){
         String[] campos = input.split(",");

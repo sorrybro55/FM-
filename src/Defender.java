@@ -4,17 +4,53 @@ import java.util.ArrayList;
 
 public class Defender extends FootballPlayer{
 
+    private int marking;
+
     public Defender(){
         super();
+        this.marking = 50;
 
     }
 
-    public Defender (String name,  int number, int speed, int stamina, int agility, int jumping, int heading, int finishing, int passing, String team, ArrayList<String> career){
+    public Defender (String name,  int number, int speed, int stamina, int agility, int jumping, int heading, int finishing, int passing, int marking, String team, ArrayList<String> career){
         super(name, number, speed, stamina, agility, jumping, heading, finishing, passing, team, career);
+        this.marking = marking;
     }
 
     public Defender(Defender df){
         super(df);
+        this.marking = df.getMarking();
+    }
+
+    public int getMarking(){
+        return this.marking;
+    }
+
+    public void setMarking(int marking){
+        if(marking > 100)
+            this.marking = 100;
+        else if(marking < 0)
+            this.marking =0;
+        else
+            this.marking = marking;
+    }
+
+    public void increaseMarking(int inc){
+        setMarking(this.marking + inc);
+    }
+
+    public void decreaseMarking(int inc){
+        setMarking(this.marking - inc);
+    }
+
+    public void increaseStats(int inc){
+        super.increaseStats(inc);
+        increaseMarking(inc);
+    }
+
+    public void decreaseStats(int dec){
+        super.decreaseStats(dec);
+        decreaseMarking(dec);
     }
 
     public Position getPosition(){
@@ -26,7 +62,7 @@ public class Defender extends FootballPlayer{
     }
 
     public int overall(){
-        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing()) / 7;
+        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing()) + this.marking/ 8;
     }
 
     public boolean equals(Object o){
@@ -35,6 +71,18 @@ public class Defender extends FootballPlayer{
         if(o == null || o.getClass() != this.getClass())
             return false;
         return super.equals(o);
+    }
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString()).append(" | Marcação: ").append(this.marking);
+        return sb.toString();
+    }
+
+    public String toStringSimple(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toStringSimple()).append(" | Marcação: ").append(this.marking);
+        return sb.toString();
     }
 
     public static Defender parse(String input) {
@@ -47,6 +95,7 @@ public class Defender extends FootballPlayer{
                 Integer.parseInt(campos[6]),
                 Integer.parseInt(campos[7]),
                 Integer.parseInt(campos[8]),
+                50,
                 "Sem Equipa",
                 new ArrayList<>());
     }

@@ -25,7 +25,12 @@ public class Winger extends FootballPlayer {
     }
 
     public void setCrossing(int crossing){
-        this.crossing = crossing;
+        if(crossing> 100)
+            this.crossing = 100;
+        else if(crossing < 0)
+            this.crossing =0;
+        else
+            this.crossing = crossing;
     }
 
     public Position getPosition(){
@@ -41,8 +46,7 @@ public class Winger extends FootballPlayer {
             return true;
         if(o == null || o.getClass() != this.getClass())
             return false;
-        Winger w = (Winger) o;
-        return super.equals(w) && this.crossing == w.getCrossing();
+        return super.equals(o);
     }
 
 

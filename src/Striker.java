@@ -2,19 +2,54 @@ import java.util.ArrayList;
 
 public class Striker extends FootballPlayer {
 
-
+    private int positioning;
 
     public Striker(){
         super();
+        this.positioning = 50;
     }
 
-    public Striker (String name, int number, int speed, int stamina, int agility, int jumping, int heading, int finishing, int passing, String team, ArrayList<String> career){
+    public Striker (String name, int number, int speed, int stamina, int agility, int jumping, int heading, int finishing, int passing, int positioning, String team, ArrayList<String> career){
         super(name, number, speed, stamina, agility, jumping, heading, finishing, passing, team, career);
+        this.positioning = positioning;
     }
 
     public Striker(Striker s){
         super(s);
+        this.positioning = s.getPositioning();
     }
+
+    public void setPositioning(int positioning){
+        if(positioning > 100)
+            this.positioning = 100;
+        else if(positioning < 0)
+            this.positioning =0;
+        else
+            this.positioning = positioning;
+    }
+
+    public int getPositioning(){
+        return this.positioning;
+    }
+
+    public void increasePositioning(int inc){
+        setPositioning(this.positioning + inc);
+    }
+
+    public void decreasePositioning(int inc){
+        setPositioning(this.positioning - inc);
+    }
+
+    public void increaseStats(int inc){
+        super.increaseStats(inc);
+        increasePositioning(inc);
+    }
+
+    public void decreaseStats(int inc){
+        super.decreaseStats(inc);
+        decreasePositioning(inc);
+    }
+
 
     public Position getPosition(){
         return Position.STRIKER;
@@ -33,7 +68,19 @@ public class Striker extends FootballPlayer {
     }
 
     public int overall(){
-        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing()) / 7;
+        return (this.getSpeed() + this.getStamina() + this.getAgility() + this.getJumping() + this.getHeading() + this.getFinishing() + this.getPassing() + this.positioning) / 8;
+    }
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString()).append(" | Posicionamento: ").append(this.positioning);
+        return sb.toString();
+    }
+
+    public String toStringSimple(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toStringSimple()).append(" | Posicionamento: ").append(this.positioning);
+        return sb.toString();
     }
 
     public static Striker parse(String input) {
@@ -46,6 +93,7 @@ public class Striker extends FootballPlayer {
                 Integer.parseInt(campos[6]),
                 Integer.parseInt(campos[7]),
                 Integer.parseInt(campos[8]),
+                50,
                 "Sem Equipa",
                 new ArrayList<>());
     }

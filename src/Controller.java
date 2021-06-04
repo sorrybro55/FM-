@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -183,12 +182,18 @@ public class Controller {
         int finishing = IO.chooseAbility("Capaciadade de Remate");
         int passing = IO.chooseAbility("Capacidade de Passe");
         int elasticity = 0;
+        int marking = 0;
         int recovery = 0;
         int crossing = 0;
+        int positioning = 0;
         if(position == Position.GOALKEEPER)
             elasticity = IO.chooseAbility("Elasticidade");
+        if (position == Position.DEFENDER)
+            marking = IO.chooseAbility("Marcação");
         if(position == Position.MIDFIELDER)
             recovery = IO.chooseAbility("Recuperacao");
+        if(position == Position.STRIKER)
+            positioning = IO.chooseAbility("Posicionamento");
         if(position == Position.WINGER)
             recovery = IO.chooseAbility("Cruzamento");
         String team = "Sem Equipa";
@@ -198,7 +203,7 @@ public class Controller {
                 state.addPlayer(new GoalKeeper(name, number, speed, stamina, agility, jumping, heading, finishing, passing, elasticity, team, new ArrayList<String>()));
                 break;
             case DEFENDER:
-                state.addPlayer(new Defender(name, number, speed, stamina, agility, jumping, heading, finishing, passing, team, new ArrayList<String>()));
+                state.addPlayer(new Defender(name, number, speed, stamina, agility, jumping, heading, finishing, passing, marking,team, new ArrayList<String>()));
                 break;
             case WINGER:
                 state.addPlayer(new Winger(name, number, speed, stamina, agility, jumping, heading, finishing, passing, crossing, team, new ArrayList<String>()));
@@ -207,7 +212,7 @@ public class Controller {
                 state.addPlayer(new MidFielder(name, number, speed, stamina, agility, jumping, heading, finishing, passing, recovery, team, new ArrayList<String>()));
                 break;
             case STRIKER:
-                state.addPlayer(new Striker(name, number, speed, stamina, agility, jumping, heading, finishing, passing, team, new ArrayList<String>()));
+                state.addPlayer(new Striker(name, number, speed, stamina, agility, jumping, heading, finishing, passing, positioning, team, new ArrayList<String>()));
                 break;
         }
     }
@@ -347,7 +352,7 @@ public class Controller {
         return null;
     }
 
-    
+
 
     public void save(){
         String fileName = IO.getFileName();
