@@ -5,41 +5,41 @@ public class Menu {
     private List<String> options;
     private int option;
     private String title;
-    private String out;
+    private String exitOption;
 
     public Menu(String [] options){
         this.options = Arrays.asList(options);
         this.option = 0;
         this.title = "*** Menu ***";
-        this.out = "Sair";
+        this.exitOption = "Sair";
     }
 
     public Menu(List<String> options){
         this.options = new ArrayList<>(options);
         this.option = 0;
         this.title = "*** Menu ***";
-        this.out = "Sair";
+        this.exitOption = "Sair";
     }
 
     public Menu(String [] options, String title){
         this.options = Arrays.asList(options);
         this.option = 0;
         this.title = title;
-        this.out = "Sair";
+        this.exitOption = "Sair";
     }
 
     public Menu(List<String> options, String title){
         this.options = new ArrayList<>(options);
         this.option = 0;
         this.title = title;
-        this.out = "Sair";
+        this.exitOption= "Sair";
     }
 
     public Menu(String[] options, String out, String title ){
         this.options = Arrays.asList(options);
         this.option = 0;
         this.title = title;
-        this.out = out;
+        this.exitOption = out;
 
     }
 
@@ -53,7 +53,7 @@ public class Menu {
             System.out.println(this.options.get(i));
         }
         System.out.print("0. ");
-        System.out.println(out);
+        System.out.println(exitOption);
     }
     private int readOption(){
         int op;

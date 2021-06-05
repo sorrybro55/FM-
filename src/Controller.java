@@ -15,7 +15,7 @@ public class Controller {
     public  void run() {
 
         int option = -1;
-        Menu menu = new Menu(new String[]{"Fazer Jogo", "Ver Resultados", "Gerir Jogadores", "Gerir Equipas","Gravar Estado", "Ler Estado"});
+        Menu menu = new Menu(new String[]{"Fazer Jogo", "Ver Resultados", "Gerir Jogadores", "Gerir Equipas","Guardar Estado", "Carregar Estado"});
         do {
             IO.newLine();
             menu.run();
@@ -48,7 +48,7 @@ public class Controller {
         } while (option != 0) ;
     }
 
-    public void makeGame () throws NoTeamsException{
+    private void makeGame () throws NoTeamsException{
         Predicate<FootballTeam> p = FootballTeam::isComplete;
         if (this.state.getTeams().values().stream().filter(p).count() <1) {
             throw new NoTeamsException();
@@ -85,7 +85,7 @@ public class Controller {
         }
 
     }
-    public void showGames(){
+    private void showGames(){
         List<String> games = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         for(FootballMatch fm : this.state.getGames()){
@@ -112,7 +112,7 @@ public class Controller {
 
     }
 
-    public void managePlayers(){
+    private void managePlayers(){
 
         Menu menu = new Menu(new String[]{"Ver Jogadores","Transferir Jogador","Criar Jogador","Apagar Jogador"},"*** Selecione Opção ***");
         int option = -1;
@@ -144,7 +144,7 @@ public class Controller {
     }
 
 
-    public void showPlayers(){
+    private void showPlayers(){
         List<String> players = new ArrayList<>(this.state.getPlayers().keySet());
         Menu menu = new Menu(players, "*** Selecione Jogador ***");
         int option = -1;
@@ -163,7 +163,7 @@ public class Controller {
         }while (option != 0);
     }
 
-    public void transferPlayer(){
+    private void transferPlayer(){
         String player = this.selectPlayer();
         if(player == null)
             return;
@@ -173,7 +173,7 @@ public class Controller {
         state.transferPlayer(player,team);
     }
 
-    public void createPlayer(){
+    private void createPlayer(){
         String name = IO.chooseName();
         Position position = IO.choosePosition();
         int number = IO.chooseNumber();
@@ -221,7 +221,7 @@ public class Controller {
     }
 
 
-    public void deletePlayers(){
+    private void deletePlayers(){
         int option = -1;
         do {
             List<String> players = new ArrayList<>(this.state.getPlayers().keySet());
@@ -238,7 +238,7 @@ public class Controller {
 
 
 
-    public void manageTeams(){
+    private void manageTeams(){
 
         Menu menu = new Menu(new String[]{"Ver Equipas","Criar Equipas","Apagar Equipa"},"*** Selecione Opção ***");
         int option = -1;
@@ -266,7 +266,7 @@ public class Controller {
 
 
 
-    public void showTeams(){
+    private void showTeams(){
         List<String> teams = new ArrayList<>(this.state.getTeams().keySet());
         Menu menu = new Menu(teams, "*** Selecione Equipa ***");
         int option = -1;
@@ -289,7 +289,7 @@ public class Controller {
 
 
 
-    public void createTeam(){
+    private void createTeam(){
         IO.newLine();
         String name = IO.chooseName();
         FootballTeam team = new FootballTeam();
@@ -297,7 +297,7 @@ public class Controller {
         state.addTeam(team);
     }
 
-    public void deleteTeams(){
+    private void deleteTeams(){
         int option = -1;
         do {
             List<String> teams = new ArrayList<>(this.state.getTeams().keySet());
@@ -315,7 +315,7 @@ public class Controller {
     }
 
 
-    public String selectPlayer(){
+    private String selectPlayer(){
         List<String> players = new ArrayList<>(this.state.getPlayers().keySet());
         Menu menu = new Menu(players, "*** Selecione Jogador ***");
         int option = -1;
@@ -330,7 +330,7 @@ public class Controller {
 
 
 
-    public String selectTeam(){
+    private String selectTeam(){
         List<String> teams = new ArrayList<>(state.getTeams().keySet());
         Menu menu = new Menu(teams,"*** Escolha Equipa ***");
         int option = -1;
@@ -344,7 +344,7 @@ public class Controller {
         return null;
     }
 
-    public String selectTeam(Predicate<FootballTeam> p){
+    private String selectTeam(Predicate<FootballTeam> p){
         List<String> teams = state.getTeams().entrySet().stream().filter(team -> p.test(team.getValue())).map(Map.Entry::getKey).collect(Collectors.toList());
         Menu menu = new Menu(teams,"*** Escolha Equipa ***");
         int option = -1;
@@ -360,19 +360,19 @@ public class Controller {
 
 
 
-    public void save(){
+    private void save(){
         IO.newLine();
         String fileName = IO.getFileName();
         try{
             this.state.save(fileName);
-            IO.message("Gravado Com Sucesso!");
+            IO.message("Guardado Com Sucesso!");
 
         }catch (IOException e){
             IO.message("Ficheiro Não Encontrado!");
         }
     }
 
-    public void load(){
+    private void load(){
         IO.newLine();
         String fileName = IO.getFileName();
         try{

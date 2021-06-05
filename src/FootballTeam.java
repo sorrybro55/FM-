@@ -90,12 +90,6 @@ public class FootballTeam implements Serializable{
         fp.setNumber(i);
     }
 
-    public FootballPlayer getPlayer(Integer number) {
-        FootballPlayer ret = this.squad.get(number);
-        if (ret != null)
-            return ret.clone();
-        return null;
-    }
 
 
     public void removePlayer(Integer number) {

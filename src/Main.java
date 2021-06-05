@@ -12,7 +12,7 @@ public class Main
         State state = new State();
         try {
             state.parse("logs.txt");
-        } catch (LinhaIncorretaException  |IOException e) {
+        } catch (WrongLineException  |IOException e) {
             System.out.println("Não Foi Possivel Carregar Dados!");
         }
         Controller controller = new Controller(state);

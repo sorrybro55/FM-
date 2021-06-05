@@ -150,7 +150,7 @@ public class State implements Serializable {
 
 
 
-    public void parse(String filename) throws LinhaIncorretaException, IOException {
+    public void parse(String filename) throws WrongLineException, IOException {
         List<String> linhas = readFile(filename);
         Map<String, FootballTeam> equipas = new TreeMap<>(); //nome, equipa
         Map<String, FootballPlayer> jogadores = new TreeMap<>(); //numero, jogador
@@ -167,35 +167,35 @@ public class State implements Serializable {
                     break;
                 case "Guarda-Redes":
                     j = GoalKeeper.parse(linhaPartida[1]);
-                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    if (ultima == null) throw new WrongLineException(); //we need to insert the player into the team
                     j.setTeam(ultima.getName());
                     jogadores.put(j.getName(), j.clone());
                     ultima.addPlayer(j); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Defesa":
                     j = Defender.parse(linhaPartida[1]);
-                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    if (ultima == null) throw new WrongLineException(); //we need to insert the player into the team
                     j.setTeam(ultima.getName());
                     jogadores.put(j.getName(), j.clone());
                     ultima.addPlayer(j); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Medio":
                     j = MidFielder.parse(linhaPartida[1]);
-                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    if (ultima == null) throw new WrongLineException(); //we need to insert the player into the team
                     j.setTeam(ultima.getName());
                     jogadores.put(j.getName(), j.clone());
                     ultima.addPlayer(j); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Lateral":
                     j = Winger.parse(linhaPartida[1]);
-                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    if (ultima == null) throw new WrongLineException(); //we need to insert the player into the team
                     j.setTeam(ultima.getName());
                     jogadores.put(j.getName(), j.clone());
                     ultima.addPlayer(j); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Avancado":
                     j = Striker.parse(linhaPartida[1]);
-                    if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
+                    if (ultima == null) throw new WrongLineException(); //we need to insert the player into the team
                     j.setTeam(ultima.getName());
                     jogadores.put(j.getName(), j.clone());
                     ultima.addPlayer(j); //if no team was parsed previously, file is not well-formed
@@ -205,7 +205,7 @@ public class State implements Serializable {
                     jogos.add(jo.clone());
                     break;
                 default:
-                    throw new LinhaIncorretaException();
+                    throw new WrongLineException();
 
             }
         }
