@@ -41,7 +41,7 @@ public class IO {
                 number = 0;
                 sc.nextLine();
             }
-            if(number <0){
+            if(number <0 ){
                 System.out.println("Numero Invalido");
                 number = -1;
             }
@@ -63,7 +63,7 @@ public class IO {
                 value = -1;
                 sc.nextLine();
             }
-            if(value <0){
+            if(value <0 || value > 100){
                 System.out.println("Valor Invalido");
                 value = -1;
             }

@@ -167,42 +167,42 @@ public class State implements Serializable {
                     break;
                 case "Guarda-Redes":
                     j = GoalKeeper.parse(linhaPartida[1]);
-                    j.setTeam(ultima.getName());
-                    jogadores.put(j.getName(), j);
                     if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
-                    ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
+                    j.setTeam(ultima.getName());
+                    jogadores.put(j.getName(), j.clone());
+                    ultima.addPlayer(j); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Defesa":
                     j = Defender.parse(linhaPartida[1]);
-                    j.setTeam(ultima.getName());
-                    jogadores.put(j.getName(), j);
                     if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
-                    ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
+                    j.setTeam(ultima.getName());
+                    jogadores.put(j.getName(), j.clone());
+                    ultima.addPlayer(j); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Medio":
                     j = MidFielder.parse(linhaPartida[1]);
-                    j.setTeam(ultima.getName());
-                    jogadores.put(j.getName(), j);
                     if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
-                    ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
+                    j.setTeam(ultima.getName());
+                    jogadores.put(j.getName(), j.clone());
+                    ultima.addPlayer(j); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Lateral":
                     j = Winger.parse(linhaPartida[1]);
-                    j.setTeam(ultima.getName());
-                    jogadores.put(j.getName(), j);
                     if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
-                    ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
+                    j.setTeam(ultima.getName());
+                    jogadores.put(j.getName(), j.clone());
+                    ultima.addPlayer(j); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Avancado":
                     j = Striker.parse(linhaPartida[1]);
-                    j.setTeam(ultima.getName());
-                    jogadores.put(j.getName(), j);
                     if (ultima == null) throw new LinhaIncorretaException(); //we need to insert the player into the team
-                    ultima.addPlayer(j.clone()); //if no team was parsed previously, file is not well-formed
+                    j.setTeam(ultima.getName());
+                    jogadores.put(j.getName(), j.clone());
+                    ultima.addPlayer(j); //if no team was parsed previously, file is not well-formed
                     break;
                 case "Jogo":
                     FootballMatch jo = FootballMatch.parse(linhaPartida[1]);
-                    jogos.add(jo);
+                    jogos.add(jo.clone());
                     break;
                 default:
                     throw new LinhaIncorretaException();
