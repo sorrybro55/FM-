@@ -151,7 +151,7 @@ public class State implements Serializable {
 
 
     public void parse(String filename) throws WrongLineException, IOException {
-        List<String> linhas = readFile(filename);
+        List<String> linhas = Files.readAllLines(Paths.get(filename), StandardCharsets.UTF_8);
         Map<String, FootballTeam> equipas = new TreeMap<>(); //nome, equipa
         Map<String, FootballPlayer> jogadores = new TreeMap<>(); //numero, jogador
         List<FootballMatch> jogos = new ArrayList<>();
@@ -222,10 +222,7 @@ public class State implements Serializable {
         this.setTeams(equipas);
 
     }
-    public static List<String> readFile(String nomeFich) throws IOException{
-        List<String> lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8);
-        return lines;
-    }
+
 
     public void save(String fileName) throws IOException{
         FileOutputStream fos = new FileOutputStream(fileName);
