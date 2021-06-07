@@ -105,6 +105,7 @@ public class Controller {
                 FootballMatch fm = this.state.getGames().get(option-1);
                 IO.newLine();
                 IO.showGame(fm);
+                IO.newLine();
                 IO.pressEnter();
             }
 

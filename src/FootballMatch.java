@@ -215,11 +215,30 @@ public class FootballMatch implements Serializable
 
 
 
+    public String toStringSimple(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Data: ").append(date).append(" | ");
+        sb.append(this.state).append(" | ");
+        sb.append(this.teamHome).append(" ").append(this.getScoreHome()).append(" : ").append(this.getScoreAway()).append(" ").append(this.teamAway);
+        return sb.toString();
+    }
+
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Data: ").append(date).append(" | ");
         sb.append(this.state).append(" | ");
         sb.append(this.teamHome).append(" ").append(this.getScoreHome()).append(" : ").append(this.getScoreAway()).append(" ").append(this.teamAway);
+        sb.append("\n\n*** Alinhamentos Finais ***\n");
+        sb.append(this.teamHome).append("\n").append(this.playersHome).append("\n");
+        sb.append(this.teamAway).append("\n").append(this.playersAway).append("\n\n");
+        sb.append("*** Substituições ***\n");
+        sb.append(this.teamHome).append("\n");
+        for(Map.Entry<Integer,Integer> me : this.substitutionsHome.entrySet())
+            sb.append(me.getKey()).append(" -> ").append(me.getValue()).append("   ");
+        sb.append("\n");
+        sb.append(this.teamAway).append("\n");
+        for(Map.Entry<Integer,Integer> me : this.substitutionsAway.entrySet())
+            sb.append(me.getKey()).append(" -> ").append(me.getValue()).append("   ");
         return sb.toString();
     }
     
@@ -243,7 +262,7 @@ public class FootballMatch implements Serializable
 
     private List<FootballPlayer> bench(String team){
         List<FootballPlayer> result = new ArrayList<>();
-        if(team == teamHome){
+        if(team.equals(teamHome)){
             for(FootballPlayer fp : squadHome.values())
                 if(!playersHome.contains(fp.getNumber()) && !this.substitutionsHome.containsKey(fp.getNumber()))
                     result.add(fp.clone());
@@ -276,7 +295,7 @@ public class FootballMatch implements Serializable
 
     private List<FootballPlayer> playing(String team){
         List<FootballPlayer> result = new ArrayList<>();
-        if(team == teamHome){
+        if(team.equals(teamHome)){
             for (int i : this.playersHome)
                 result.add(squadHome.get(i).clone());
         }
@@ -425,7 +444,7 @@ public class FootballMatch implements Serializable
         List<Integer> numbers;
         Map<Integer,FootballPlayer> squad;
         Map<Integer, Integer> substitutions;
-        if(team == teamHome){
+        if(team.equals(teamHome)){
             numbers = this.playersHome;
             squad = this.squadHome;
             substitutions = this.substitutionsHome;

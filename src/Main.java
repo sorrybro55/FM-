@@ -11,7 +11,7 @@ public class Main
 
         State state = new State();
         try {
-            state.parse("logs.txt");
+            state.parse("logsV2.txt");
         } catch (WrongLineException  |IOException e) {
             System.out.println("Não Foi Possivel Carregar Dados!");
         }

@@ -36,7 +36,8 @@ public class MatchController {
     }
 
     private void matchPresentation(){
-        IO.message(match.toString());
+        IO.newLine();
+        IO.message(match.toStringSimple());
         IO.newLine();
     }
 
@@ -52,16 +53,16 @@ public class MatchController {
         IO.newLine();
     }
 
-    private void lineUps(){
-        IO.message(match.toString());
-        IO.newLine();
-        IO.message("***Alinhamentos***");
+    private void showLineUps(){
+        IO.message("\n***Alinhamentos***");
         IO.newLine();
         IO.message(match.getTeamHome());
         IO.showPlayers(match.playingHome().iterator());
         IO.newLine();
         IO.message(match.getTeamAway());
         IO.showPlayers(match.playingAway().iterator());
+        IO.newLine();
+        IO.pressEnter();
 
     }
 
@@ -69,9 +70,8 @@ public class MatchController {
         this.matchPresentation();
         this.lineUpHome();
         this.lineUpAway();
-        this.lineUps();
+        this.showLineUps();
         this.match.startGame();
-        IO.newLine();
         IO.message("Inicio da Partida");
         IO.newLine();
 
@@ -145,6 +145,7 @@ public class MatchController {
         this.programSubstitutionsHome();
         this.lineUpAway();
         this.programSubstitutionsAway();
+        this.showLineUps();
         this.match.startGame();
         for(int i=0; i<10; i++){
             int decision = this.decision();
@@ -190,7 +191,6 @@ public class MatchController {
             this.match.decreaseStats(5);
         }
         this.match.endGame();
-        IO.newLine();
         IO.message("Resultado Final");
         IO.message(match.score());
     }

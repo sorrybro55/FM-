@@ -202,6 +202,14 @@ public class State implements Serializable {
                     break;
                 case "Jogo":
                     FootballMatch jo = FootballMatch.parse(linhaPartida[1]);
+                    String teamHome = jo.getTeamHome();
+                    String teamAway = jo.getTeamHome();
+                    if(equipas.containsKey(teamHome)){
+                        jo.setSquadHome(equipas.get(teamHome).getSquad());
+                    }
+                    if(equipas.containsKey(teamAway)){
+                        jo.setSquadAway(equipas.get(teamAway).getSquad());
+                    }
                     jogos.add(jo.clone());
                     break;
                 default:
