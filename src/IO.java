@@ -38,7 +38,7 @@ public class IO {
             try {
                 number = sc.nextInt();
             } catch (InputMismatchException e){
-                number = 0;
+                number = -1;
                 sc.nextLine();
             }
             if(number <0 ){
