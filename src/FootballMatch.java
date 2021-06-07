@@ -18,8 +18,8 @@ public class FootballMatch implements Serializable
     private Map<Integer, FootballPlayer> squadAway;
     private List<Integer> playersHome;
     private List<Integer> playersAway;
-    private Map<Integer, Integer> substitutionsHome = new HashMap<>();
-    private Map<Integer, Integer> substitutionsAway = new HashMap<>();
+    private Map<Integer, Integer> substitutionsHome;
+    private Map<Integer, Integer> substitutionsAway;
     private int[] taticHome;
     private int[] taticAway;
 
