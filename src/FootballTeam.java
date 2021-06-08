@@ -61,7 +61,7 @@ public class FootballTeam implements Serializable{
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.name).append("\nOverall: ").append((int)this.overall()).append("\n\nPlantel:\n\n");
+        sb.append(this.name).append("\n\nHabilidade da Equipa: ").append((int)this.overall()).append("\n\nPlantel:\n\n");
         Iterator<Map.Entry<Integer, FootballPlayer>> it = squad.entrySet().iterator();
         Map.Entry<Integer, FootballPlayer> me = null;
         while (it.hasNext()) {

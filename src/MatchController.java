@@ -72,6 +72,7 @@ public class MatchController {
         this.lineUpAway();
         this.showLineUps();
         this.match.startGame();
+        this.match.startGame();
         IO.message("Inicio da Partida");
         IO.newLine();
 
@@ -212,7 +213,7 @@ public class MatchController {
             int overall = (int) (team.equals(match.getTeamHome())? match.overallHome() : match.overallAway());
             String[] options = {"442", "433", "352"};
             options[r] += " *";
-            Menu menu = new Menu(options, "Prosseguir","*** Modelo tatico ***\nOverall Equipa: " + overall );
+            Menu menu = new Menu(options, "Prosseguir","*** Modelo tatico ***\nHabilidade da Equipa: " + overall );
             IO.newLine();
             menu.run();
             option = menu.getOption();

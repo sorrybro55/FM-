@@ -204,7 +204,7 @@ public abstract class FootballPlayer implements Serializable
         .append("\nClube Atual: ").append(this.team).append(" | Clubes Anteiores: ");
         for (String c : career)
             sb.append(c);
-        sb.append("\nOverall: ").append(this.overall()).append(" | Velocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
+        sb.append("\nHabilidade: ").append(this.overall()).append(" | Velocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
         sb.append(" | Impulsao: ").append(this.jumping).append(" | Jogo de Cabeca: ").append(this.heading).append(" | Remate: ").append(this.finishing);
         sb.append(" | Capacidade de Passe: ").append(this.passing);
 
@@ -214,7 +214,7 @@ public abstract class FootballPlayer implements Serializable
     public String toStringSimple(){
         StringBuilder sb = new StringBuilder();
         sb.append(this.number).append(" | ").append(this.name).append(" | ").append(this.getPosition()).append("\n");
-        sb.append("Overall: ").append(this.overall()).append(" | Velocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
+        sb.append("Habilidade: ").append(this.overall()).append(" | Velocidade: ").append(this.speed).append(" | Resistencia: ").append(this.stamina).append(" | Destreza: ").append(this.agility);
         sb.append(" | Impulsao: ").append(this.jumping).append(" | Jogo de Cabeca: ").append(this.heading).append(" | Remate: ").append(this.finishing);
         sb.append(" | Capacidade de Passe: ").append(this.passing);
         return sb.toString();
