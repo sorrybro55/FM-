@@ -245,6 +245,7 @@ public class State implements Serializable {
         FileInputStream fis = new FileInputStream(fileName);
         ObjectInputStream ois = new ObjectInputStream(fis);
         State state  = (State) ois.readObject();
+        ois.close();
         return state;
 
     }
