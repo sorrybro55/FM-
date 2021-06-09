@@ -15,7 +15,7 @@ public class Controller {
     public  void run() {
 
         int option = -1;
-        Menu menu = new Menu(new String[]{"Fazer Jogo", "Ver Resultados", "Gerir Jogadores", "Gerir Equipas","Guardar Estado", "Carregar Estado"});
+        Menu menu = new Menu(new String[]{"Fazer Jogo", "Resultados", "Jogadores", "Equipas","Guardar Estado", "Carregar Estado"});
         do {
             IO.newLine();
             menu.run();
@@ -115,7 +115,7 @@ public class Controller {
 
     private void managePlayers(){
 
-        Menu menu = new Menu(new String[]{"Ver Jogadores","Transferir Jogador","Criar Jogador","Apagar Jogador"},"*** Selecione Opção ***");
+        Menu menu = new Menu(new String[]{"Consultar Jogador","Transferir Jogador","Criar Jogador","Apagar Jogador"},"*** Selecione Opção ***");
         int option = -1;
         do{
             IO.newLine();
@@ -241,7 +241,7 @@ public class Controller {
 
     private void manageTeams(){
 
-        Menu menu = new Menu(new String[]{"Ver Equipas","Criar Equipas","Apagar Equipa"},"*** Selecione Opção ***");
+        Menu menu = new Menu(new String[]{"Consultar Equipa","Criar Equipa","Apagar Equipa"},"*** Selecione Opção ***");
         int option = -1;
         do{
             IO.newLine();
