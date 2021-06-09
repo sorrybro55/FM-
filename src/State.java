@@ -225,6 +225,7 @@ public class State implements Serializable {
         for (FootballMatch jog: jogos){
             System.out.println(jog.toString());
         }*/
+        jogos.sort(Comparator.comparing(FootballMatch::getDate));
         this.setGames(jogos);
         this.setPlayers(jogadores);
         this.setTeams(equipas);
