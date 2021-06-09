@@ -333,9 +333,9 @@ public class MatchController {
             if(option ==1){
 
                 IO.newLine();
-                IO.message("Selecione Primeiro Jogador (Titulares)");
+                IO.message("Selecione Jogador dos Titulares");
                 int out = IO.chooseNumber();
-                IO.message("Selecione Segundo Jogador");
+                IO.message("Selecione Jogador do Banco");
                 int in = IO.chooseNumber();
                 Menu timeMenu = new Menu(new String[]{"Primeira Parte","Segunda Parte"},"Intervalo","Escolha Momento");
                 int timOption = -1;
@@ -399,7 +399,7 @@ public class MatchController {
     }
 
     private void cleanFutureSubstitutionAway(int in, int out){
-        for(Map<Integer,Integer> me : this.futureSubstitutionsHome.values()){
+        for(Map<Integer,Integer> me : this.futureSubstitutionsAway.values()){
             me.remove(in);
             me.entrySet().removeIf(entry -> (out == (entry.getValue())));
         }

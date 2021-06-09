@@ -462,11 +462,11 @@ public class FootballMatch implements Serializable
         else {
 
             if (this.state != MatchState.TOSTART && substitutions.keySet().size() >= 3)
-                throw new SubstitutionsException("Não Pode Realizar Mais Substituições");
+                throw new SubstitutionsException("Não Pode Realizar Mais Substituições!");
             if (substitutions.containsKey(in) || substitutions.containsKey(out))
-                throw new SubstitutionsException("Substituição Invalida");
+                throw new SubstitutionsException("Substituição Inválida!");
             if (!squad.containsKey(in) || !numbers.contains(out))
-                throw new SubstitutionsException("Substituição Invalida");
+                throw new SubstitutionsException("Substituição Inválida!");
 
             int index = numbers.indexOf(out);
             numbers.set(index, in);
